@@ -1,0 +1,35 @@
+@import '../base/variables';
+
+.swal2-shown.swal2-height-auto {
+  .swal2-container {
+    .swal2-header {
+      .swal2-warning {
+        border-color: $swal2-warning;
+        color: $swal2-warning;
+      }
+    }
+
+    .swal2-content {
+      font-size: 1rem;
+      .red--text {
+        color: $swal2-warning;
+      }
+    }
+
+    .swal2-actions {
+      button {
+        margin: 8px;
+
+        &.swal2-cancel {
+          background-color: $swal2-warning;
+          border-color: $swal2-warning;
+        }
+
+        &.swal2-confirm {
+          background-color: $swal2-confirm;
+          border-color: $swal2-confirm;
+        }
+      }
+    }
+  }
+}
