@@ -4,7 +4,7 @@
       <appSidebar />
       <appHeader />
 
-      <v-main>
+      <v-main :style="background">
         <router-view></router-view>
       </v-main>
     </template>
@@ -24,6 +24,25 @@ export default {
   components: {
     appHeader: () => import('@/components/header/app-header'),
     appSidebar: () => import('@/components/sidebar/app-sidebar')
+  },
+
+  computed: {
+    background() {
+      let style = 'background-size: cover; background-position: center center; background-attachment: fixed;';
+
+      const bg = this.$store.getters['background/get'];
+
+      if (bg) {
+        return `background-image: url('${bg}'); ${style}`;
+      }
+
+      return bg;
+    }
+  },
+  watch: {
+    $route() {
+      this.$store.dispatch('background/clear');
+    }
   }
 };
 </script>

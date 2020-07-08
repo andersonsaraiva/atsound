@@ -1,1 +1,87 @@
 @import '../base/variables';
+
+.card-services {
+  cursor: pointer;
+  display: block;
+  border: 3px solid #d0d0d0;
+  border-radius: 5px;
+  text-align: center;
+  background: none;
+  padding: 18px 5px;
+  position: relative;
+  height: 100%;
+  z-index: 5;
+  box-shadow: 0px 10px 30px 0px rgba(50, 50, 50, 0.16);
+  background-color: rgba(255, 255, 255, 0.76);
+  height: 100%;
+
+  &:hover {
+    opacity: 1;
+    border-color: #d0d0d0;
+
+    &:before,
+    &:after {
+      width: 85%;
+      height: 85%;
+    }
+  }
+
+  &:before,
+  &::after {
+    display: block;
+    content: '';
+    width: 15%;
+    height: 12%;
+    position: absolute;
+    transition: all 0.5s ease 0s;
+  }
+
+  &:before {
+    bottom: -3px;
+    right: -3px;
+    border-bottom: 3px solid var(--v-primary-base);
+    border-right: 3px solid var(--v-primary-base);
+  }
+
+  &::after {
+    top: -3px;
+    left: -3px;
+    border-top: 3px solid var(--v-primary-base);
+    border-left: 3px solid var(--v-primary-base);
+  }
+
+  &_icon {
+    display: inline-block;
+    margin-bottom: 20px;
+
+    i {
+      background-color: var(--v-primary-base);
+      border-radius: 100%;
+      height: 80px;
+      width: 80px;
+      text-align: center;
+    }
+  }
+
+  &_title {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--v-primary-base);
+  }
+}
+
+.delay-300ms {
+  animation-delay: 300ms;
+}
+
+.delay-600ms {
+  animation-delay: 600ms;
+}
+
+.delay-900ms {
+  animation-delay: 900ms;
+}
+
+.delay-1200ms {
+  animation-delay: 1200ms;
+}

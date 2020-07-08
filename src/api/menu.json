@@ -2,31 +2,31 @@
   {
     "icon": "fas fa-home",
     "title": "Início",
-    "path": ""
+    "path": "dashboard"
   },
   {
     "icon": "far fa-calendar-alt",
     "title": "Agenda",
-    "path": ""
+    "path": "calendar"
   },
   {
     "icon": "fas fa-hand-holding-usd",
     "title": "Orçamentos",
-    "path": ""
+    "path": "budgets"
   },
   {
-    "icon": "fas fa-file-signature",
+    "icon": "fas fa-file-alt",
     "title": "Estoque",
-    "path": ""
+    "path": "stock"
   },
   {
     "icon": "far fa-address-book",
-    "title": "Cadastro de Cliente",
-    "path": ""
+    "title": "Cadastro de Clientes",
+    "path": "customer"
   },
   {
     "icon": "far fa-address-card",
     "title": "Cadastro de Funcionários",
-    "path": ""
+    "path": "collaborators"
   }
 ]

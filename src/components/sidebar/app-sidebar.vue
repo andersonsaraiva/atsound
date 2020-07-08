@@ -45,6 +45,7 @@ export default {
     redirect(path) {
       if (this.$route.path !== `/${path}`) {
         this.$router.push(path);
+        this.$store.dispatch('sidebar/openOrClosed');
       }
     },
 
