@@ -1,13 +1,13 @@
 <template>
   <v-container>
-    <appTitle />
+    <appTitle value="Bem-vindo" />
 
     <v-row justify="center" align="center">
       <v-col
         lg="4"
         md="6"
         cols="12"
-        :class="`animate__animated animate__fadeInLeft animate__delay-${index + 1}s`"
+        :class="`animate__animated animate__fadeInLeft animate__delay-${index + 1}ms`"
         v-for="(menu, index) in menus"
         :key="index"
         @click="redirect(menu.path)"

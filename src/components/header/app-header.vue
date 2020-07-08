@@ -1,7 +1,7 @@
 <template>
   <v-app-bar app clipped-left color="primary" dark>
     <v-app-bar-nav-icon @click="openSidebar"></v-app-bar-nav-icon>
-    <v-toolbar-title @click="linkDash">
+    <v-toolbar-title @click="linkDash" class="cursor-pointer">
       <span class="title">AT SOUND</span>
     </v-toolbar-title>
     <v-spacer></v-spacer>
