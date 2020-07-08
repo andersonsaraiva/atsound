@@ -1,0 +1,27 @@
+.change-fontSize {
+  display: flex;
+  padding-right: 5px;
+  align-items: center;
+  border-right: 1px solid var(--v-primary-lighten3);
+  margin-right: 20px;
+
+  .v-icon {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 550px) {
+  .change-fontSize {
+    margin-right: 13px;
+    width: 30%;
+    display: inline-block;
+    border-right: none;
+
+    .v-btn {
+      width: 27px;
+    }
+    .v-icon {
+      font-size: 18px;
+    }
+  }
+}
