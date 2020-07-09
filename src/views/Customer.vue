@@ -11,33 +11,36 @@
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on" small>Cadastrar</v-btn>
             </template>
+
             <v-card>
-              <v-card-title>
+              <v-card-title class="pa-3">
                 <span class="headline">{{ formTitle }}</span>
+                <v-spacer></v-spacer>
+                <v-icon @click="close">close</v-icon>
               </v-card-title>
 
               <v-divider horizontal></v-divider>
 
-              <v-card-text>
+              <v-form ref="form" lazy-validation>
                 <v-container fluid>
-                  <v-row>
-                    <v-col cols="12" sm="6" md="6">
-                      <v-text-field v-model="editedItem.name" label="Nome"></v-text-field>
+                  <v-row class="px-1">
+                    <v-col cols="12" sm="6" md="6" class="py-0">
+                      <v-text-field v-model="editedItem.name" label="Nome" type="text" required :rules="[required]" />
                     </v-col>
-                    <v-col cols="12" sm="6" md="6">
-                      <v-text-field v-model="editedItem.email" label="Email"></v-text-field>
+                    <v-col cols="12" sm="6" md="6" class="py-0">
+                      <v-text-field v-model="editedItem.email" label="Email" type="text" required :rules="[required]" />
                     </v-col>
-                    <v-col cols="12" sm="6" md="6">
-                      <v-text-field v-model="editedItem.phone" label="Telefone"></v-text-field>
+                    <v-col cols="12" sm="6" md="6" class="py-0">
+                      <v-text-field v-model="editedItem.phone" label="Telefone" type="text" required :rules="[required]" />
                     </v-col>
-                    <v-col cols="12" sm="6" md="6">
-                      <v-text-field v-model="editedItem.cpf" label="CPF"></v-text-field>
+                    <v-col cols="12" sm="6" md="6" class="py-0">
+                      <v-text-field v-model="editedItem.cpf" label="CPF" required type="text" :rules="[required]" />
                     </v-col>
                   </v-row>
                 </v-container>
-              </v-card-text>
+              </v-form>
 
-              <v-card-actions>
+              <v-card-actions class="pa-3">
                 <v-spacer></v-spacer>
                 <v-btn color="grey darken-3" dark @click="save" small>Salvar</v-btn>
                 <v-btn color="red" dark @click="close" small>Cancelar</v-btn>
@@ -65,6 +68,7 @@
 
 <script>
 import customers from '@/api/customer.json';
+import { required } from '@/helpers/validations';
 
 export default {
   components: {
@@ -72,6 +76,7 @@ export default {
   },
 
   data: () => ({
+    required,
     dialog: false,
     headers: [
       { text: 'Nome', align: 'start', value: 'name' },
@@ -138,6 +143,8 @@ export default {
     },
 
     save() {
+      if (!this.$refs.form.validate(true)) return;
+
       if (this.editedIndex > -1) {
         Object.assign(this.customers[this.editedIndex], this.editedItem);
       } else {

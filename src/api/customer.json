@@ -3,54 +3,42 @@
     "name": "Patrice S. Long",
     "email": "email@email.com",
     "phone": "(11) 97026-7788",
-    "cpf": "425.115.550-00"
+    "cpf": "425.115.550-00",
+    "cars": ["BMW", "Porsche"]
   },
   {
     "name": "Robert A. McClain",
     "email": "email@email.com",
     "phone": "(11) 97026-7788",
-    "cpf": "425.115.550-00"
+    "cpf": "425.115.550-00",
+    "cars": ["BMW", "Porsche"]
   },
   {
     "name": "William J. Dennis",
     "email": "email@email.com",
     "phone": "(11) 97026-7788",
-    "cpf": "425.115.550-00"
+    "cpf": "425.115.550-00",
+    "cars": ["BMW", "Porsche"]
   },
   {
     "name": "Michael E. Box",
     "email": "email@email.com",
     "phone": "(11) 97026-7788",
-    "cpf": "425.115.550-00"
+    "cpf": "425.115.550-00",
+    "cars": ["BMW", "Porsche"]
   },
   {
     "name": "Sydney R. Mendez",
     "email": "email@email.com",
     "phone": "(11) 97026-7788",
-    "cpf": "425.115.550-00"
+    "cpf": "425.115.550-00",
+    "cars": ["BMW", "Porsche"]
   },
   {
     "name": "Annette R. Frias",
     "email": "email@email.com",
     "phone": "(11) 97026-7788",
-    "cpf": "425.115.550-00"
-  },
-  {
-    "name": "Barry S. Morris",
-    "email": "email@email.com",
-    "phone": "(11) 97026-7788",
-    "cpf": "425.115.550-00"
-  },
-  {
-    "name": "Mary J. Youngquist",
-    "email": "email@email.com",
-    "phone": "(11) 97026-7788",
-    "cpf": "425.115.550-00"
-  },
-  {
-    "name": "Barbara S. Pickett",
-    "email": "email@email.com",
-    "phone": "(11) 97026-7788",
-    "cpf": "425.115.550-00"
+    "cpf": "425.115.550-00",
+    "cars": ["BMW", "Porsche"]
   }
 ]

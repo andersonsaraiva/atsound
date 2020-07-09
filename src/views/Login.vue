@@ -57,7 +57,8 @@ export default {
 
   methods: {
     handleLogin() {
-      //if (!this.$refs.form.validate(true)) return;
+      if (!this.$refs.form.validate(true)) return;
+
       this.$router.push('dashboard');
     }
   }
