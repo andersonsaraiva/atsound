@@ -26,7 +26,7 @@
   &:after {
     right: 0;
     width: 69%;
-    background: rgba(0, 0, 0, 0.3);
+    background: transparent;
   }
 
   &_item {
@@ -83,8 +83,8 @@
         }
 
         &:last-child {
-          background: rgba(244, 67, 54, 0.5);
-          border-color: rgba(244, 67, 54, 0.5);
+          background: var(--v-primary-lighten4);
+          border-color: var(--v-primary-lighten4);
           margin-right: 0px;
           cursor: default;
 
@@ -129,6 +129,22 @@
           border-width: 25px 10px 0 0;
         }
       }
+    }
+  }
+}
+
+.theme--dark {
+  .content-breadcrumbs {
+    &:after {
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+}
+
+.theme--light {
+  .content-breadcrumbs {
+    &:after {
+      background: rgba(0, 0, 0, 0.3);
     }
   }
 }

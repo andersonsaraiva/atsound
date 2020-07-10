@@ -12,7 +12,7 @@
   height: 100%;
   z-index: 5;
   box-shadow: 0px 10px 30px 0px rgba(50, 50, 50, 0.16);
-  background-color: rgba(255, 255, 255, 0.76);
+  background-color: transparent;
   height: 100%;
 
   &:hover {
@@ -70,18 +70,14 @@
   }
 }
 
-.delay-300ms {
-  animation-delay: 300ms;
+.theme--dark {
+  .card-services {
+    background-color: rgba(30, 30, 30, 0.76);
+  }
 }
 
-.delay-600ms {
-  animation-delay: 600ms;
-}
-
-.delay-900ms {
-  animation-delay: 900ms;
-}
-
-.delay-1200ms {
-  animation-delay: 1200ms;
+.theme--light {
+  .card-services {
+    background-color: rgba(255, 255, 255, 0.76);
+  }
 }

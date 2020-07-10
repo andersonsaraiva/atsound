@@ -88,7 +88,27 @@ export default {
       }
     }
     &:hover {
-      background: #e5e5e5;
+      background: transparent;
+    }
+  }
+}
+
+.theme--dark {
+  .menu_account {
+    .v-list-item {
+      &:hover {
+        background: #1e1e1e;
+      }
+    }
+  }
+}
+
+.theme--light {
+  .menu_account {
+    .v-list-item {
+      &:hover {
+        background: #e5e5e5;
+      }
     }
   }
 }

@@ -35,10 +35,6 @@ export default {
     menus: menus.filter(x => x.path !== 'dashboard')
   }),
 
-  created() {
-    this.$store.dispatch('background/set', 'static/bg-dashboard.jpg');
-  },
-
   methods: {
     redirect(path) {
       if (this.$route.path !== `/${path}`) {
