@@ -70,6 +70,15 @@ export default [
     component: () => import('@/views/Stock.vue')
   },
   {
+    path: '/provider',
+    meta: {
+      public: false,
+      title: 'Fornecedores'
+    },
+    name: 'provider',
+    component: () => import('@/views/Providers.vue')
+  },
+  {
     path: '/customer',
     meta: {
       public: false,

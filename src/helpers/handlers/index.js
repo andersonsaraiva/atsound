@@ -1,1 +1,1 @@
-export const DELETE = 'DELETE';
+export const DELETE_PROVIDER = 'DELETE_PROVIDER';

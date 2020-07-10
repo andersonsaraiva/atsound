@@ -20,6 +20,11 @@
     "path": "stock"
   },
   {
+    "icon": "fas fa-shipping-fast",
+    "title": "Fornecedores",
+    "path": "provider"
+  },
+  {
     "icon": "far fa-address-book",
     "title": "Cadastro de Clientes",
     "path": "customer"

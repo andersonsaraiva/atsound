@@ -36,7 +36,7 @@ export const confirmMessage = async (title, text, item, handler_name) => {
 
   const result = await swalWithBootstrapButtons.fire({
     title,
-    text,
+    html: text,
     icon: 'warning',
     showCancelButton: true,
     confirmButtonText: 'OK ',
