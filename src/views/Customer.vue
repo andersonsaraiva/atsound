@@ -2,90 +2,105 @@
   <v-container>
     <appBreadcrumbs />
 
-    <v-data-table :headers="headers" :items="customers" sort-by="calories" class="elevation-1">
-      <template v-slot:top>
-        <v-toolbar flat color="white">
-          <v-spacer></v-spacer>
+    <v-card class="elevation-1 mb-4 mt-4">
+      <v-card-text class="py-0">
+        <v-row>
+          <v-col lg="10" md="10" sm="8">
+            <v-text-field
+              v-model="search"
+              clearable
+              append-icon="search"
+              label="Digite para pesquisar..."
+              hide-details
+              outlined
+              dense
+            ></v-text-field>
+          </v-col>
 
-          <v-dialog v-model="dialog" max-width="500px">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on" small>Cadastrar</v-btn>
-            </template>
+          <v-col lg="2" md="2" sm="4">
+            <v-btn color="primary" dark @click="dialog = true">Cadastrar</v-btn>
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
 
-            <v-card>
-              <v-card-title class="pa-3">
-                <span class="headline">{{ formTitle }}</span>
-                <v-spacer></v-spacer>
-                <v-icon @click="close">close</v-icon>
-              </v-card-title>
-
-              <v-divider horizontal></v-divider>
-
-              <v-form ref="form" lazy-validation>
-                <v-container fluid>
-                  <v-row class="px-1">
-                    <v-col cols="12" sm="6" md="6" class="py-0">
-                      <v-text-field v-model="editedItem.name" label="Nome" type="text" required :rules="[required]" />
-                    </v-col>
-                    <v-col cols="12" sm="6" md="6" class="py-0">
-                      <v-text-field v-model="editedItem.email" label="Email" type="text" required :rules="[required]" />
-                    </v-col>
-                    <v-col cols="12" sm="6" md="6" class="py-0">
-                      <v-text-field v-model="editedItem.phone" label="Telefone" type="text" required :rules="[required]" />
-                    </v-col>
-                    <v-col cols="12" sm="6" md="6" class="py-0">
-                      <v-text-field v-model="editedItem.cpf" label="CPF" required type="text" :rules="[required]" />
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-form>
-
-              <v-card-actions class="pa-3">
-                <v-spacer></v-spacer>
-                <v-btn color="grey darken-3" dark @click="save" small>Salvar</v-btn>
-                <v-btn color="red" dark @click="close" small>Cancelar</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </v-toolbar>
-      </template>
-
+    <v-data-table :search="search" :headers="headers" :items="items" class="elevation-1" dense>
       <template v-slot:item.actions="{ item }">
-        <v-icon small class="mr-2" @click="editItem(item)">
+        <v-icon small class="mr-2" @click="editItem(item)" color="green">
           mdi-pencil
         </v-icon>
-        <v-icon small @click="deleteItem(item)">
+        <v-icon small @click="deleteItem(item)" color="red">
           mdi-delete
         </v-icon>
       </template>
-
-      <template v-slot:no-data>
-        <v-btn color="primary" @click="initialize">Reset</v-btn>
-      </template>
     </v-data-table>
+
+    <v-dialog v-model="dialog">
+      <v-card>
+        <v-card-title class="pa-3">
+          <span class="headline">{{ formTitle }}</span>
+          <v-spacer></v-spacer>
+          <v-icon @click="close">close</v-icon>
+        </v-card-title>
+
+        <v-divider horizontal></v-divider>
+
+        <v-form ref="form" lazy-validation>
+          <v-container fluid>
+            <v-row class="px-1">
+              <v-col cols="12" sm="6" md="6" class="py-0">
+                <v-text-field v-model="editedItem.name" label="Nome" type="text" required :rules="[required]" />
+              </v-col>
+              <v-col cols="12" sm="6" md="6" class="py-0">
+                <v-text-field v-model="editedItem.email" label="Email" type="text" required :rules="[required]" />
+              </v-col>
+              <v-col cols="12" sm="6" md="6" class="py-0">
+                <v-text-field v-model="editedItem.phone" label="Telefone" type="text" required :rules="[required]" />
+              </v-col>
+              <v-col cols="12" sm="6" md="6" class="py-0">
+                <v-text-field v-model="editedItem.cpf" label="CPF" required type="text" :rules="[required]" />
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+
+        <v-card-actions class="pa-3">
+          <v-spacer></v-spacer>
+          <v-btn color="grey darken-3" dark @click="save" small>Salvar</v-btn>
+          <v-btn color="red" dark @click="close" small>Cancelar</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
 <script>
-import customers from '@/api/customer.json';
+import items from '@/api/customer.json';
 import { required } from '@/helpers/validations';
+import { confirmMessage } from '@/helpers/messages';
+import * as HANDLERS from '@/helpers/handlers';
 
 export default {
   components: {
     appBreadcrumbs: () => import('@/components/breadcrumbs/app-breadcrumbs')
   },
 
+  events: {
+    [HANDLERS.DELETE_CUSTOMER]: 'showDelete'
+  },
+
   data: () => ({
+    search: '',
     required,
     dialog: false,
     headers: [
-      { text: 'Nome', align: 'start', value: 'name' },
+      { text: 'Nome', value: 'name' },
       { text: 'Email', value: 'email' },
       { text: 'Telefone', value: 'phone' },
       { text: 'CPF', value: 'cpf' },
       { text: 'Actions', value: 'actions', sortable: false, align: 'right' }
     ],
-    customers: [],
+    items: [],
     editedIndex: -1,
     editedItem: {
       name: '',
@@ -119,19 +134,23 @@ export default {
 
   methods: {
     initialize() {
-      this.customers = customers;
+      this.items = items;
     },
 
     editItem(item) {
-      this.editedIndex = this.customers.indexOf(item);
+      this.editedIndex = this.items.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
 
     deleteItem(item) {
-      const index = this.customers.indexOf(item);
+      confirmMessage(`Deseja realmente excluir`, `${item.name}`, item, HANDLERS.DELETE_CUSTOMER);
+    },
 
-      confirm('Are you sure you want to delete this item?') && this.customers.splice(index, 1);
+    showDelete(item) {
+      const index = this.items.indexOf(item);
+
+      this.items.splice(index, 1);
     },
 
     close() {
@@ -139,6 +158,7 @@ export default {
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
+        this.$refs.form.reset();
       });
     },
 
@@ -146,9 +166,9 @@ export default {
       if (!this.$refs.form.validate(true)) return;
 
       if (this.editedIndex > -1) {
-        Object.assign(this.customers[this.editedIndex], this.editedItem);
+        Object.assign(this.items[this.editedIndex], this.editedItem);
       } else {
-        this.customers.push(this.editedItem);
+        this.items.push(this.editedItem);
       }
 
       this.close();
