@@ -18,7 +18,7 @@
           </v-col>
 
           <v-col lg="2" md="2" sm="4">
-            <v-btn color="primary" @click="dialog = true">Cadastrar</v-btn>
+            <v-btn color="primary" @click="addBudget">Cadastrar</v-btn>
           </v-col>
         </v-row>
       </v-card-text>
@@ -154,7 +154,7 @@
 <script>
 import items from '@/api/budgets.json';
 import { required } from '@/helpers/validations';
-import { confirmMessage } from '@/helpers/messages';
+import { showMessage, confirmMessage } from '@/helpers/messages';
 import * as HANDLERS from '@/helpers/handlers';
 
 export default {
@@ -242,7 +242,13 @@ export default {
       this.items = items;
     },
 
+    addBudget() {
+      this.dialog = true;
+      this.totalServices = 0;
+    },
+
     editItem(item) {
+      this.totalServices = 0;
       this.editedIndex = this.items.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
@@ -277,6 +283,8 @@ export default {
       } else {
         this.items.push(this.editedItem);
       }
+
+      showMessage('success', 'Operação realizada com sucesso!');
 
       this.close();
     },

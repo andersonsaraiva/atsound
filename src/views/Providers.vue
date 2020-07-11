@@ -77,7 +77,7 @@
 <script>
 import items from '@/api/providers.json';
 import { required } from '@/helpers/validations';
-import { confirmMessage } from '@/helpers/messages';
+import { showMessage, confirmMessage } from '@/helpers/messages';
 import * as HANDLERS from '@/helpers/handlers';
 
 export default {
@@ -171,6 +171,8 @@ export default {
       } else {
         this.items.push(this.editedItem);
       }
+
+      showMessage('success', 'Operação realizada com sucesso!');
 
       this.close();
     }
