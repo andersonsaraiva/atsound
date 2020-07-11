@@ -6,6 +6,8 @@ import vuetify from '@/plugins/vuetify';
 
 import '@/plugins/Events';
 import '@/plugins/styles';
+import '@/plugins/vueTheMask';
+import "@/plugins/vuetify-money.js";
 import '@/services/http';
 
 Vue.config.productionTip = false

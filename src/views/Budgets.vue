@@ -55,7 +55,7 @@
                 <v-text-field v-model="editedItem.email" label="Email" type="text" />
               </v-col>
               <v-col cols="12" sm="3" md="3" class="py-0">
-                <v-text-field v-model="editedItem.cpf" label="CPF" required type="text" />
+                <v-text-field v-model="editedItem.cpf" label="CPF" required type="text" v-mask="'###.###.##-##'" />
               </v-col>
             </v-row>
           </v-container>
@@ -82,7 +82,16 @@
                           />
                         </v-col>
                         <v-col cols="12" sm="2" md="2" class="py-0">
-                          <v-text-field v-model="service.price" label="Preço" type="text" dense outlined required :rules="[required]" />
+                          <vuetify-money
+                            v-model="service.price"
+                            label="Preço"
+                            dense
+                            outlined
+                            required
+                            :rules="[required]"
+                            :valueWhenIsEmpty="''"
+                            :options="options"
+                          />
                         </v-col>
                         <v-col cols="12" sm="2" md="2" class="py-0">
                           <v-btn color="primary" @click="addService" :disabled="!formServices">
@@ -100,6 +109,10 @@
                             dense
                             class="elevation-1"
                           >
+                            <template v-slot:item.price="{ item }">
+                              {{ formatValue(item.price) }}
+                            </template>
+
                             <template v-slot:item.actions="{ item }">
                               <v-icon small class="mr-2" @click="editService(item)" color="green">
                                 mdi-pencil
@@ -107,6 +120,15 @@
                               <v-icon small @click="deleteService(item)" color="red">
                                 mdi-delete
                               </v-icon>
+                            </template>
+                            <template v-slot:body.append>
+                              <tr class="">
+                                <td class="text-start"><strong>Total:</strong></td>
+                                <td class="text-start">
+                                  <strong>{{ formatValue(totalServices) }}</strong>
+                                </td>
+                                <td class="text-right"></td>
+                              </tr>
                             </template>
                           </v-data-table>
                         </v-col>
@@ -145,6 +167,7 @@ export default {
   },
 
   data: () => ({
+    totalServices: null,
     form: true,
     formServices: true,
     search: '',
@@ -180,6 +203,12 @@ export default {
       email: null,
       phone: null,
       services: []
+    },
+    options: {
+      locale: 'pt-BR',
+      suffix: '',
+      length: 11,
+      precision: 2
     }
   }),
 
@@ -200,6 +229,15 @@ export default {
   },
 
   methods: {
+    formatValue(value) {
+      let number = parseFloat(value)
+        .toFixed(2)
+        .split('.');
+      number[0] = number[0].split(/(?=(?:...)*$)/).join('.');
+
+      return `R$ ${number.join(',')}`;
+    },
+
     initialize() {
       this.items = items;
     },
@@ -260,6 +298,22 @@ export default {
       }
 
       this.$refs.formServices.reset();
+    }
+  },
+
+  watch: {
+    vActions(newValue) {
+      deep: true, (this.actions = newValue);
+    },
+
+    editedItem: {
+      deep: true,
+      handler(newValue) {
+        let prices = newValue.services.map(item => parseFloat(item.price));
+        this.totalServices = prices.reduce(function(a, b) {
+          return a + b;
+        }, 0);
+      }
     }
   }
 };
