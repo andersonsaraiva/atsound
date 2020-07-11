@@ -7,6 +7,7 @@
       <v-main :style="background">
         <router-view></router-view>
       </v-main>
+      <appSettings />
     </template>
 
     <template v-else>
@@ -23,7 +24,8 @@
 export default {
   components: {
     appHeader: () => import('@/components/header/app-header'),
-    appSidebar: () => import('@/components/sidebar/app-sidebar')
+    appSidebar: () => import('@/components/sidebar/app-sidebar'),
+    appSettings: () => import('@/components/settings/app-settings')
   },
 
   computed: {
