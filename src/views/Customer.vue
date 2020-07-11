@@ -49,16 +49,16 @@
           <v-container fluid>
             <v-row class="px-1">
               <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.name" label="Nome" type="text" required :rules="[required]" />
+                <v-text-field v-model="editedItem.name" label="Nome" type="text" required :rules="[required]" dense outlined />
               </v-col>
               <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.email" label="Email" type="text" required :rules="[required]" />
+                <v-text-field v-model="editedItem.email" label="Email" type="text" required :rules="[required, email]" dense outlined />
               </v-col>
               <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.phone" label="Telefone" type="text" required :rules="[required]" />
+                <v-text-field v-model="editedItem.phone" label="Telefone" type="text" required :rules="[required]" dense outlined />
               </v-col>
               <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.cpf" label="CPF" required type="text" :rules="[required]" />
+                <v-text-field v-model="editedItem.cpf" label="CPF" required type="text" :rules="[required]" dense outlined />
               </v-col>
             </v-row>
           </v-container>
@@ -76,7 +76,7 @@
 
 <script>
 import items from '@/api/customer.json';
-import { required } from '@/helpers/validations';
+import { required, email } from '@/helpers/validations';
 import { showMessage, confirmMessage } from '@/helpers/messages';
 import * as HANDLERS from '@/helpers/handlers';
 
@@ -92,6 +92,7 @@ export default {
   data: () => ({
     search: '',
     required,
+    email,
     dialog: false,
     headers: [
       { text: 'Nome', value: 'name' },

@@ -49,13 +49,22 @@
           <v-container fluid>
             <v-row class="px-1">
               <v-col cols="12" sm="4" md="4" class="py-0">
-                <v-text-field v-model="editedItem.phone" label="Telefone" type="text" required :rules="[required]" />
+                <v-text-field
+                  v-model="editedItem.phone"
+                  label="Telefone"
+                  type="text"
+                  dense
+                  outlined
+                  required
+                  :rules="[required]"
+                  v-mask="['(##) ####-####', '(##) #####-####']"
+                />
               </v-col>
               <v-col cols="12" sm="5" md="5" class="py-0">
-                <v-text-field v-model="editedItem.email" label="Email" type="text" />
+                <v-text-field v-model="editedItem.email" label="Email" type="text" dense outlined :rules="[email]" />
               </v-col>
               <v-col cols="12" sm="3" md="3" class="py-0">
-                <v-text-field v-model="editedItem.cpf" label="CPF" required type="text" v-mask="'###.###.##-##'" />
+                <v-text-field v-model="editedItem.cpf" label="CPF" dense outlined type="text" v-mask="'###.###.##-##'" />
               </v-col>
             </v-row>
           </v-container>
@@ -153,7 +162,7 @@
 
 <script>
 import items from '@/api/budgets.json';
-import { required } from '@/helpers/validations';
+import { required, email } from '@/helpers/validations';
 import { showMessage, confirmMessage } from '@/helpers/messages';
 import * as HANDLERS from '@/helpers/handlers';
 
@@ -172,6 +181,7 @@ export default {
     formServices: true,
     search: '',
     required,
+    email,
     dialog: false,
     showCollapse: 0,
     service: {
