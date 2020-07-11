@@ -167,7 +167,7 @@ export default {
   },
 
   data: () => ({
-    totalServices: null,
+    totalServices: 0,
     form: true,
     formServices: true,
     search: '',
@@ -309,10 +309,12 @@ export default {
     editedItem: {
       deep: true,
       handler(newValue) {
-        let prices = newValue.services.map(item => parseFloat(item.price));
-        this.totalServices = prices.reduce(function(a, b) {
-          return a + b;
-        }, 0);
+        if (newValue.services.length) {
+          let prices = newValue.services.map(item => parseFloat(item.price));
+          this.totalServices = prices.reduce(function(a, b) {
+            return a + b;
+          }, 0);
+        }
       }
     }
   }
