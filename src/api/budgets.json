@@ -1,0 +1,25 @@
+[
+  {
+    "id": 1,
+    "cpf": "874.836.300-60",
+    "phone": "(11) 97026-7700",
+    "email": "email@email.com",
+    "services": [
+      {
+        "id": 1,
+        "description": "Barra de Led",
+        "price": 360
+      },
+      {
+        "id": 2,
+        "description": "Alarme",
+        "price": 180
+      },
+      {
+        "id": 3,
+        "description": "Mascara Negra",
+        "price": 80
+      }
+    ]
+  }
+]

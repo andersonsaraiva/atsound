@@ -18,7 +18,7 @@
           </v-col>
 
           <v-col lg="2" md="2" sm="4">
-            <v-btn color="primary" dark @click="dialog = true">Cadastrar</v-btn>
+            <v-btn color="primary" @click="dialog = true">Cadastrar</v-btn>
           </v-col>
         </v-row>
       </v-card-text>
@@ -66,8 +66,8 @@
 
         <v-card-actions class="pa-3">
           <v-spacer></v-spacer>
-          <v-btn color="grey darken-3" dark @click="save" small>Salvar</v-btn>
-          <v-btn color="red" dark @click="close" small>Cancelar</v-btn>
+          <v-btn color="primary" @click="save" small>Salvar</v-btn>
+          <v-btn @click="close" small>Cancelar</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

@@ -1,0 +1,14 @@
+.column-group {
+  .v-expansion-panel {
+    .v-expansion-panel-header {
+      padding: 0.9rem;
+      min-height: auto;
+    }
+
+    .v-expansion-panel-content {
+      .v-expansion-panel-content__wrap {
+        padding: 10px;
+      }
+    }
+  }
+}
