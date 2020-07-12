@@ -339,10 +339,6 @@ export default {
   },
 
   watch: {
-    vActions(newValue) {
-      deep: true, (this.actions = newValue);
-    },
-
     editedItem: {
       deep: true,
       handler(newValue) {
