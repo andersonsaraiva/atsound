@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Lampada ultra led H4 4300k",
+    "brand": "Philips",
+    "description": "PAR LAMPADA PHILIPS H4 NEW CRISTAL VISION ULTRA 4300K + PINGOSA Crystal Vision Ultra",
+    "quantity": 4,
+    "purchaseDate": "2020-07-12",
+    "purchaseValue": 102.99,
+    "stockValue": null,
+    "providerId": 1
+  },
+  {
+    "name": "H4 BI-XENON 8000K",
+    "brand": "Tiger / Ray-x",
+    "description": "Kit Xenon H4 Bi-xenon 8000k Com Reator Digital Hid",
+    "quantity": 7,
+    "purchaseDate": "2020-07-11",
+    "purchaseValue": 80,
+    "stockValue": null,
+    "providerId": null
+  },
+  {
+    "name": "Cabo Rca 5 Metros",
+    "brand": "Prime",
+    "description": "Cabo Rca 5 Metros Dupla Blindagem Cobre 5m Blindado Azul 5mm",
+    "quantity": 15,
+    "purchaseDate": "2020-06-29",
+    "purchaseValue": 29.9,
+    "stockValue": null,
+    "providerId": null
+  }
+]

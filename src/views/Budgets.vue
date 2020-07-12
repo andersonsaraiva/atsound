@@ -165,6 +165,7 @@
 import items from '@/api/budgets.json';
 import { required, email } from '@/helpers/validations';
 import { showMessage, confirmMessage } from '@/helpers/messages';
+import { formatValue } from '@/helpers/utils';
 import * as HANDLERS from '@/helpers/handlers';
 
 export default {
@@ -240,14 +241,7 @@ export default {
   },
 
   methods: {
-    formatValue(value) {
-      let number = parseFloat(value)
-        .toFixed(2)
-        .split('.');
-      number[0] = number[0].split(/(?=(?:...)*$)/).join('.');
-
-      return `R$ ${number.join(',')}`;
-    },
+    formatValue,
 
     initialize() {
       this.items = items;
