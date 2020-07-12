@@ -25,6 +25,9 @@
     </v-card>
 
     <v-data-table :search="search" :headers="headers" :items="items" class="elevation-1" dense>
+      <template v-slot:item.budgetDate="{ item }">
+        {{ formatDate(item.budgetDate) }}
+      </template>
       <template v-slot:item.actions="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)" color="green">
           mdi-pencil
@@ -48,7 +51,10 @@
         <v-form ref="form" lazy-validation v-model="form">
           <v-container fluid>
             <v-row class="px-1">
-              <v-col cols="12" sm="4" md="4" class="py-0">
+              <v-col cols="12" sm="6" md="6" class="py-0">
+                <v-text-field v-model="editedItem.name" label="Nome" type="text" dense outlined required :rules="[required]" />
+              </v-col>
+              <v-col cols="12" sm="6" md="6" class="py-0">
                 <v-text-field
                   v-model="editedItem.phone"
                   label="Telefone"
@@ -60,11 +66,22 @@
                   v-mask="['(##) ####-####', '(##) #####-####']"
                 />
               </v-col>
-              <v-col cols="12" sm="5" md="5" class="py-0">
+              <v-col cols="12" sm="6" md="6" class="py-0">
                 <v-text-field v-model="editedItem.email" label="Email" type="text" dense outlined :rules="[email]" />
               </v-col>
               <v-col cols="12" sm="3" md="3" class="py-0">
                 <v-text-field v-model="editedItem.cpf" label="CPF" dense outlined type="text" v-mask="'###.###.##-##'" />
+              </v-col>
+              <v-col cols="12" sm="3" md="3" class="py-0">
+                <v-text-field
+                  type="date"
+                  v-model="editedItem.budgetDate"
+                  label="Data do Orçamento"
+                  dense
+                  outlined
+                  required
+                  :rules="[required]"
+                />
               </v-col>
             </v-row>
           </v-container>
@@ -165,7 +182,7 @@
 import items from '@/api/budgets.json';
 import { required, email } from '@/helpers/validations';
 import { showMessage, confirmMessage } from '@/helpers/messages';
-import { formatValue } from '@/helpers/utils';
+import { formatValue, formatDate } from '@/helpers/utils';
 import * as HANDLERS from '@/helpers/handlers';
 
 export default {
@@ -174,7 +191,7 @@ export default {
   },
 
   events: {
-    [HANDLERS.DELETE_PROVIDER]: 'showDelete'
+    [HANDLERS.DELETE_BUDGETS]: 'showDelete'
   },
 
   data: () => ({
@@ -191,9 +208,11 @@ export default {
       price: null
     },
     headers: [
+      { text: 'Nome', value: 'name' },
       { text: 'Email', value: 'email' },
       { text: 'Telefone', value: 'phone' },
       { text: 'CPF', value: 'cpf' },
+      { text: 'Data do Orçamento', value: 'budgetDate' },
       { text: '', value: 'actions', sortable: false, align: 'right' }
     ],
     servicesHeaders: [
@@ -206,12 +225,16 @@ export default {
     editedService: -1,
     editedItem: {
       id: null,
+      name: null,
+      budgetDate: null,
       email: null,
       phone: null,
       services: []
     },
     defaultItem: {
       id: null,
+      name: null,
+      budgetDate: null,
       email: null,
       phone: null,
       services: []
@@ -242,6 +265,7 @@ export default {
 
   methods: {
     formatValue,
+    formatDate,
 
     initialize() {
       this.items = items;
@@ -260,7 +284,7 @@ export default {
     },
 
     deleteItem(item) {
-      confirmMessage(`Deseja realmente excluir`, `${item.name}`, item, HANDLERS.DELETE_PROVIDER);
+      confirmMessage(`Deseja realmente excluir`, `${item.name}`, item, HANDLERS.DELETE_BUDGETS);
     },
 
     showDelete(item) {

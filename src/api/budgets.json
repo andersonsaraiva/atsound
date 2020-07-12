@@ -1,9 +1,11 @@
 [
   {
     "id": 1,
+    "name": "Patrice S. Long",
     "cpf": "874.836.300-60",
     "phone": "(11) 97026-7700",
     "email": "email@email.com",
+    "budgetDate": "2020-07-12",
     "services": [
       {
         "id": 1,
