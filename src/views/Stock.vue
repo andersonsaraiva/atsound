@@ -25,6 +25,10 @@
     </v-card>
 
     <v-data-table :search="search" :headers="headers" :items="items" class="elevation-1" dense>
+      <template v-slot:item.quantity="{ item }">
+        <span :class="['font-weight-bold', getColor(item.quantity)]">{{ item.quantity }}</span>
+      </template>
+
       <template v-slot:item.purchaseValue="{ item }">
         {{ formatValue(item.purchaseValue) }}
       </template>
@@ -239,6 +243,12 @@ export default {
       showMessage('success', 'Operação realizada com sucesso!');
 
       this.close();
+    },
+
+    getColor(item) {
+      if (item == 1) return 'red--text';
+      else if (item == 2) return 'orange--text';
+      else return 'green--text';
     }
   }
 };
