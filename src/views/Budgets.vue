@@ -35,7 +35,7 @@
       </template>
     </v-data-table>
 
-    <v-dialog v-model="dialog">
+    <v-dialog v-model="dialog" persistent>
       <v-card>
         <v-card-title class="pa-3">
           <span class="headline">{{ formTitle }}</span>
@@ -100,6 +100,7 @@
                             :rules="[required]"
                             :valueWhenIsEmpty="''"
                             :options="options"
+                            background-color="transparent"
                           />
                         </v-col>
                         <v-col cols="12" sm="2" md="2" class="py-0">
