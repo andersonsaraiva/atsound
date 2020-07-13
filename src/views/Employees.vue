@@ -52,74 +52,14 @@
               <v-col cols="12" sm="6" md="6" class="py-0">
                 <v-text-field v-model="editedItem.name" label="Nome" type="text" required :rules="[required]" />
               </v-col>
-
               <v-col cols="12" sm="6" md="6" class="py-0">
                 <v-text-field v-model="editedItem.email" label="Email" type="text" required :rules="[required]" />
               </v-col>
-
               <v-col cols="12" sm="6" md="6" class="py-0">
                 <v-text-field v-model="editedItem.phone" label="Telefone" type="text" required :rules="[required]" />
               </v-col>
-
               <v-col cols="12" sm="6" md="6" class="py-0">
                 <v-text-field v-model="editedItem.cpf" label="CPF" required type="text" :rules="[required]" />
-              </v-col>
-
-              <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-menu
-                  ref="menu"
-                  v-model="menu"
-                  :close-on-content-click="false"
-                  :return-value.sync="editedItem.date_of_birth"
-                  transition="scale-transition"
-                  offset-y
-                  min-width="290px"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                      v-model="editedItem.date_of_birth"
-                      label="Data de nascimento"
-                      prepend-icon="event"
-                      readonly
-                      v-bind="attrs"
-                      v-on="on"
-                    />
-                  </template>
-
-                  <v-date-picker v-model="editedItem.date_of_birth" no-title scrollable>
-                    <v-spacer></v-spacer>
-                    <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-                    <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
-                  </v-date-picker>
-                </v-menu>
-              </v-col>
-
-              <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.address.cep" label="CEP" required type="text" :rules="[required]" />
-              </v-col>
-
-              <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.address.street" label="Rua" required type="text" :rules="[required]" />
-              </v-col>
-
-              <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.address.number" label="Número" required type="text" :rules="[required]" />
-              </v-col>
-
-              <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.address.complement" label="Complemento" type="text" />
-              </v-col>
-
-              <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.address.neighborhood" label="Bairro" required type="text" :rules="[required]" />
-              </v-col>
-
-              <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.address.city" label="Cidade" required type="text" :rules="[required]" />
-              </v-col>
-
-              <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.address.state" label="Estado" required type="text" :rules="[required]" />
               </v-col>
             </v-row>
           </v-container>
@@ -136,7 +76,7 @@
 </template>
 
 <script>
-import items from '@/api/customer.json';
+import items from '@/api/employees.json';
 import { required } from '@/helpers/validations';
 import { confirmMessage } from '@/helpers/messages';
 import * as HANDLERS from '@/helpers/handlers';
@@ -154,8 +94,6 @@ export default {
     search: '',
     required,
     dialog: false,
-    menu: false,
-    date: new Date().toISOString().substr(0, 10),
     headers: [
       { text: 'Nome', value: 'name' },
       { text: 'Email', value: 'email' },
@@ -167,13 +105,36 @@ export default {
     editedIndex: -1,
     editedItem: {
       name: '',
+      date_of_birth: '',
+      gender: '',
+      nationality: '',
+      marital_status: '',
+      schooling: '',
       email: '',
       phone: '',
-      cpf: '',
-      gender: '',
-      date_of_birth: '',
+      documents: {
+        cpf: '',
+        rg: '',
+        rg_date_of_issue: '',
+        rg_emitting_organ: '',
+        rg_state: '',
+        cnh: '',
+        cnh_date_of_issue: '',
+        cnh_expiration_date: '',
+        cnh_emitting_organ: '',
+        cnh_state: ''
+      },
+      dependents: [
+        {
+          name: '',
+          date_of_birth: ''
+        },
+        {
+          name: '',
+          date_of_birth: ''
+        }
+      ],
       address: {
-        cep: '',
         street: '',
         number: '',
         neighborhood: '',
@@ -181,24 +142,44 @@ export default {
         city: '',
         state: ''
       },
-      cars: [
-        {
-          model: '',
-          color: '',
-          year: '',
-          license_plate: ''
-        }
-      ]
+      hiring: {
+        contract_date: '',
+        current_position: '',
+        current_wage: 0
+      }
     },
     defaultItem: {
       name: '',
+      date_of_birth: '',
+      gender: '',
+      nationality: '',
+      marital_status: '',
+      schooling: '',
       email: '',
       phone: '',
-      cpf: '',
-      gender: '',
-      date_of_birth: '',
+      documents: {
+        cpf: '',
+        rg: '',
+        rg_date_of_issue: '',
+        rg_emitting_organ: '',
+        rg_state: '',
+        cnh: '',
+        cnh_date_of_issue: '',
+        cnh_expiration_date: '',
+        cnh_emitting_organ: '',
+        cnh_state: ''
+      },
+      dependents: [
+        {
+          name: '',
+          date_of_birth: ''
+        },
+        {
+          name: '',
+          date_of_birth: ''
+        }
+      ],
       address: {
-        cep: '',
         street: '',
         number: '',
         neighborhood: '',
@@ -206,14 +187,11 @@ export default {
         city: '',
         state: ''
       },
-      cars: [
-        {
-          model: '',
-          color: '',
-          year: '',
-          license_plate: ''
-        }
-      ]
+      hiring: {
+        contract_date: '',
+        current_position: '',
+        current_wage: 0
+      }
     }
   }),
 

@@ -32,6 +32,6 @@
   {
     "icon": "far fa-address-card",
     "title": "Cadastro de Funcionários",
-    "path": "collaborators"
+    "path": "employees"
   }
 ]

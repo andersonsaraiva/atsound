@@ -4,41 +4,185 @@
     "email": "email@email.com",
     "phone": "(11) 97026-7700",
     "cpf": "874.836.300-60",
-    "cars": ["BMW", "Porsche"]
+    "gender": "Feminino",
+    "date_of_birth": "28-05-1993",
+    "address": {
+      "cep": "03261090",
+      "street": "Fernão Lopes de Camargo",
+      "number": "280",
+      "neighborhood": "Pq São Lucas",
+      "complement": "",
+      "city": "São Paulo",
+      "state": "SP"
+    },
+    "cars": [
+      {
+        "model": "Porsche",
+        "color": "Branca",
+        "year": "2020",
+        "license_plate": "EFZ-9584"
+      },
+      {
+        "model": "BMW",
+        "color": "Preta",
+        "year": "2018",
+        "license_plate": "EDS-8845"
+      }
+    ]
   },
   {
     "name": "Robert A. McClain",
     "email": "email@email.com",
     "phone": "(11) 97026-7711",
     "cpf": "548.940.140-09",
-    "cars": ["BMW", "Porsche"]
+    "gender": "Feminino",
+    "date_of_birth": "28-05-1993",
+    "address": {
+      "cep": "03261090",
+      "street": "Fernão Lopes de Camargo",
+      "number": "280",
+      "neighborhood": "Pq São Lucas",
+      "complement": "",
+      "city": "São Paulo",
+      "state": "SP"
+    },
+    "cars": [
+      {
+        "model": "Porsche",
+        "color": "Branca",
+        "year": "2020",
+        "license_plate": "EFZ-9584"
+      },
+      {
+        "model": "BMW",
+        "color": "Preta",
+        "year": "2018",
+        "license_plate": "EDS-8845"
+      }
+    ]
   },
   {
     "name": "William J. Dennis",
     "email": "email@email.com",
     "phone": "(11) 97026-7722",
     "cpf": "662.668.070-68",
-    "cars": ["BMW", "Porsche"]
+    "gender": "Feminino",
+    "date_of_birth": "28-05-1993",
+    "address": {
+      "cep": "03261090",
+      "street": "Fernão Lopes de Camargo",
+      "number": "280",
+      "neighborhood": "Pq São Lucas",
+      "complement": "",
+      "city": "São Paulo",
+      "state": "SP"
+    },
+    "cars": [
+      {
+        "model": "Porsche",
+        "color": "Branca",
+        "year": "2020",
+        "license_plate": "EFZ-9584"
+      },
+      {
+        "model": "BMW",
+        "color": "Preta",
+        "year": "2018",
+        "license_plate": "EDS-8845"
+      }
+    ]
   },
   {
     "name": "Michael E. Box",
     "email": "email@email.com",
     "phone": "(11) 97026-7733",
     "cpf": "618.610.880-51",
-    "cars": ["BMW", "Porsche"]
+    "gender": "Feminino",
+    "date_of_birth": "28-05-1993",
+    "address": {
+      "cep": "03261090",
+      "street": "Fernão Lopes de Camargo",
+      "number": "280",
+      "neighborhood": "Pq São Lucas",
+      "complement": "",
+      "city": "São Paulo",
+      "state": "SP"
+    },
+    "cars": [
+      {
+        "model": "Porsche",
+        "color": "Branca",
+        "year": "2020",
+        "license_plate": "EFZ-9584"
+      },
+      {
+        "model": "BMW",
+        "color": "Preta",
+        "year": "2018",
+        "license_plate": "EDS-8845"
+      }
+    ]
   },
   {
     "name": "Sydney R. Mendez",
     "email": "email@email.com",
     "phone": "(11) 97026-7744",
     "cpf": "070.883.740-99",
-    "cars": ["BMW", "Porsche"]
+    "gender": "Feminino",
+    "date_of_birth": "28-05-1993",
+    "address": {
+      "cep": "03261090",
+      "street": "Fernão Lopes de Camargo",
+      "number": "280",
+      "neighborhood": "Pq São Lucas",
+      "complement": "",
+      "city": "São Paulo",
+      "state": "SP"
+    },
+    "cars": [
+      {
+        "model": "Porsche",
+        "color": "Branca",
+        "year": "2020",
+        "license_plate": "EFZ-9584"
+      },
+      {
+        "model": "BMW",
+        "color": "Preta",
+        "year": "2018",
+        "license_plate": "EDS-8845"
+      }
+    ]
   },
   {
     "name": "Annette R. Frias",
     "email": "email@email.com",
     "phone": "(11) 97026-7755",
     "cpf": "020.719.090-97",
-    "cars": ["BMW", "Porsche"]
+    "gender": "Feminino",
+    "date_of_birth": "28-05-1993",
+    "address": {
+      "cep": "03261090",
+      "street": "Fernão Lopes de Camargo",
+      "number": "280",
+      "neighborhood": "Pq São Lucas",
+      "complement": "",
+      "city": "São Paulo",
+      "state": "SP"
+    },
+    "cars": [
+      {
+        "model": "Porsche",
+        "color": "Branca",
+        "year": "2020",
+        "license_plate": "EFZ-9584"
+      },
+      {
+        "model": "BMW",
+        "color": "Preta",
+        "year": "2018",
+        "license_plate": "EDS-8845"
+      }
+    ]
   }
 ]

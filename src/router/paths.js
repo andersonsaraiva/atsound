@@ -88,12 +88,12 @@ export default [
     component: () => import('@/views/Customer.vue')
   },
   {
-    path: '/collaborators',
+    path: '/employees',
     meta: {
       public: false,
       title: 'Cadastro de Funcionários'
     },
-    name: 'collaborators',
-    component: () => import('@/views/Collaborators.vue')
+    name: 'employees',
+    component: () => import('@/views/Employees.vue')
   }
 ];

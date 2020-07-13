@@ -22,14 +22,14 @@ export const showMessage = (type, message, timer = 1500) => {
     });
   }
 
-  throw new Error("Obrigatório passar como parâmetro uma mensagem!");
-}
+  throw new Error('Obrigatório passar como parâmetro uma mensagem!');
+};
 
 export const confirmMessage = async (title, text, item, handler_name) => {
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
-      confirmButton: `v-btn v-btn--contained v-btn--rounded theme--dark v-size--default`,
-      cancelButton: `v-btn v-btn--contained v-btn--rounded theme--dark v-size--default`
+      cancelButton: `v-btn v-btn--contained v-btn--rounded theme--dark v-size--default`,
+      confirmButton: `v-btn v-btn--contained v-btn--rounded theme--dark v-size--default`
     },
     buttonsStyling: false
   });
@@ -47,4 +47,4 @@ export const confirmMessage = async (title, text, item, handler_name) => {
   if (result.value) {
     eventBus.$emit(HANDLERS[handler_name], item);
   }
-}
+};
