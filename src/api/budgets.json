@@ -1,9 +1,11 @@
 [
   {
     "id": 1,
+    "name": "Patrice S. Long",
     "cpf": "874.836.300-60",
     "phone": "(11) 97026-7700",
-    "email": "email@email.com",
+    "email": "patrice@email.com",
+    "budgetDate": "2020-07-12",
     "services": [
       {
         "id": 1,
@@ -19,6 +21,36 @@
         "id": 3,
         "description": "Mascara Negra",
         "price": 20
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Robert A. McClain",
+    "cpf": "548.940.140-09",
+    "phone": "(11) 97026-7711",
+    "email": "robert@email.com",
+    "budgetDate": "2020-06-29",
+    "services": [
+      {
+        "id": 4,
+        "description": "Insulfilm",
+        "price": 180
+      },
+      {
+        "id": 5,
+        "description": "Caixa Trio",
+        "price": 200
+      },
+      {
+        "id": 6,
+        "description": "Corneta",
+        "price": 75
+      },
+      {
+        "id": 7,
+        "description": "Alarme",
+        "price": 75
       }
     ]
   }

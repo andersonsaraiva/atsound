@@ -31,7 +31,7 @@
               </div>
             </v-form>
           </div>
-          <footer class="form-login--footer">© {{ currentYear }} Copyright Atsound</footer>
+          <footer class="form-login--footer">© {{ currentYear }} todos direitos reservados</footer>
         </div>
         <div class="bg-login"></div>
       </div>

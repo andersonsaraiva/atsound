@@ -55,7 +55,16 @@
                 <v-text-field v-model="editedItem.email" label="Email" type="text" dense outlined required :rules="[required, email]" />
               </v-col>
               <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.phone" label="Telefone" type="text" dense outlined required :rules="[required]" />
+                <v-text-field
+                  v-model="editedItem.phone"
+                  label="Telefone"
+                  type="text"
+                  dense
+                  outlined
+                  required
+                  :rules="[required]"
+                  v-mask="['(##) ####-####', '(##) #####-####']"
+                />
               </v-col>
               <v-col cols="12" sm="6" md="6" class="py-0">
                 <v-text-field v-model="editedItem.url" label="Site" type="text" dense outlined />
