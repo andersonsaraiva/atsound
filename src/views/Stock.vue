@@ -61,13 +61,29 @@
           <v-container fluid>
             <v-row class="px-1">
               <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.name" label="Nome" type="text" dense outlined required :rules="[required]" />
+                <v-text-field
+                  v-model="editedItem.name"
+                  label="Nome"
+                  type="text"
+                  dense
+                  outlined
+                  required
+                  :rules="[required]"
+                />
               </v-col>
               <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.brand" label="Marca" type="text" dense outlined required :rules="[required]" />
+                <v-text-field
+                  v-model="editedItem.brand"
+                  label="Marca"
+                  type="text"
+                  dense
+                  outlined
+                  required
+                  :rules="[required]"
+                />
               </v-col>
               <v-col cols="12" sm="12" md="12" class="py-0">
-                <v-textarea v-model="editedItem.description" label="Descrição do Produto" dense outlined rows="3"></v-textarea>
+                <v-textarea v-model="editedItem.description" label="Descrição do Produto" dense outlined rows="3" />
               </v-col>
               <v-col cols="12" sm="2" md="2" class="py-0">
                 <v-text-field

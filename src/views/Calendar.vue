@@ -2,7 +2,7 @@
   <v-container>
     <appBreadcrumbs />
 
-    <v-row class="fill-height ">
+    <v-row class="fill-height">
       <v-col>
         <v-sheet class="d-flex align-center mb-4">
           <v-btn outlined class="mr-4" color="grey darken-2" @click="setToday">
@@ -44,6 +44,8 @@
               </v-list-item>
             </v-list>
           </v-menu>
+
+          <v-btn color="primary" @click="handleSave" class="ml-2">Cadastrar</v-btn>
         </v-sheet>
 
         <v-sheet height="600">
@@ -61,19 +63,13 @@
           ></v-calendar>
 
           <v-menu v-model="selectedOpen" :close-on-content-click="false" :activator="selectedElement" offset-x>
-            <v-card color="grey lighten-4" min-width="350px" flat>
-              <v-toolbar :color="selectedEvent.color" dense dark>
-                <v-btn icon>
-                  <v-icon small>mdi-pencil</v-icon>
-                </v-btn>
+            <v-card min-width="350px" flat>
+              <v-toolbar :color="selectedEvent.color" dense>
+                <v-icon small class="mr-2" @click="handleEdit(selectedEvent)">mdi-pencil</v-icon>
                 <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
                 <v-spacer></v-spacer>
-                <v-btn icon>
-                  <v-icon small>mdi-heart</v-icon>
-                </v-btn>
-                <v-btn icon>
-                  <v-icon small>mdi-dots-vertical</v-icon>
-                </v-btn>
+                <v-icon small class="mr-2" @click>mdi-heart</v-icon>
+                <v-icon small @click>mdi-dots-vertical</v-icon>
               </v-toolbar>
 
               <v-card-text>
@@ -93,16 +89,140 @@
         </v-sheet>
       </v-col>
     </v-row>
+
+    <v-dialog v-model="dialog">
+      <v-card>
+        <v-card-title class="pa-3">
+          <span class="headline">{{ formTitle }}</span>
+          <v-spacer></v-spacer>
+          <v-icon @click="close">close</v-icon>
+        </v-card-title>
+
+        <v-divider horizontal></v-divider>
+
+        <v-form ref="form" lazy-validation>
+          <v-container fluid>
+            <v-row class="px-1">
+              <v-col cols="12" sm="6" md="6" class="py-0">
+                <v-text-field
+                  v-model="scheduleItem.name"
+                  label="Nome"
+                  type="text"
+                  required
+                  :rules="[required]"
+                  outlined
+                  dense
+                />
+              </v-col>
+
+              <v-col cols="12" sm="6" md="6" class="py-0">
+                <v-text-field
+                  v-model="scheduleItem.color"
+                  label="Color"
+                  type="text"
+                  :rules="[required]"
+                  outlined
+                  dense
+                />
+              </v-col>
+
+              <v-col cols="12" sm="6" md="6" class="py-0">
+                <v-menu
+                  ref="startMenu"
+                  v-model="startMenu"
+                  :close-on-content-click="false"
+                  :return-value.sync="scheduleItem.start"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="scheduleItem.start"
+                      label="Data de inicio"
+                      prepend-inner-icon="event"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                      dense
+                      outlined
+                    />
+                  </template>
+
+                  <v-date-picker v-model="scheduleItem.start" no-title scrollable>
+                    <v-spacer></v-spacer>
+                    <v-btn small color="primary" @click="startMenu = false">Cancel</v-btn>
+                    <v-btn small color="primary" @click="$refs.startMenu.save(scheduleItem.start)">OK</v-btn>
+                  </v-date-picker>
+                </v-menu>
+              </v-col>
+
+              <v-col cols="12" sm="6" md="6" class="py-0">
+                <v-menu
+                  ref="endMenu"
+                  v-model="endMenu"
+                  :close-on-content-click="false"
+                  :return-value.sync="scheduleItem.end"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="scheduleItem.end"
+                      label="Data final"
+                      prepend-inner-icon="event"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                      outlined
+                      dense
+                    />
+                  </template>
+
+                  <v-date-picker v-model="scheduleItem.end" no-title scrollable>
+                    <v-spacer></v-spacer>
+                    <v-btn small color="primary" @click="endMenu = false">Cancel</v-btn>
+                    <v-btn small color="primary" @click="$refs.endMenu.save(scheduleItem.end)">OK</v-btn>
+                  </v-date-picker>
+                </v-menu>
+              </v-col>
+
+              <v-col cols="12" class="py-0">
+                <v-textarea
+                  v-model="scheduleItem.description"
+                  label="Descrição"
+                  dense
+                  outlined
+                  rows="3"
+                  required
+                  :rules="[required]"
+                />
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+
+        <v-card-actions class="pa-3">
+          <v-spacer></v-spacer>
+          <v-btn color="primary" @click="save" small>Salvar</v-btn>
+          <v-btn @click="close" small>Cancelar</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
 <script>
+import { required } from '@/helpers/validations';
+
 export default {
   components: {
     appBreadcrumbs: () => import('@/components/breadcrumbs/app-breadcrumbs')
   },
 
   data: () => ({
+    required,
     focus: '',
     type: 'month',
     typeToLabel: {
@@ -114,16 +234,34 @@ export default {
     selectedEvent: {},
     selectedElement: null,
     selectedOpen: false,
+    dialog: false,
+    startMenu: false,
+    endMenu: false,
+    editedIndex: -1,
+    scheduleItem: {
+      name: '',
+      start: '',
+      end: '',
+      description: '',
+      color: '',
+      timed: true
+    },
     events: [
       {
+        id: Math.random()
+          .toString(36)
+          .substr(2, 9),
         name: 'Troca de rodas',
         start: new Date('2020-07-09T13:00:00.000Z'),
         end: new Date('2020-07-09T14:45:00.000Z'),
-        description: 'Trocar rodas da Tracket por aro 20", cliente XXXX',
+        description: 'Trocar rodas aro 20", cliente XXXX',
         color: 'blue',
         timed: true
       },
       {
+        id: Math.random()
+          .toString(36)
+          .substr(2, 9),
         name: 'Instalação de som',
         start: new Date('2020-07-17T14:00:00.000Z'),
         end: new Date('2020-07-17T16:45:00.000Z'),
@@ -138,6 +276,12 @@ export default {
     this.$refs.calendar.checkChange();
   },
 
+  computed: {
+    formTitle() {
+      return this.editedIndex === -1 ? 'Cadastro' : 'Edição';
+    }
+  },
+
   methods: {
     viewDay({ date }) {
       this.focus = date;
@@ -149,6 +293,7 @@ export default {
     },
 
     setToday() {
+      this.type = 'day';
       this.focus = '';
     },
 
@@ -158,6 +303,68 @@ export default {
 
     next() {
       this.$refs.calendar.next();
+    },
+
+    save() {
+      this.scheduleItem.start = new Date(`${this.scheduleItem.start}T11:00:00.000Z`);
+      this.scheduleItem.end = new Date(`${this.scheduleItem.end}T11:00:00.000Z`);
+
+      if (this.editedIndex === -1) {
+        this.events.push(this.scheduleItem);
+      } else {
+        const events = this.events.filter(item => item.id !== this.editedIndex);
+
+        this.events = [...events, this.scheduleItem];
+      }
+
+      this.scheduleItem = {
+        id: Math.random()
+          .toString(36)
+          .substr(2, 9),
+        name: '',
+        start: '',
+        end: '',
+        description: '',
+        color: '',
+        timed: true
+      };
+
+      this.dialog = false;
+    },
+
+    handleSave() {
+      this.editedIndex = -1;
+
+      this.scheduleItem = {
+        id: Math.random()
+          .toString(36)
+          .substr(2, 9),
+        name: '',
+        start: '',
+        end: '',
+        description: '',
+        color: '',
+        timed: true
+      };
+
+      this.dialog = true;
+    },
+
+    handleEdit(selectedEvent) {
+      this.editedIndex = selectedEvent.id;
+
+      const test = JSON.parse(JSON.stringify(selectedEvent));
+
+      test.start = '2020-07-17';
+      test.end = '2020-07-17';
+
+      this.scheduleItem = test;
+
+      this.dialog = true;
+    },
+
+    close() {
+      this.dialog = false;
     },
 
     showEvent({ nativeEvent, event }) {
@@ -205,11 +412,11 @@ export default {
       // }
       //
       // this.events = events;
-    },
-
-    rnd(a, b) {
-      return Math.floor((b - a + 1) * Math.random()) + a;
     }
+
+    // rnd(a, b) {
+    //   return Math.floor((b - a + 1) * Math.random()) + a;
+    // }
   }
 };
 </script>

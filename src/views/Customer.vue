@@ -14,7 +14,7 @@
               hide-details
               outlined
               dense
-            ></v-text-field>
+            />
           </v-col>
 
           <v-col lg="2" md="2" sm="4">
@@ -50,19 +50,51 @@
           <v-container fluid>
             <v-row class="px-1">
               <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.name" label="Nome" type="text" required :rules="[required]" />
+                <v-text-field
+                  v-model="editedItem.name"
+                  label="Nome"
+                  type="text"
+                  required
+                  :rules="[required]"
+                  outlined
+                  dense
+                />
               </v-col>
 
               <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.email" label="Email" type="text" required :rules="[required]" />
+                <v-text-field
+                  v-model="editedItem.email"
+                  label="Email"
+                  type="text"
+                  required
+                  :rules="[required]"
+                  outlined
+                  dense
+                />
               </v-col>
 
               <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.phone" label="Telefone" type="text" required :rules="[required]" />
+                <v-text-field
+                  v-model="editedItem.phone"
+                  label="Telefone"
+                  type="text"
+                  required
+                  :rules="[required]"
+                  outlined
+                  dense
+                />
               </v-col>
 
               <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.cpf" label="CPF" required type="text" :rules="[required]" />
+                <v-text-field
+                  v-model="editedItem.cpf"
+                  label="CPF"
+                  required
+                  type="text"
+                  :rules="[required]"
+                  outlined
+                  dense
+                />
               </v-col>
 
               <v-col cols="12" sm="6" md="6" class="py-0">
@@ -79,47 +111,97 @@
                     <v-text-field
                       v-model="editedItem.date_of_birth"
                       label="Data de nascimento"
-                      prepend-icon="event"
+                      prepend-inner-icon="event"
                       readonly
                       v-bind="attrs"
                       v-on="on"
+                      outlined
+                      dense
                     />
                   </template>
 
                   <v-date-picker v-model="editedItem.date_of_birth" no-title scrollable>
                     <v-spacer></v-spacer>
-                    <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-                    <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+                    <v-btn small color="primary" @click="menu = false">Cancel</v-btn>
+                    <v-btn small color="primary" @click="$refs.menu.save(date)">OK</v-btn>
                   </v-date-picker>
                 </v-menu>
               </v-col>
 
               <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.address.cep" label="CEP" required type="text" :rules="[required]" />
+                <v-text-field
+                  v-model="editedItem.address.cep"
+                  label="CEP"
+                  required
+                  type="text"
+                  :rules="[required]"
+                  outlined
+                  dense
+                />
               </v-col>
 
               <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.address.street" label="Rua" required type="text" :rules="[required]" />
+                <v-text-field
+                  v-model="editedItem.address.street"
+                  label="Rua"
+                  required
+                  type="text"
+                  :rules="[required]"
+                  outlined
+                  dense
+                />
               </v-col>
 
               <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.address.number" label="Número" required type="text" :rules="[required]" />
+                <v-text-field
+                  v-model="editedItem.address.number"
+                  label="Número"
+                  required
+                  type="text"
+                  :rules="[required]"
+                  outlined
+                  dense
+                />
               </v-col>
 
               <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.address.complement" label="Complemento" type="text" />
+                <v-text-field v-model="editedItem.address.complement" label="Complemento" type="text" outlined dense />
               </v-col>
 
               <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.address.neighborhood" label="Bairro" required type="text" :rules="[required]" />
+                <v-text-field
+                  v-model="editedItem.address.neighborhood"
+                  label="Bairro"
+                  required
+                  type="text"
+                  :rules="[required]"
+                  outlined
+                  dense
+                />
               </v-col>
 
               <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.address.city" label="Cidade" required type="text" :rules="[required]" />
+                <v-text-field
+                  v-model="editedItem.address.city"
+                  label="Cidade"
+                  required
+                  type="text"
+                  :rules="[required]"
+                  outlined
+                  dense
+                />
               </v-col>
 
               <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.address.state" label="Estado" required type="text" :rules="[required]" />
+                <v-text-field
+                  v-model="editedItem.address.state"
+                  label="Estado"
+                  required
+                  type="text"
+                  :rules="[required]"
+                  outlined
+                  dense
+                />
               </v-col>
             </v-row>
           </v-container>
@@ -160,7 +242,6 @@ export default {
       { text: 'Nome', value: 'name' },
       { text: 'Email', value: 'email' },
       { text: 'Telefone', value: 'phone' },
-      { text: 'CPF', value: 'cpf' },
       { text: '', value: 'actions', sortable: false, align: 'right' }
     ],
     items: [],

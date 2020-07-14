@@ -2,9 +2,9 @@
   {
     "name": "John Doe",
     "date_of_birth": "28/05/1993",
-    "gender": "M",
+    "gender": "Masculino",
     "nationality": "pt-BR",
-    "marital_status": "solteiro",
+    "marital_status": "Casado",
     "schooling": "Ensino Médio Completo",
     "email": "email@email.com",
     "phone": "(11) 97026-7700",
@@ -31,6 +31,7 @@
       }
     ],
     "address": {
+      "cep": "03261090",
       "street": "Fernão Lopes de Camargo",
       "number": "280",
       "neighborhood": "Pq São Lucas",
@@ -47,9 +48,9 @@
   {
     "name": "John Doe 2",
     "date_of_birth": "28/05/1993",
-    "gender": "M",
+    "gender": "Masculino",
     "nationality": "pt-BR",
-    "marital_status": "solteiro",
+    "marital_status": "Solteiro",
     "schooling": "Ensino Médio Completo",
     "email": "email@email.com",
     "phone": "(11) 97026-7700",
@@ -76,6 +77,7 @@
       }
     ],
     "address": {
+      "cep": "03261090",
       "street": "Fernão Lopes de Camargo",
       "number": "280",
       "neighborhood": "Pq São Lucas",
