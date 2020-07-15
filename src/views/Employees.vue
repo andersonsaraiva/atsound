@@ -61,7 +61,31 @@
                 />
               </v-col>
 
-              <v-col cols="12" sm="6" md="6" class="py-0">
+              <v-col cols="12" sm="3" md="3" class="py-0">
+                <v-text-field
+                  v-model="editedItem.email"
+                  label="Email"
+                  type="text"
+                  required
+                  :rules="[required]"
+                  outlined
+                  dense
+                />
+              </v-col>
+
+              <v-col cols="12" sm="3" md="3" class="py-0">
+                <v-text-field
+                  v-model="editedItem.phone"
+                  label="Telefone"
+                  type="text"
+                  required
+                  :rules="[required]"
+                  outlined
+                  dense
+                />
+              </v-col>
+
+              <v-col cols="12" sm="3" md="3" class="py-0">
                 <v-menu
                   ref="menu"
                   v-model="menu"
@@ -92,7 +116,7 @@
                 </v-menu>
               </v-col>
 
-              <v-col cols="12" sm="6" md="6" class="py-0">
+              <v-col cols="12" sm="3" md="3" class="py-0">
                 <v-select
                   v-model="editedItem.gender"
                   :items="['Masculino', 'Feminino']"
@@ -102,7 +126,17 @@
                 ></v-select>
               </v-col>
 
-              <v-col cols="12" sm="6" md="6" class="py-0">
+              <v-col cols="12" sm="3" md="3" class="py-0">
+                <v-select
+                  v-model="editedItem.marital_status"
+                  :items="['Solteiro', 'Casado', 'Divorciado']"
+                  label="Estado Civil"
+                  outlined
+                  dense
+                ></v-select>
+              </v-col>
+
+              <v-col cols="12" sm="3" md="3" class="py-0">
                 <v-text-field
                   v-model="editedItem.nationality"
                   label="Nacionalidade"
@@ -114,17 +148,7 @@
                 />
               </v-col>
 
-              <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-select
-                  v-model="editedItem.marital_status"
-                  :items="['Solteiro', 'Casado', 'Divorciado']"
-                  label="Estado Civil"
-                  outlined
-                  dense
-                ></v-select>
-              </v-col>
-
-              <v-col cols="12" sm="6" md="6" class="py-0">
+              <v-col cols="12" sm="3" md="3" class="py-0">
                 <v-text-field
                   v-model="editedItem.schooling"
                   label="Escolaridade"
@@ -136,31 +160,7 @@
                 />
               </v-col>
 
-              <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field
-                  v-model="editedItem.email"
-                  label="Email"
-                  type="text"
-                  required
-                  :rules="[required]"
-                  outlined
-                  dense
-                />
-              </v-col>
-
-              <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field
-                  v-model="editedItem.phone"
-                  label="Telefone"
-                  type="text"
-                  required
-                  :rules="[required]"
-                  outlined
-                  dense
-                />
-              </v-col>
-
-              <v-col cols="12" sm="6" md="6" class="py-0">
+              <v-col cols="12" sm="3" md="3" class="py-0">
                 <v-text-field
                   v-model="editedItem.documents.cpf"
                   label="CPF"
@@ -172,7 +172,7 @@
                 />
               </v-col>
 
-              <v-col cols="12" sm="6" md="6" class="py-0">
+              <v-col cols="12" sm="3" md="3" class="py-0">
                 <v-text-field
                   v-model="editedItem.documents.rg"
                   label="RG"
@@ -184,7 +184,7 @@
                 />
               </v-col>
 
-              <v-col cols="12" sm="6" md="6" class="py-0">
+              <v-col cols="12" sm="3" md="3" class="py-0">
                 <v-text-field
                   v-model="editedItem.documents.cnh"
                   label="CNH"
@@ -196,7 +196,11 @@
                 />
               </v-col>
 
-              <v-col cols="12" sm="6" md="6" class="py-0">
+              <v-col cols="12" class="pt-0">
+                <h3 class="subtitle-1">Endereço</h3>
+              </v-col>
+
+              <v-col cols="12" sm="3" md="3" class="py-0">
                 <v-text-field
                   v-model="editedItem.address.cep"
                   label="CEP"
@@ -220,7 +224,7 @@
                 />
               </v-col>
 
-              <v-col cols="12" sm="6" md="6" class="py-0">
+              <v-col cols="12" sm="3" md="3" class="py-0">
                 <v-text-field
                   v-model="editedItem.address.number"
                   label="Número"
@@ -232,11 +236,11 @@
                 />
               </v-col>
 
-              <v-col cols="12" sm="6" md="6" class="py-0">
+              <v-col cols="12" sm="3" md="3" class="py-0">
                 <v-text-field v-model="editedItem.address.complement" label="Complemento" type="text" outlined dense />
               </v-col>
 
-              <v-col cols="12" sm="6" md="6" class="py-0">
+              <v-col cols="12" sm="3" md="3" class="py-0">
                 <v-text-field
                   v-model="editedItem.address.neighborhood"
                   label="Bairro"
@@ -248,7 +252,7 @@
                 />
               </v-col>
 
-              <v-col cols="12" sm="6" md="6" class="py-0">
+              <v-col cols="12" sm="3" md="3" class="py-0">
                 <v-text-field
                   v-model="editedItem.address.city"
                   label="Cidade"
@@ -260,7 +264,7 @@
                 />
               </v-col>
 
-              <v-col cols="12" sm="6" md="6" class="py-0">
+              <v-col cols="12" sm="3" md="3" class="py-0">
                 <v-text-field
                   v-model="editedItem.address.state"
                   label="Estado"
@@ -275,7 +279,7 @@
           </v-container>
         </v-form>
 
-        <v-card-actions class="pa-3">
+        <v-card-actions class="pa-3 pt-0">
           <v-spacer></v-spacer>
           <v-btn color="primary" @click="save" small>Salvar</v-btn>
           <v-btn @click="close" small>Cancelar</v-btn>
@@ -335,16 +339,6 @@ export default {
         cnh_emitting_organ: '',
         cnh_state: ''
       },
-      dependents: [
-        {
-          name: '',
-          date_of_birth: ''
-        },
-        {
-          name: '',
-          date_of_birth: ''
-        }
-      ],
       address: {
         street: '',
         number: '',
@@ -380,16 +374,6 @@ export default {
         cnh_emitting_organ: '',
         cnh_state: ''
       },
-      dependents: [
-        {
-          name: '',
-          date_of_birth: ''
-        },
-        {
-          name: '',
-          date_of_birth: ''
-        }
-      ],
       address: {
         street: '',
         number: '',

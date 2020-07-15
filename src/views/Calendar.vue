@@ -117,6 +117,18 @@
 
               <v-col cols="12" sm="6" md="6" class="py-0">
                 <v-text-field
+                  v-model="scheduleItem.name"
+                  label="Time"
+                  type="time"
+                  required
+                  :rules="[required]"
+                  outlined
+                  dense
+                />
+              </v-col>
+
+              <v-col cols="12" sm="6" md="6" class="py-0">
+                <v-text-field
                   v-model="scheduleItem.color"
                   label="Color"
                   type="text"
@@ -254,8 +266,8 @@ export default {
         name: 'Troca de rodas',
         start: new Date('2020-07-09T13:00:00.000Z'),
         end: new Date('2020-07-09T14:45:00.000Z'),
-        description: 'Trocar rodas aro 20", cliente XXXX',
         color: 'blue',
+        description: 'Trocar rodas aro 20", cliente XXXX',
         timed: true
       },
       {
@@ -265,8 +277,8 @@ export default {
         name: 'Instalação de som',
         start: new Date('2020-07-17T14:00:00.000Z'),
         end: new Date('2020-07-17T16:45:00.000Z'),
-        description: 'Instalar aparelho de som do cliente XXXX',
         color: 'indigo',
+        description: 'Instalar aparelho de som do cliente XXXX',
         timed: true
       }
     ]
@@ -307,7 +319,7 @@ export default {
 
     save() {
       this.scheduleItem.start = new Date(`${this.scheduleItem.start}T11:00:00.000Z`);
-      this.scheduleItem.end = new Date(`${this.scheduleItem.end}T11:00:00.000Z`);
+      this.scheduleItem.end = new Date(`${this.scheduleItem.end}T12:00:00.000Z`);
 
       if (this.editedIndex === -1) {
         this.events.push(this.scheduleItem);
