@@ -221,6 +221,88 @@
           </v-container>
         </v-form>
 
+        <v-form ref="formCars" lazy-validation v-model="formCars">
+          <v-container fluid>
+            <v-row>
+              <v-col>
+                <v-expansion-panels focusable v-model="showCollapse" class="column-group">
+                  <v-expansion-panel>
+                    <v-expansion-panel-header>Serviços</v-expansion-panel-header>
+                    <v-expansion-panel-content>
+                      <v-row>
+                        <v-col cols="12" sm="3" md="3" class="py-0">
+                          <v-text-field
+                            v-model="car.model"
+                            label="Modelo"
+                            type="text"
+                            dense
+                            outlined
+                            required
+                            :rules="[required]"
+                          />
+                        </v-col>
+
+                        <v-col cols="12" sm="3" md="3" class="py-0">
+                          <v-text-field
+                            v-model="car.color"
+                            label="Cor"
+                            type="text"
+                            dense
+                            outlined
+                            required
+                            :rules="[required]"
+                          />
+                        </v-col>
+
+                        <v-col cols="12" sm="3" md="3" class="py-0">
+                          <v-text-field
+                            v-model="car.year"
+                            label="Ano"
+                            type="text"
+                            dense
+                            outlined
+                            required
+                            :rules="[required]"
+                          />
+                        </v-col>
+
+                        <v-col cols="12" sm="3" md="3" class="py-0">
+                          <v-btn color="primary" @click="addCar" :disabled="!formCars">
+                            <v-icon left>add</v-icon>
+                            Adicionar
+                          </v-btn>
+                        </v-col>
+                      </v-row>
+
+                      <v-row>
+                        <v-col>
+                          <v-data-table
+                            :headers="carsHeaders"
+                            :items="editedItem.cars"
+                            hide-default-footer
+                            dense
+                            class="elevation-1"
+                          >
+                            <template v-slot:item.actions="{ item }">
+                              <v-icon small class="mr-2" @click="editCar(item)" color="green">
+                                mdi-pencil
+                              </v-icon>
+
+                              <v-icon small @click="deleteCar(item)" color="red">
+                                mdi-delete
+                              </v-icon>
+                            </template>
+                          </v-data-table>
+                        </v-col>
+                      </v-row>
+                    </v-expansion-panel-content>
+                  </v-expansion-panel>
+                </v-expansion-panels>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+
         <v-card-actions class="pa-3 pt-0">
           <v-spacer></v-spacer>
           <v-btn color="primary" @click="save" small>Salvar</v-btn>
@@ -249,6 +331,8 @@ export default {
   data: () => ({
     search: '',
     required,
+    formCars: true,
+    showCollapse: 0,
     dialog: false,
     menu: false,
     date: new Date().toISOString().substr(0, 10),
@@ -258,7 +342,20 @@ export default {
       { text: 'Telefone', value: 'phone' },
       { text: '', value: 'actions', sortable: false, align: 'right' }
     ],
+    carsHeaders: [
+      { text: 'Modelo', value: 'model' },
+      { text: 'Cor', value: 'color' },
+      { text: 'Ano', value: 'year' },
+      { text: '', value: 'actions', sortable: false, align: 'right' }
+    ],
     items: [],
+    car: {
+      model: '',
+      color: '',
+      year: '',
+      license_plate: ''
+    },
+    editedCar: -1,
     editedIndex: -1,
     editedItem: {
       name: '',
@@ -368,7 +465,26 @@ export default {
       }
 
       this.close();
-    }
+    },
+
+    addCar() {
+      if (!this.$refs.formCars.validate(true)) return;
+
+      if (this.editedCar > -1) {
+        Object.assign(this.editedItem.cars[this.editedCar], this.car);
+      } else {
+        this.editedItem.cars.push(JSON.parse(JSON.stringify(this.car)));
+      }
+
+      this.$refs.formCars.reset();
+    },
+
+    editCar(item) {
+      this.editedCar = this.editedItem.cars.indexOf(item);
+      this.car = Object.assign({}, item);
+    },
+
+    deleteCar(item) {}
   }
 };
 </script>
