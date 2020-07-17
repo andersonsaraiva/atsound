@@ -116,26 +116,14 @@
               </v-col>
 
               <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field
-                  v-model="scheduleItem.name"
-                  label="Time"
-                  type="time"
-                  required
-                  :rules="[required]"
-                  outlined
-                  dense
-                />
-              </v-col>
-
-              <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field
+                <v-select
                   v-model="scheduleItem.color"
+                  :items="['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1']"
                   label="Color"
-                  type="text"
-                  :rules="[required]"
                   outlined
                   dense
-                />
+                  :rules="[required]"
+                ></v-select>
               </v-col>
 
               <v-col cols="12" sm="6" md="6" class="py-0">
@@ -170,6 +158,18 @@
               </v-col>
 
               <v-col cols="12" sm="6" md="6" class="py-0">
+                <v-text-field
+                  v-model="scheduleItem.startTime"
+                  label="Horário de início"
+                  type="time"
+                  required
+                  :rules="[required]"
+                  outlined
+                  dense
+                />
+              </v-col>
+
+              <v-col cols="12" sm="6" md="6" class="py-0">
                 <v-menu
                   ref="endMenu"
                   v-model="endMenu"
@@ -198,6 +198,18 @@
                     <v-btn small color="primary" @click="$refs.endMenu.save(scheduleItem.end)">OK</v-btn>
                   </v-date-picker>
                 </v-menu>
+              </v-col>
+
+              <v-col cols="12" sm="6" md="6" class="py-0">
+                <v-text-field
+                  v-model="scheduleItem.endTime"
+                  label="Horário final"
+                  type="time"
+                  required
+                  :rules="[required]"
+                  outlined
+                  dense
+                />
               </v-col>
 
               <v-col cols="12" class="py-0">
@@ -254,6 +266,8 @@ export default {
       name: '',
       start: '',
       end: '',
+      startTime: '',
+      endTime: '',
       description: '',
       color: '',
       timed: true
@@ -264,8 +278,8 @@ export default {
           .toString(36)
           .substr(2, 9),
         name: 'Troca de rodas',
-        start: new Date('2020-07-09T13:00:00.000Z'),
-        end: new Date('2020-07-09T14:45:00.000Z'),
+        start: new Date('2020-07-23T13:00:00.000Z'),
+        end: new Date('2020-07-23T14:45:00.000Z'),
         color: 'blue',
         description: 'Trocar rodas aro 20", cliente XXXX',
         timed: true
@@ -275,10 +289,21 @@ export default {
           .toString(36)
           .substr(2, 9),
         name: 'Instalação de som',
-        start: new Date('2020-07-17T14:00:00.000Z'),
-        end: new Date('2020-07-17T16:45:00.000Z'),
-        color: 'indigo',
+        start: new Date('2020-07-30T14:00:00.000Z'),
+        end: new Date('2020-07-30T16:45:00.000Z'),
+        color: 'green',
         description: 'Instalar aparelho de som do cliente XXXX',
+        timed: true
+      },
+      {
+        id: Math.random()
+          .toString(36)
+          .substr(2, 9),
+        name: 'Instalação de multimidia',
+        start: new Date('2020-07-27T13:00:00.000Z'),
+        end: new Date('2020-07-27T18:45:00.000Z'),
+        color: 'indigo',
+        description: 'Instalar aparelho de multimidia do cliente XXXX',
         timed: true
       }
     ]
@@ -318,8 +343,8 @@ export default {
     },
 
     save() {
-      this.scheduleItem.start = new Date(`${this.scheduleItem.start}T11:00:00.000Z`);
-      this.scheduleItem.end = new Date(`${this.scheduleItem.end}T12:00:00.000Z`);
+      this.scheduleItem.start = new Date(`${this.scheduleItem.start}T${this.scheduleItem.startTime}:00.000Z`);
+      this.scheduleItem.end = new Date(`${this.scheduleItem.end}T${this.scheduleItem.endTime}:00.000Z`);
 
       if (this.editedIndex === -1) {
         this.events.push(this.scheduleItem);
@@ -336,6 +361,8 @@ export default {
         name: '',
         start: '',
         end: '',
+        startTime: '',
+        endTime: '',
         description: '',
         color: '',
         timed: true
@@ -367,8 +394,8 @@ export default {
 
       const test = JSON.parse(JSON.stringify(selectedEvent));
 
-      test.start = '2020-07-17';
-      test.end = '2020-07-17';
+      test.start = '2020-07-22';
+      test.end = '2020-07-22';
 
       this.scheduleItem = test;
 
