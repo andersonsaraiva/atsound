@@ -18,7 +18,7 @@
           </v-col>
 
           <v-col lg="2" md="2" sm="4">
-            <v-btn color="primary" @click="dialog = true">Cadastrar</v-btn>
+            <v-btn color="primary" @click="dialog = true" title="Cadastrar um novo Fornecedor">Cadastrar</v-btn>
           </v-col>
         </v-row>
       </v-card-text>
@@ -26,10 +26,10 @@
 
     <v-data-table :search="search" :headers="headers" :items="items" class="elevation-1" dense>
       <template v-slot:item.actions="{ item }">
-        <v-icon small class="mr-2" @click="editItem(item)" color="green">
+        <v-icon small class="mr-2" @click="editItem(item)" color="green" title="Editar item">
           mdi-pencil
         </v-icon>
-        <v-icon small @click="deleteItem(item)" color="red">
+        <v-icon small @click="deleteItem(item)" color="red" title="Excluir item">
           mdi-delete
         </v-icon>
       </template>
@@ -40,7 +40,7 @@
         <v-card-title class="pa-3">
           <span class="headline">{{ formTitle }}</span>
           <v-spacer></v-spacer>
-          <v-icon @click="close">close</v-icon>
+          <v-icon @click="close" title="Fechar janela">close</v-icon>
         </v-card-title>
 
         <v-divider horizontal></v-divider>
@@ -49,10 +49,26 @@
           <v-container fluid>
             <v-row class="px-1">
               <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.name" label="Nome" type="text" dense outlined required :rules="[required]" />
+                <v-text-field
+                  v-model="editedItem.name"
+                  label="Nome"
+                  type="text"
+                  dense
+                  outlined
+                  required
+                  :rules="[required]"
+                />
               </v-col>
               <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.email" label="Email" type="text" dense outlined required :rules="[required, email]" />
+                <v-text-field
+                  v-model="editedItem.email"
+                  label="Email"
+                  type="text"
+                  dense
+                  outlined
+                  required
+                  :rules="[required, email]"
+                />
               </v-col>
               <v-col cols="12" sm="6" md="6" class="py-0">
                 <v-text-field
@@ -84,7 +100,6 @@
 </template>
 
 <script>
-import items from '@/api/providers.json';
 import { required, email } from '@/helpers/validations';
 import { showMessage, confirmMessage } from '@/helpers/messages';
 import * as HANDLERS from '@/helpers/handlers';
@@ -110,7 +125,6 @@ export default {
       { text: 'Site', value: 'url' },
       { text: '', value: 'actions', sortable: false, align: 'right' }
     ],
-    items: [],
     editedIndex: -1,
     editedItem: {
       name: '',
@@ -126,27 +140,21 @@ export default {
     }
   }),
 
+  created() {
+    this.$store.dispatch('providers/get');
+  },
+
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? 'Cadastro' : 'Edição';
-    }
-  },
+    },
 
-  watch: {
-    dialog(val) {
-      val || this.close();
+    items() {
+      return this.$store.getters['providers/get'];
     }
-  },
-
-  created() {
-    this.initialize();
   },
 
   methods: {
-    initialize() {
-      this.items = items;
-    },
-
     editItem(item) {
       this.editedIndex = this.items.indexOf(item);
       this.editedItem = Object.assign({}, item);
@@ -158,9 +166,7 @@ export default {
     },
 
     showDelete(item) {
-      const index = this.items.indexOf(item);
-
-      this.items.splice(index, 1);
+      this.$store.dispatch('providers/delete', item);
     },
 
     close() {
@@ -177,14 +183,18 @@ export default {
       if (!this.$refs.form.validate(true)) return;
 
       if (this.editedIndex > -1) {
-        Object.assign(this.items[this.editedIndex], this.editedItem);
+        this.$store.dispatch('providers/update', this.editedItem);
       } else {
-        this.items.push(this.editedItem);
+        this.$store.dispatch('providers/create', this.editedItem);
       }
 
-      showMessage('success', 'Operação realizada com sucesso!');
-
       this.close();
+    }
+  },
+
+  watch: {
+    dialog(val) {
+      val || this.close();
     }
   }
 };

@@ -8,7 +8,7 @@
 
     <div class="align-center content-breadcrumbs_item">
       <ul>
-        <li id="to-dashboard" @click="dashboard">Início</li>
+        <li id="to-dashboard" @click="dashboard" title="Ir para o início">Início</li>
         <li v-text="verifyName()"></li>
       </ul>
     </div>

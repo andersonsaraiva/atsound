@@ -140,7 +140,6 @@
 
 <script>
 import items from '@/api/stock.json';
-import providers from '@/api/providers.json';
 import { required } from '@/helpers/validations';
 import { showMessage, confirmMessage } from '@/helpers/messages';
 import { formatValue } from '@/helpers/utils';
@@ -156,7 +155,6 @@ export default {
   },
 
   data: () => ({
-    providers,
     search: '',
     required,
     dialog: false,
@@ -201,6 +199,10 @@ export default {
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? 'Cadastro' : 'Edição';
+    },
+
+    providers() {
+      return this.$store.getters['providers/get'];
     }
   },
 
@@ -211,6 +213,7 @@ export default {
   },
 
   created() {
+    this.$store.dispatch('providers/get');
     this.initialize();
   },
 
