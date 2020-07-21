@@ -28,6 +28,17 @@ export default {
     appSettings: () => import('@/components/settings/app-settings')
   },
 
+  async beforeCreate() {
+    await this.$store.dispatch('authentication/getSettings');
+    const theme = this.$store.getters['authentication/getSettings'];
+
+    if (theme && this.$vuetify) {
+      this.$vuetify.theme.themes.light.primary = theme.APP_THEME_COLOR;
+      this.$vuetify.theme.themes.dark.primary = theme.APP_THEME_COLOR;
+      this.$vuetify.theme.dark = theme.APP_THEME_DARK;
+    }
+  },
+
   computed: {
     background() {
       let style = 'background-size: cover; background-position: center center; background-attachment: fixed;';
@@ -41,6 +52,7 @@ export default {
       return bg;
     }
   },
+
   watch: {
     $route() {
       this.$store.dispatch('background/clear');

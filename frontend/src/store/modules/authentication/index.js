@@ -6,7 +6,13 @@ export const authentication = {
   namespaced: true,
   state: {
     profile: null,
-    token: null
+    token: null,
+    settings: {
+      API: null,
+      APP_NAME: null,
+      APP_THEME_COLOR: null,
+      APP_THEME_DARK: null
+    }
   },
   getters,
   mutations,

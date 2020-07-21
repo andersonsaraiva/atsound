@@ -32,10 +32,10 @@ export default new Vuetify({
     },
     themes: {
       light: {
-        primary: '#F44336'
+        primary: '#FFF'
       },
       dark: {
-        primary: '#F44336'
+        primary: '#FFF'
       }
     }
   }

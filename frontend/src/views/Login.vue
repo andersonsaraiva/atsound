@@ -5,12 +5,20 @@
         <div class="form-login">
           <div class="form-login--content">
             <div class="form-login--content_title">
-              <h1>Atsound</h1>
+              <h1 v-if="settings" v-text="settings.APP_NAME"></h1>
             </div>
 
             <v-form @submit.prevent="handleLogin" ref="form" lazy-validation v-model="valid">
               <div class="form-login--content_fields">
-                <v-text-field append-icon="person" name="Login" label="Login" type="text" v-model="login" required :rules="[required]" />
+                <v-text-field
+                  append-icon="person"
+                  name="Login"
+                  label="Login"
+                  type="text"
+                  v-model="login"
+                  required
+                  :rules="[required]"
+                />
                 <v-text-field
                   :append-icon="show ? 'visibility_off' : 'visibility'"
                   @click:append="show = !show"
@@ -60,6 +68,12 @@ export default {
       if (!this.$refs.form.validate(true)) return;
 
       this.$router.push('dashboard');
+    }
+  },
+
+  computed: {
+    settings() {
+      return this.$store.getters['authentication/getSettings'];
     }
   }
 };
