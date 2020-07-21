@@ -149,12 +149,22 @@
               </v-col>
 
               <v-col cols="12" sm="3" md="3" class="py-0">
-                <v-text-field
+                <v-autocomplete
                   v-model="editedItem.schooling"
                   label="Escolaridade"
                   type="text"
                   required
                   :rules="[required]"
+                  :items="[
+                    'Ensino Fundamental Incompleto',
+                    'Ensino Fundamental Completo',
+                    'Ensino Médio Incompleto',
+                    'Ensino Médio Completo',
+                    'Ensino Técnico',
+                    'Ensino Superior Incompleto',
+                    'Ensino Superior Completo',
+                    'Outros'
+                  ]"
                   outlined
                   dense
                 />
