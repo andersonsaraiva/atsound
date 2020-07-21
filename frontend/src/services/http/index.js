@@ -18,8 +18,7 @@ Axios.interceptors.request.use(
 
   function (error) {
     Promise.resolve(error).then(function ({ response }) {
-      const { errors, traceId } = response.data;
-      return showMessage(errors, traceId);
+      return showMessage('error', response.data);
     });
 
     store.dispatch('loading/finishLoading');
@@ -40,7 +39,7 @@ Axios.interceptors.response.use(
         case 400:
         case 415:
         case 500: {
-          showMessage(response.data)
+          showMessage('error', response.data)
           break;
         }
 
@@ -61,7 +60,7 @@ Axios.interceptors.response.use(
         }
 
         default: {
-          showMessage(response.data)
+          showMessage('error', response.data)
         }
       }
     });

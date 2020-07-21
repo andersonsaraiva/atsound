@@ -67,7 +67,7 @@
                   label="Email"
                   type="text"
                   required
-                  :rules="[required]"
+                  :rules="[required, email]"
                   outlined
                   dense
                 />
@@ -82,44 +82,25 @@
                   :rules="[required]"
                   outlined
                   dense
+                  v-mask="['(##) ####-####', '(##) #####-####']"
                 />
               </v-col>
 
               <v-col cols="12" sm="3" md="3" class="py-0">
-                <v-menu
-                  ref="menu"
-                  v-model="menu"
-                  :close-on-content-click="false"
-                  :return-value.sync="editedItem.date_of_birth"
-                  transition="scale-transition"
-                  offset-y
-                  min-width="290px"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                      v-model="editedItem.date_of_birth"
-                      label="Data de nascimento"
-                      prepend-inner-icon="event"
-                      readonly
-                      v-bind="attrs"
-                      v-on="on"
-                      outlined
-                      dense
-                    />
-                  </template>
-
-                  <v-date-picker v-model="editedItem.date_of_birth" no-title scrollable>
-                    <v-spacer></v-spacer>
-                    <v-btn small color="primary" @click="menu = false">Cancel</v-btn>
-                    <v-btn small color="primary" @click="$refs.menu.save(date)">OK</v-btn>
-                  </v-date-picker>
-                </v-menu>
+                <v-text-field
+                  type="date"
+                  v-model="editedItem.date_of_birth"
+                  label="Data de nascimento"
+                  prepend-inner-icon="event"
+                  outlined
+                  dense
+                />
               </v-col>
 
               <v-col cols="12" sm="3" md="3" class="py-0">
                 <v-select
                   v-model="editedItem.gender"
-                  :items="['Masculino', 'Feminino']"
+                  :items="['Feminino', 'Masculino']"
                   label="Sexo"
                   outlined
                   dense
@@ -129,7 +110,7 @@
               <v-col cols="12" sm="3" md="3" class="py-0">
                 <v-select
                   v-model="editedItem.marital_status"
-                  :items="['Solteiro', 'Casado', 'Divorciado']"
+                  :items="['Casado', 'Divorciado', 'Solteiro', 'Viúvo']"
                   label="Estado Civil"
                   outlined
                   dense
@@ -179,6 +160,7 @@
                   :rules="[required]"
                   outlined
                   dense
+                  v-mask="'###.###.##-##'"
                 />
               </v-col>
 
@@ -219,6 +201,8 @@
                   :rules="[required]"
                   outlined
                   dense
+                  v-mask="'#####-###'"
+                  @blur="onBlur"
                 />
               </v-col>
 
@@ -301,9 +285,10 @@
 
 <script>
 import items from '@/api/employees.json';
-import { required } from '@/helpers/validations';
-import { confirmMessage } from '@/helpers/messages';
+import { required, email } from '@/helpers/validations';
+import { showMessage, confirmMessage } from '@/helpers/messages';
 import * as HANDLERS from '@/helpers/handlers';
+import { getCep } from '@/services/cep';
 
 export default {
   components: {
@@ -317,6 +302,7 @@ export default {
   data: () => ({
     search: '',
     required,
+    email,
     dialog: false,
     menu: false,
     date: new Date().toISOString().substr(0, 10),
@@ -340,14 +326,7 @@ export default {
       documents: {
         cpf: '',
         rg: '',
-        rg_date_of_issue: '',
-        rg_emitting_organ: '',
-        rg_state: '',
-        cnh: '',
-        cnh_date_of_issue: '',
-        cnh_expiration_date: '',
-        cnh_emitting_organ: '',
-        cnh_state: ''
+        cnh: ''
       },
       address: {
         street: '',
@@ -356,11 +335,6 @@ export default {
         complement: '',
         city: '',
         state: ''
-      },
-      hiring: {
-        contract_date: '',
-        current_position: '',
-        current_wage: 0
       }
     },
     defaultItem: {
@@ -375,14 +349,7 @@ export default {
       documents: {
         cpf: '',
         rg: '',
-        rg_date_of_issue: '',
-        rg_emitting_organ: '',
-        rg_state: '',
-        cnh: '',
-        cnh_date_of_issue: '',
-        cnh_expiration_date: '',
-        cnh_emitting_organ: '',
-        cnh_state: ''
+        cnh: ''
       },
       address: {
         street: '',
@@ -391,11 +358,6 @@ export default {
         complement: '',
         city: '',
         state: ''
-      },
-      hiring: {
-        contract_date: '',
-        current_position: '',
-        current_wage: 0
       }
     }
   }),
@@ -456,6 +418,21 @@ export default {
       }
 
       this.close();
+    },
+
+    async onBlur() {
+      if (this.editedItem && this.editedItem.address.cep) {
+        const { data } = await getCep(this.editedItem.address.cep);
+
+        if (data.erro) {
+          showMessage('error', `O CEP ${this.editedItem.address.cep} é inválido!`, 3000);
+        } else {
+          this.editedItem.address.street = data.logradouro;
+          this.editedItem.address.neighborhood = data.bairro;
+          this.editedItem.address.city = data.localidade;
+          this.editedItem.address.state = data.uf;
+        }
+      }
     }
   }
 };
