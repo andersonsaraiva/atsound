@@ -8,7 +8,7 @@
               <h1 v-if="settings" v-text="settings.APP_NAME"></h1>
             </div>
 
-            <v-form @submit.prevent="handleLogin" ref="form" lazy-validation v-model="valid">
+            <v-form @submit.prevent="handleLogin" ref="form" lazy-validation v-model="valid" v-if="!isForgotPassword">
               <div class="form-login--content_fields">
                 <v-text-field
                   append-icon="person"
@@ -38,6 +38,35 @@
                 <v-btn text small color="primary" @click="isForgotPassword = true">Esqueci minha senha</v-btn>
               </div>
             </v-form>
+
+            <v-form
+              @submit.prevent="handleForgotPassword"
+              ref="formForgout"
+              lazy-validation
+              v-model="validForgotPassword"
+              v-if="isForgotPassword"
+            >
+              <div class="form-login--content_fields">
+                <h4 class="form-login--content_subtitle">Digite seu email para recuperar a senha</h4>
+
+                <v-text-field
+                  append-icon="person"
+                  name="Email"
+                  label="Email"
+                  type="text"
+                  v-model="typedEmail"
+                  required
+                  :rules="[required, email]"
+                />
+              </div>
+
+              <v-btn type="submit" large block color="primary" :disabled="!validForgotPassword" :loading="loading">
+                Enviar email
+              </v-btn>
+              <div class="form-login--content_forgot">
+                <v-btn text small color="primary" @click="isForgotPassword = false">Voltar para o login</v-btn>
+              </div>
+            </v-form>
           </div>
           <footer class="form-login--footer">© {{ currentYear }} todos direitos reservados</footer>
         </div>
@@ -49,18 +78,21 @@
 
 <script>
 import { showMessage } from '@/helpers/messages';
-import { required } from '@/helpers/validations';
+import { required, email } from '@/helpers/validations';
 
 export default {
   data: () => ({
     currentYear: new Date().getFullYear(),
     valid: true,
+    validForgotPassword: true,
     show: false,
     loading: false,
     login: '',
     password: '',
+    typedEmail: '',
     isForgotPassword: false,
-    required
+    required,
+    email
   }),
 
   methods: {
