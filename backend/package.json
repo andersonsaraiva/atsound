@@ -8,11 +8,13 @@
   },
   "devDependencies": {
     "git-commit-msg-linter": "^2.4.4",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "sequelize-cli": "^6.2.0"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
-    "knex": "^0.21.2",
-    "mysql": "^2.18.1"
+    "mysql2": "^2.1.0",
+    "sequelize": "^6.3.3"
   }
 }
