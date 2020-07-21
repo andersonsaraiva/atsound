@@ -6,7 +6,7 @@
           <path id="sky" class="st0" d="M0 0h1000v203.1H0z" />
           <linearGradient id="water_1_" gradientUnits="userSpaceOnUse" x1="500" y1="354" x2="500" y2="200.667">
             <stop offset="0" stop-color="#fff" />
-            <stop offset="1" stop-color="#b3dcdf" />
+            <stop offset="1" stop-color="#EFEBE9" />
           </linearGradient>
           <path id="water" fill="url(#water_1_)" d="M0 200.7h1000V354H0z" />
           <path id="land" class="st0" d="M0 273.4h1000V354H0z" />
@@ -253,20 +253,38 @@
           />
         </g>
         <g id="train">
-          <path fill="#b3dcdf" d="M344.5 248.5h507.2v37.8H344.5z" />
+          <path fill="#8b8b8b" d="M344.5 248.5h507.2v37.8H344.5z" />
           <g id="wheels">
             <circle class="st6" cx="384.1" cy="285.6" r="15.1" />
-            <path class="st2" d="M384.1 295.7c-5.6 0-10.1-4.5-10.1-10.1s4.5-10.1 10.1-10.1 10.1 4.5 10.1 10.1c0 5.5-4.6 10.1-10.1 10.1z" />
+            <path
+              class="st2"
+              d="M384.1 295.7c-5.6 0-10.1-4.5-10.1-10.1s4.5-10.1 10.1-10.1 10.1 4.5 10.1 10.1c0 5.5-4.6 10.1-10.1 10.1z"
+            />
             <circle class="st6" cx="416.1" cy="285.6" r="15.1" />
-            <path class="st2" d="M416.1 295.7c-5.6 0-10.1-4.5-10.1-10.1s4.5-10.1 10.1-10.1 10.1 4.5 10.1 10.1c0 5.5-4.6 10.1-10.1 10.1z" />
+            <path
+              class="st2"
+              d="M416.1 295.7c-5.6 0-10.1-4.5-10.1-10.1s4.5-10.1 10.1-10.1 10.1 4.5 10.1 10.1c0 5.5-4.6 10.1-10.1 10.1z"
+            />
             <circle class="st6" cx="469.1" cy="285.6" r="15.1" />
-            <path class="st2" d="M469.1 295.7c-5.6 0-10.1-4.5-10.1-10.1s4.5-10.1 10.1-10.1 10.1 4.5 10.1 10.1c0 5.5-4.6 10.1-10.1 10.1z" />
+            <path
+              class="st2"
+              d="M469.1 295.7c-5.6 0-10.1-4.5-10.1-10.1s4.5-10.1 10.1-10.1 10.1 4.5 10.1 10.1c0 5.5-4.6 10.1-10.1 10.1z"
+            />
             <circle class="st6" cx="734.1" cy="285.6" r="15.1" />
-            <path class="st2" d="M734.1 295.7c-5.6 0-10.1-4.5-10.1-10.1s4.5-10.1 10.1-10.1 10.1 4.5 10.1 10.1c0 5.5-4.6 10.1-10.1 10.1z" />
+            <path
+              class="st2"
+              d="M734.1 295.7c-5.6 0-10.1-4.5-10.1-10.1s4.5-10.1 10.1-10.1 10.1 4.5 10.1 10.1c0 5.5-4.6 10.1-10.1 10.1z"
+            />
             <circle class="st6" cx="766.1" cy="285.6" r="15.1" />
-            <path class="st2" d="M766.1 295.7c-5.6 0-10.1-4.5-10.1-10.1s4.5-10.1 10.1-10.1 10.1 4.5 10.1 10.1c0 5.5-4.6 10.1-10.1 10.1z" />
+            <path
+              class="st2"
+              d="M766.1 295.7c-5.6 0-10.1-4.5-10.1-10.1s4.5-10.1 10.1-10.1 10.1 4.5 10.1 10.1c0 5.5-4.6 10.1-10.1 10.1z"
+            />
             <circle class="st6" cx="821.1" cy="285.6" r="15.1" />
-            <path class="st2" d="M821.1 295.7c-5.6 0-10.1-4.5-10.1-10.1s4.5-10.1 10.1-10.1 10.1 4.5 10.1 10.1c0 5.5-4.6 10.1-10.1 10.1z" />
+            <path
+              class="st2"
+              d="M821.1 295.7c-5.6 0-10.1-4.5-10.1-10.1s4.5-10.1 10.1-10.1 10.1 4.5 10.1 10.1c0 5.5-4.6 10.1-10.1 10.1z"
+            />
           </g>
           <path id="bracefront" class="st7" d="M383.2 285.6h88.1" />
           <path id="braceback" class="st7" d="M733.2 285.6h88.1" />
@@ -294,7 +312,7 @@
                 404
               </text>
               <text transform="translate(659.5 213.994)" class="st8 st10" font-size="24.025">
-                Página não encontrada
+                Não encontrado.
               </text>
             </g>
             <g id="ladders">
@@ -309,7 +327,11 @@
                 <path id="bb-rung" class="st9" d="M851.8 281.1h17.7" />
               </g>
             </g>
-            <path id="window-front" class="st8" d="M350.5 196.4s-.4 3.9 15.2 4.3l32.3-30.3s-18.2 1.1-19-.8l-28.5 26.8z" />
+            <path
+              id="window-front"
+              class="st8"
+              d="M350.5 196.4s-.4 3.9 15.2 4.3l32.3-30.3s-18.2 1.1-19-.8l-28.5 26.8z"
+            />
           </g>
         </g>
       </svg>
@@ -322,39 +344,33 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
-$color-white: #fff;
-
 .main {
-  margin-top: 10%;
+  margin-top: 15%;
 }
 
 .st0 {
-  fill: $color-white;
+  fill: #fff;
 }
-
 .st2 {
-  fill: var(--v-primary-base);
+  fill: #2c2c2c;
 }
-
 .st3 {
-  fill: var(--v-primary-lighten1);
+  fill: var(--v-secondary-lighten3);
 }
-
 .st4,
 .st6 {
-  fill: $color-white;
-  stroke: var(--v-accent-lighten1);
+  fill: #fff;
+  stroke: #82b1ff;
   stroke-miterlimit: 10;
 }
 .st6 {
-  stroke: var(--v-primary-base);
+  stroke: #2c2c2c;
   stroke-width: 2;
 }
-
 .st7,
 .st8,
 .st9 {
-  stroke: var(--v-primary-lighten1);
+  stroke: var(--v-secondary-lighten3);
   stroke-miterlimit: 10;
 }
 
@@ -363,12 +379,10 @@ $color-white: #fff;
   stroke-linecap: round;
   fill: none;
 }
-
 .st8,
 .st9 {
-  fill: $color-white;
+  fill: #fff;
 }
-
 .st9 {
   fill: none;
 }
@@ -405,15 +419,6 @@ $color-white: #fff;
   animation: land 10000ms linear infinite;
 }
 
-#bracefront,
-#braceback {
-  animation: braces 1s linear infinite;
-}
-
-#car-layers {
-  animation: jig 0.35s linear infinite;
-}
-
 @keyframes jig {
   0% {
     transform: translateY(0px);
@@ -424,6 +429,10 @@ $color-white: #fff;
   100% {
     transform: translateY(0px);
   }
+}
+
+#car-layers {
+  animation: jig 0.35s linear infinite;
 }
 
 @keyframes land {
@@ -481,6 +490,11 @@ $color-white: #fff;
   100% {
     transform: translateY(0px) translateX(0);
   }
+}
+
+#bracefront,
+#braceback {
+  animation: braces 1s linear infinite;
 }
 
 @keyframes braces {
