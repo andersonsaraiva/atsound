@@ -2,21 +2,21 @@
 
 module.exports = {
   development: {
-    client: "mysql",
+    client: 'mysql',
     connection: {
-      host: "127.0.0.1",
-      user: "root",
-      password: "",
-      database: "atsound",
+      host: '127.0.0.1',
+      user: 'root',
+      password: '',
+      database: 'atsound'
     },
     migrations: {
-      tableName: "knex_migrations",
-      directory: `${__dirname}/src/database/migrations`,
+      tableName: 'knex_migrations',
+      directory: `${__dirname}/src/database/migrations`
     },
     seeds: {
-      directory: `${__dirname}/src/database/seeds`,
-    },
-  },
+      directory: `${__dirname}/src/database/seeds`
+    }
+  }
 
   // staging: {
   //   client: 'postgresql',
