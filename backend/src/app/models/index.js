@@ -15,9 +15,11 @@ fs.readdirSync(__dirname)
      * Choose any one of the below definition for model variable
      */
     // for individual model files having `export default (sequelize, DataTypes) => {`
-    const model = require(path.join(__dirname, file)).default(sequelize, Sequelize.DataTypes);
+    // const model = require(path.join(__dirname, file)).default(sequelize, Sequelize.DataTypes);
+
     // for individual model files having `module.exports = (sequelize, DataTypes) => {`
-    // const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
+    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
+
     db[model.name] = model;
   });
 

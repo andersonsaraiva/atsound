@@ -4,7 +4,7 @@ class UserController {
   async index(req, res, next) {
     try {
       const users = await User.findAll({
-        attributes: ['id', 'name', 'email', 'role', 'username', 'createdAt', 'updatedAt']
+        attributes: ['id', 'name', 'username', 'email', 'role', 'createdAt', 'updatedAt']
       });
 
       return res.status(200).send(users);
@@ -15,9 +15,17 @@ class UserController {
 
   async create(req, res, next) {
     try {
-      // const { username } = req.body;
-      // await knex('users').insert({ username });
-      // return res.status(201).send();
+      const { name, username, email, password } = req.body;
+
+      if (!!(await User.findOne({ where: { email } }))) {
+        return res.status(400).send({ message: 'Erro ao criar novo usuário... Usuário já existe na base de dados!' });
+      }
+
+      const user = await User.create({ name, username, email, password });
+
+      delete user.password_hash;
+
+      return res.status(201).json({ user, token: user.generateToken() });
     } catch (error) {
       next(error);
     }
@@ -25,10 +33,13 @@ class UserController {
 
   async update(req, res, next) {
     try {
-      // const { username } = req.body;
-      // const { id } = req.params;
-      // await knex('users').update({ username }).where({ id });
-      // return res.send();
+      const { name, username, email, password } = req.body;
+      const { id } = req.params;
+
+      try {
+      } catch (error) {
+        next(error);
+      }
     } catch (error) {
       next(error);
     }
