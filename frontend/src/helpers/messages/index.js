@@ -25,6 +25,21 @@ export const showMessage = (type, message, timer = 1500) => {
   throw new Error('Obrigatório passar como parâmetro uma mensagem!');
 };
 
+export const showMessageErrorModal = (message) => {
+  if (message) {
+    return Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      html: message,
+      width: '600px',
+      confirmButtonColor: '#ff5252',
+    });
+  }
+
+  throw new Error("Obrigatório passar como parâmetro uma mensagem!");
+}
+
+
 export const confirmMessage = async (title, text, item, handler_name) => {
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {

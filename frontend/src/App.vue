@@ -17,6 +17,8 @@
         </keep-alive>
       </v-main>
     </template>
+
+    <appLoader />
   </v-app>
 </template>
 
@@ -24,6 +26,7 @@
 export default {
   components: {
     appHeader: () => import('@/components/header/app-header'),
+    appLoader: () => import('@/components/loader/app-loader'),
     appSidebar: () => import('@/components/sidebar/app-sidebar'),
     appSettings: () => import('@/components/settings/app-settings')
   },
