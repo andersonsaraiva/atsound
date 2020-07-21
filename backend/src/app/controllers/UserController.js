@@ -1,12 +1,17 @@
-module.exports = {
+const { User } = require('../models');
+
+class UserController {
   async index(req, res, next) {
     try {
-      // const results = await knex('users');
-      // return res.json(results);
+      const users = await User.findAll({
+        attributes: ['id', 'name', 'email', 'role', 'username', 'createdAt', 'updatedAt']
+      });
+
+      return res.status(200).send(users);
     } catch (error) {
       next(error);
     }
-  },
+  }
 
   async create(req, res, next) {
     try {
@@ -16,7 +21,7 @@ module.exports = {
     } catch (error) {
       next(error);
     }
-  },
+  }
 
   async update(req, res, next) {
     try {
@@ -27,7 +32,7 @@ module.exports = {
     } catch (error) {
       next(error);
     }
-  },
+  }
 
   async delete(req, res, next) {
     try {
@@ -38,4 +43,6 @@ module.exports = {
       next(error);
     }
   }
-};
+}
+
+module.exports = new UserController();
