@@ -13,9 +13,13 @@ export default {
     }
   },
 
-  update: async (params) => {
+  update: async ({ commit }, params) => {
     try {
-      await updateUser(params);
+      const { status } = await updateUser(params);
+
+      if (status === 200) {
+        commit('update');
+      }
     } catch (error) {
       throw Error("Ocorreu um erro de API.");
     }
