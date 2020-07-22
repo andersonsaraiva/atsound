@@ -15,15 +15,15 @@ const router = new VueRouter({
 router.beforeEach(function (to, from, next) {
   const isPublicRoute = to.matched.some(route => route.meta.public);
 
-  // const token = store.getters['authentication/getToken'];
+  const token = store.getters['authentication/getToken'];
 
-  // if (!isPublicRoute && !token) {
-  //   return next({ path: '/login' });
-  // }
+  if (!isPublicRoute && !token) {
+    return next({ path: '/login' });
+  }
 
-  // if (to.path === '/login' && token) {
-  //   return next({ path: from.path });
-  // }
+  if (to.path === '/login' && token) {
+    return next({ path: from.path });
+  }
 
   if (to.meta.title) {
     document.title = `Atsound - ${to.meta.title}`;

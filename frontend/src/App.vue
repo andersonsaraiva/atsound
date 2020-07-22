@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <template v-if="!$route.meta.public">
+    <template v-if="!$route.meta.public && token">
       <appSidebar />
       <appHeader />
 
@@ -43,6 +43,10 @@ export default {
   },
 
   computed: {
+    token() {
+      return this.$store.getters['authentication/getToken'];
+    },
+
     background() {
       let style = 'background-size: cover; background-position: center center; background-attachment: fixed;';
 

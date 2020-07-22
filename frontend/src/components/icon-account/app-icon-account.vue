@@ -1,21 +1,21 @@
 <template>
   <v-layout class="user-info">
-    <v-menu offset-y transition="scroll-y-transition" :max-width="280">
+    <v-menu offset-y transition="scroll-y-transition" :max-width="280" v-if="profile">
       <template v-slot:activator="{ attrs, on }">
         <div v-on="on" v-bind="attrs" class="user-info__photo">
           <v-card class="user-info__icon" img="static/icon-user.jpg"></v-card>
 
           <v-icon class="arrow">keyboard_arrow_down</v-icon>
 
-          <span>Anderson Saraiva</span>
+          <span v-text="profile.name"></span>
         </div>
       </template>
 
-      <v-list class="pa-0 menu_account" dense>
+      <v-list class="pa-0 menu_account" dense v-if="profile">
         <v-list-item>
           <v-list-item-content class="text-center">
-            <v-list-item-subtitle class="text--primary">Anderson Saraiva</v-list-item-subtitle>
-            <v-list-item-subtitle>a.saraiva90@gmail.com</v-list-item-subtitle>
+            <v-list-item-subtitle class="text--primary" v-text="profile.name"></v-list-item-subtitle>
+            <v-list-item-subtitle v-text="profile.email"></v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
 
@@ -43,10 +43,15 @@
 
 <script>
 export default {
+  computed: {
+    profile() {
+      return this.$store.getters['authentication/getProfile'];
+    }
+  },
+
   methods: {
     logoff() {
-      //this.$store.dispatch('authentication/logoff');
-      this.$router.push('login');
+      this.$store.dispatch('authentication/logoff');
     },
 
     admin() {

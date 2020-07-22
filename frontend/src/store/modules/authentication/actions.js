@@ -1,5 +1,5 @@
-import Axios from 'axios';
 import { get } from '@/services/settings';
+import { auth } from '@/services/authentication';
 
 export default {
   getSettings: async ({ commit }) => {
@@ -8,8 +8,28 @@ export default {
 
       if (data) {
         commit('setSettings', data);
-        Axios.defaults.baseURL = data.API;
       }
+    } catch (error) {
+      throw Error("Ocorreu um erro de API.");
+    }
+  },
+
+  login: async ({ commit }, params) => {
+    try {
+      const { data } = await auth(params);
+
+      if (data) {
+        commit('setToken', data.token);
+        commit('setProfile', data.user);
+      }
+    } catch (error) {
+      throw Error("Ocorreu um erro de API.");
+    }
+  },
+
+  logoff: async ({ commit }) => {
+    try {
+      commit('clear');
     } catch (error) {
       throw Error("Ocorreu um erro de API.");
     }

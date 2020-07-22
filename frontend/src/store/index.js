@@ -10,7 +10,7 @@ import { sidebar } from '@/store/modules/sidebar';
 import { users } from '@/store/modules/users';
 
 const vuexPersist = new VuexPersist({
-  key: 'auth-security',
+  key: 'application',
   storage: sessionStorage,
   reducer: state => ({
     authentication: state.authentication

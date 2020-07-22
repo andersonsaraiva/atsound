@@ -7,11 +7,11 @@ Axios.interceptors.request.use(
   async function (config) {
     store.dispatch('loading/startLoading');
 
-    //const token = store.getters['authentication/getToken'];
+    const token = store.getters['authentication/getToken'];
 
-    // if (token) {
-    //   config.headers.Authorization = `Bearer ${token}`;
-    // }
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
 
     return config;
   },
@@ -47,7 +47,7 @@ Axios.interceptors.response.use(
 
         case 401: {
           router.push({ path: '/login' });
-          showMessage("error", "Sua sessão expirou. Faça seu login novamente.");
+          showMessage("error", message, 2500);
           break;
         }
 

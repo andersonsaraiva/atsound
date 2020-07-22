@@ -12,12 +12,14 @@
               <div class="form-login--content_fields">
                 <v-text-field
                   append-icon="person"
-                  name="Login"
-                  label="Login"
+                  implement
+                  authentication
+                  name="Email"
+                  label="Email"
                   type="text"
                   v-model="login"
                   required
-                  :rules="[required]"
+                  :rules="[required, email]"
                 />
                 <v-text-field
                   :append-icon="show ? 'visibility_off' : 'visibility'"
@@ -31,7 +33,7 @@
                 />
               </div>
 
-              <v-btn type="submit" large block color="primary" :disabled="!valid" :loading="loading">
+              <v-btn type="submit" large block color="primary" :disabled="!valid">
                 Entrar
               </v-btn>
               <div class="form-login--content_forgot">
@@ -60,7 +62,7 @@
                 />
               </div>
 
-              <v-btn type="submit" large block color="primary" :disabled="!validForgotPassword" :loading="loading">
+              <v-btn type="submit" large block color="primary" :disabled="!validForgotPassword">
                 Enviar email
               </v-btn>
               <div class="form-login--content_forgot">
@@ -85,12 +87,11 @@ export default {
     currentYear: new Date().getFullYear(),
     valid: true,
     validForgotPassword: true,
+    isForgotPassword: false,
     show: false,
-    loading: false,
     login: '',
     password: '',
     typedEmail: '',
-    isForgotPassword: false,
     required,
     email
   }),
@@ -99,7 +100,7 @@ export default {
     handleLogin() {
       if (!this.$refs.form.validate(true)) return;
 
-      this.$router.push('dashboard');
+      this.$store.dispatch('authentication/login', { email: this.login, password: this.password });
     }
   },
 
