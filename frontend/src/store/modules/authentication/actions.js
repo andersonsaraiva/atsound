@@ -1,3 +1,4 @@
+import Axios from 'axios';
 import { get } from '@/services/settings';
 
 export default {
@@ -7,6 +8,7 @@ export default {
 
       if (data) {
         commit('setSettings', data);
+        Axios.defaults.baseURL = data.API;
       }
     } catch (error) {
       throw Error("Ocorreu um erro de API.");

@@ -21,6 +21,15 @@
 
         <v-divider></v-divider>
 
+        <v-list-item dense ripple @click="admin" id="administration" link>
+          <v-icon color="primary" :size="19" class="mr-2">fas fa-user-circle</v-icon>
+          <v-list-item-content>
+            <v-list-item-title>Administração</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-divider></v-divider>
+
         <v-list-item dense ripple @click="logoff" id="logoff" link>
           <v-icon color="primary" :size="19" class="mr-2">fas fa-power-off</v-icon>
           <v-list-item-content>
@@ -38,6 +47,10 @@ export default {
     logoff() {
       //this.$store.dispatch('authentication/logoff');
       this.$router.push('login');
+    },
+
+    admin() {
+      this.$router.push('users');
     }
   }
 };

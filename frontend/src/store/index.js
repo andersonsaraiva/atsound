@@ -7,6 +7,7 @@ import { background } from '@/store/modules/background';
 import { loading } from '@/store/modules/loading';
 import { providers } from '@/store/modules/providers';
 import { sidebar } from '@/store/modules/sidebar';
+import { users } from '@/store/modules/users';
 
 const vuexPersist = new VuexPersist({
   key: 'auth-security',
@@ -25,6 +26,7 @@ export default new Vuex.Store({
     background,
     loading,
     providers,
-    sidebar
+    sidebar,
+    users
   }
 });
