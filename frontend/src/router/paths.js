@@ -104,5 +104,5 @@ export default [
     },
     name: 'users',
     component: () => import('@/views/Account/Users.vue')
-  },
+  }
 ];
