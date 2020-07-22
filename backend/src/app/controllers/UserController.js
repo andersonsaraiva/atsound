@@ -1,7 +1,7 @@
 const { User } = require('../models');
 
 class UserController {
-  async index(req, res, next) {
+  async index(req, res) {
     try {
       const users = await User.findAll({
         attributes: ['id', 'name', 'username', 'email', 'role', 'createdAt', 'updatedAt']
@@ -9,11 +9,11 @@ class UserController {
 
       return res.status(200).send(users);
     } catch (error) {
-      next(error);
+      return res.status(400).send({ message: `Erro ao buscar o usuários!` });
     }
   }
 
-  async create(req, res, next) {
+  async create(req, res) {
     try {
       const { name, username, email, password } = req.body;
 
@@ -27,32 +27,33 @@ class UserController {
 
       return res.status(201);
     } catch (error) {
-      next(error);
+      return res.status(400).send({ message: 'Erro ao criar novo usuário!' });
     }
   }
 
-  async update(req, res, next) {
-    try {
-      const { name, username, email, password } = req.body;
-      const { id } = req.params;
+  async update(req, res) {
+    const { id } = req.params;
 
+    try {
       const user = await User.findOne({ where: { id } });
 
-      if (user) await user.update({ name, username, email, password });
+      if (user) await user.update(req.body);
 
-      return res.status(200);
-    } catch (error) {
-      next(error);
+      return res.status(200).send();
+    } catch (err) {
+      return res.status(400).send({ message: `Erro ao atualizar o usuário do id: ${id}!` });
     }
   }
 
-  async delete(req, res, next) {
+  async delete(req, res) {
+    const { id } = req.params;
+
     try {
-      // const { id } = req.params;
-      // await knex('users').where({ id }).del();
-      // return res.send();
-    } catch (error) {
-      next(error);
+      await User.destroy({ where: { id } });
+
+      return res.status(200).send();
+    } catch (err) {
+      return res.status(400).send({ message: 'Erro ao remover usuário!' });
     }
   }
 }
