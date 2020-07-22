@@ -21,9 +21,7 @@ class UserController {
         return res.status(400).send({ message: 'Erro ao criar novo usuário... Usuário já existe na base de dados!' });
       }
 
-      const user = await User.create({ name, username, email, password });
-
-      delete user.password_hash;
+      await User.create({ name, username, email, password });
 
       return res.status(201).send();
     } catch (error) {
