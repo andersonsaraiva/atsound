@@ -25,19 +25,20 @@ class UserController {
 
       delete user.password_hash;
 
-      return res.status(201);
+      return res.status(201).send();
     } catch (error) {
       return res.status(400).send({ message: 'Erro ao criar novo usuário!' });
     }
   }
 
   async update(req, res) {
+    const { name, username, email, password } = req.body;
     const { id } = req.params;
 
     try {
       const user = await User.findOne({ where: { id } });
 
-      if (user) await user.update(req.body);
+      if (user) await user.update({ name, username, email, password });
 
       return res.status(200).send();
     } catch (err) {
