@@ -18,7 +18,8 @@ Axios.interceptors.request.use(
 
   function (error) {
     Promise.resolve(error).then(function ({ response }) {
-      return showMessage('error', response.data);
+      const { message } = response.data
+      return showMessage('error', message);
     });
 
     store.dispatch('loading/finishLoading');
@@ -33,13 +34,14 @@ Axios.interceptors.response.use(
 
   function (error) {
     Promise.resolve(error).then(function ({ response }) {
+      const { message } = response.data
       const { status } = response;
 
       switch (status) {
         case 400:
         case 415:
         case 500: {
-          showMessage('error', response.data)
+          showMessage('error', message)
           break;
         }
 
@@ -60,7 +62,7 @@ Axios.interceptors.response.use(
         }
 
         default: {
-          showMessage('error', response.data)
+          showMessage('error', message)
         }
       }
     });

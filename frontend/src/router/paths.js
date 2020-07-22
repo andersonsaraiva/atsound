@@ -95,5 +95,14 @@ export default [
     },
     name: 'employees',
     component: () => import('@/views/Employees.vue')
-  }
+  },
+  {
+    path: '/users',
+    meta: {
+      public: false,
+      title: 'Usuários'
+    },
+    name: 'users',
+    component: () => import('@/views/Account/Users.vue')
+  },
 ];
