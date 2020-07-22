@@ -25,7 +25,7 @@ class UserController {
 
       delete user.password_hash;
 
-      return res.status(201).json({ user, token: user.generateToken() });
+      return res.status(201);
     } catch (error) {
       next(error);
     }
@@ -36,10 +36,11 @@ class UserController {
       const { name, username, email, password } = req.body;
       const { id } = req.params;
 
-      try {
-      } catch (error) {
-        next(error);
-      }
+      const user = await User.findOne({ where: { id } });
+
+      if (user) await user.update({ name, username, email, password });
+
+      return res.status(200);
     } catch (error) {
       next(error);
     }
