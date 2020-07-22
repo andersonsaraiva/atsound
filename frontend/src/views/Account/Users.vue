@@ -48,7 +48,10 @@
         <v-form ref="form" lazy-validation v-model="valid">
           <v-container fluid>
             <v-row class="px-1">
-              <v-col cols="12" sm="6" md="6" class="py-0">
+              <v-col cols="12" sm="2" md="2" class="py-0" v-if="editedItem.id">
+                <v-text-field v-model="editedItem.id" label="Código" type="text" dense outlined readonly disabled />
+              </v-col>
+              <v-col cols="12" :sm="editedItem.id ? 4 : 6" :md="editedItem.id ? 4 : 6" class="py-0">
                 <v-text-field
                   v-model="editedItem.username"
                   label="login"
@@ -128,6 +131,7 @@ export default {
     dialog: false,
     valid: true,
     headers: [
+      { text: 'Código', value: 'id' },
       { text: 'Nome', value: 'name' },
       { text: 'Email', value: 'email' },
       { text: 'Login', value: 'username' },
@@ -136,12 +140,14 @@ export default {
     ],
     editedIndex: -1,
     editedItem: {
+      id: '',
       name: '',
       email: '',
       username: '',
       role: ''
     },
     defaultItem: {
+      id: '',
       name: '',
       email: '',
       username: '',
@@ -174,7 +180,7 @@ export default {
       confirmMessage(`Deseja realmente excluir`, `${item.name}`, item, HANDLERS.DELETE_USER);
     },
 
-    showDelete(item) {
+    async showDelete(item) {
       this.$store.dispatch('users/delete', item);
     },
 
@@ -186,15 +192,17 @@ export default {
         this.editedIndex = -1;
         this.$refs.form.reset();
       });
+
+      this.$store.dispatch('users/get');
     },
 
-    save() {
+    async save() {
       if (!this.$refs.form.validate(true)) return;
 
       if (this.editedIndex > -1) {
-        this.$store.dispatch('users/update', this.editedItem);
+        await this.$store.dispatch('users/update', this.editedItem);
       } else {
-        this.$store.dispatch('users/create', this.editedItem);
+        await this.$store.dispatch('users/create', this.editedItem);
       }
 
       this.close();
