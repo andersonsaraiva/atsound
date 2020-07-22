@@ -8,13 +8,8 @@ export default {
     showMessage('success', 'Operação realizada com sucesso!');
   },
 
-  update: (state, payload) => {
-    let index = state.users.findIndex(x => x.id === payload.id);
-
-    if (index !== -1) {
-      state.users[index] = payload;
-      showMessage('success', 'Operação realizada com sucesso!');
-    }
+  update: () => {
+    showMessage('success', 'Operação realizada com sucesso!');
   },
 
   delete: (state, payload) => {

@@ -15,10 +15,10 @@ export default {
 
   update: async ({ commit }, params) => {
     try {
-      const { data } = await updateUser(params);
+      const { status } = await updateUser(params);
 
-      if (data) {
-        commit('update', data);
+      if (status === 200) {
+        commit('update');
       }
     } catch (error) {
       throw Error("Ocorreu um erro de API.");
@@ -39,10 +39,10 @@ export default {
 
   delete: async ({ commit }, params) => {
     try {
-      const { data } = await deleteUser(params);
+      const { status } = await deleteUser(params);
 
-      if (data) {
-        commit('delete', data);
+      if (status === 200) {
+        commit('delete', params);
       }
     } catch (error) {
       throw Error("Ocorreu um erro de API.");
