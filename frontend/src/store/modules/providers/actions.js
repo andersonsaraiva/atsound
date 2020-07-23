@@ -15,12 +15,10 @@ export default {
 
   update: async ({ commit }, params) => {
     try {
-      //const { data } = await updateProvider(params);
-      const data = true;
+      const { status } = await updateProvider(params);
 
-      if (data) {
-        //commit('update', data);
-        commit('update', params);
+      if (status === 200) {
+        commit('update');
       }
     } catch (error) {
       throw Error("Ocorreu um erro de API.");
@@ -29,12 +27,10 @@ export default {
 
   create: async ({ commit }, params) => {
     try {
-      //const { data } = await createProvider(params);
-      const data = true;
+      const { data } = await createProvider(params);
 
       if (data) {
-        //commit('create', data);
-        commit('create', params);
+        commit('create', data);
       }
     } catch (error) {
       throw Error("Ocorreu um erro de API.");
@@ -43,11 +39,9 @@ export default {
 
   delete: async ({ commit }, params) => {
     try {
-      //const { data } = await deleteProvider(params);
-      const data = true;
+      const { status } = await deleteProvider(params);
 
-      if (data) {
-        //commit('delete', data);
+      if (status === 200) {
         commit('delete', params);
       }
     } catch (error) {

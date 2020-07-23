@@ -48,7 +48,10 @@
         <v-form ref="form" lazy-validation>
           <v-container fluid>
             <v-row class="px-1">
-              <v-col cols="12" sm="6" md="6" class="py-0">
+              <v-col cols="12" sm="2" md="2" class="py-0" v-if="editedItem.id">
+                <v-text-field v-model="editedItem.id" label="Código" type="text" dense outlined readonly disabled />
+              </v-col>
+              <v-col cols="12" :sm="editedItem.id ? 4 : 6" :md="editedItem.id ? 4 : 6" class="py-0">
                 <v-text-field
                   v-model="editedItem.name"
                   label="Nome"
@@ -119,6 +122,7 @@ export default {
     email,
     dialog: false,
     headers: [
+      { text: 'Código', value: 'id' },
       { text: 'Nome', value: 'name' },
       { text: 'Email', value: 'email' },
       { text: 'Telefone', value: 'phone' },
@@ -127,12 +131,14 @@ export default {
     ],
     editedIndex: -1,
     editedItem: {
+      id: '',
       name: '',
       email: '',
       phone: '',
       url: ''
     },
     defaultItem: {
+      id: '',
       name: '',
       email: '',
       phone: '',
@@ -177,6 +183,8 @@ export default {
         this.editedIndex = -1;
         this.$refs.form.reset();
       });
+
+      this.$store.dispatch('providers/get');
     },
 
     save() {
