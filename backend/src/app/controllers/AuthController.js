@@ -1,7 +1,7 @@
 const { User } = require('../models');
 
 class AuthController {
-  async create(req, res, next) {
+  async create(req, res) {
     const { email, password } = req.body;
 
     try {

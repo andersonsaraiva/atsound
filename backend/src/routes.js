@@ -8,6 +8,8 @@ const ProviderController = require('./app/controllers/ProviderController');
 
 routes.post('/auth', AuthController.create);
 
+routes.use(authMiddleware);
+
 /**
  * Users routes
  */
@@ -15,7 +17,7 @@ routes
   .get('/users', UserController.index)
   .post('/users', UserController.create)
   .put('/users/:id', UserController.update)
-  .delete('/users/:id', authMiddleware, UserController.delete);
+  .delete('/users/:id', UserController.delete);
 
 /**
  * Providers routes
@@ -24,6 +26,6 @@ routes
   .get('/providers', ProviderController.index)
   .post('/providers', ProviderController.create)
   .put('/providers/:id', ProviderController.update)
-  .delete('/providers/:id', authMiddleware, ProviderController.delete);
+  .delete('/providers/:id', ProviderController.delete);
 
 module.exports = routes;
