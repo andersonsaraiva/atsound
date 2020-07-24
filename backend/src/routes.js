@@ -5,6 +5,7 @@ const authMiddleware = require('./app/middlewares/auth');
 const AuthController = require('./app/controllers/AuthController');
 const UserController = require('./app/controllers/UserController');
 const ProviderController = require('./app/controllers/ProviderController');
+const BudgetController = require('./app/controllers/BudgetController');
 
 routes.post('/auth', AuthController.create);
 
@@ -27,5 +28,14 @@ routes
   .post('/providers', ProviderController.create)
   .put('/providers/:id', ProviderController.update)
   .delete('/providers/:id', ProviderController.delete);
+
+/**
+ * Budgets routes
+ */
+routes
+  .get('/budgets', BudgetController.index)
+  .post('/budgets', BudgetController.create)
+  .put('/budgets/:id', BudgetController.update)
+  .delete('/budgets/:id', BudgetController.delete);
 
 module.exports = routes;
