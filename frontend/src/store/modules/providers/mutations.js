@@ -8,13 +8,8 @@ export default {
     showMessage('success', 'Operação realizada com sucesso!');
   },
 
-  update: (state, payload) => {
-    let index = state.providers.findIndex(x => x.id === payload.id);
-
-    if (index !== -1) {
-      state.providers[index] = payload;
-      showMessage('success', 'Operação realizada com sucesso!');
-    }
+  update: () => {
+    showMessage('success', 'Operação realizada com sucesso!');
   },
 
   delete: (state, payload) => {
