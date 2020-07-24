@@ -44,7 +44,7 @@ routes
  */
 routes
   .get('/services', ServiceController.index)
-  .post('/services', ServiceController.create)
+  .post('/budgets/:budget_id/services', ServiceController.create)
   .put('/services/:id', ServiceController.update)
   .delete('/services/:id', ServiceController.delete);
 

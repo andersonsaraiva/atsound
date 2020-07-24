@@ -1,16 +1,14 @@
 const Service = require('../models/Service');
+const Budget = require('../models/Budget');
 
-// budget_id
-// description
-// price
 class ServiceController {
   async index(req, res) {
     try {
-      const budgets = await Service.findAll({
+      const services = await Service.findAll({
         attributes: ['id', 'budget_id', 'description', 'price']
       });
 
-      return res.status(200).send(budgets);
+      return res.status(200).send(services);
     } catch (error) {
       return res.status(400).send({ message: `Erro ao buscar o serviços!` });
     }
@@ -18,7 +16,14 @@ class ServiceController {
 
   async create(req, res) {
     try {
-      const { budget_id, description, price } = req.body;
+      const { description, price } = req.body;
+      const { budget_id } = req.params;
+
+      const budget = await Budget.findByPk(budget_id);
+
+      if (!budget) {
+        return res.status(400).send({ message: `Erro ao buscar o orçamento do id: ${budget_id}!` });
+      }
 
       await Service.create({ budget_id, description, price });
 

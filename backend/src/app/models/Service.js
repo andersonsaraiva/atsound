@@ -4,12 +4,15 @@ class Service extends Model {
   static init(sequelize) {
     super.init(
       {
-        budget_id: DataTypes.INTEGER,
         description: DataTypes.STRING,
         price: DataTypes.STRING
       },
       { sequelize }
     );
+  }
+
+  static associate(models) {
+    this.belongsTo(models.Budget, { foreignKey: 'budget_id', as: 'budget' });
   }
 }
 
