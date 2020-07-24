@@ -17,12 +17,6 @@ class ProviderController {
     try {
       const { name, email, phone, url } = req.body;
 
-      if (!!(await Provider.findOne({ where: { email } }))) {
-        return res
-          .status(400)
-          .send({ message: 'Erro ao criar novo fornecedor... já existe na base de dados com esse email!' });
-      }
-
       await Provider.create({ name, email, phone, url });
 
       return res.status(201).send();

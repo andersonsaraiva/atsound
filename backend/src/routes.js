@@ -6,6 +6,7 @@ const AuthController = require('./app/controllers/AuthController');
 const UserController = require('./app/controllers/UserController');
 const ProviderController = require('./app/controllers/ProviderController');
 const BudgetController = require('./app/controllers/BudgetController');
+const ServiceController = require('./app/controllers/ServiceController');
 
 routes.post('/auth', AuthController.create);
 
@@ -37,5 +38,14 @@ routes
   .post('/budgets', BudgetController.create)
   .put('/budgets/:id', BudgetController.update)
   .delete('/budgets/:id', BudgetController.delete);
+
+/**
+ * Services routes
+ */
+routes
+  .get('/services', ServiceController.index)
+  .post('/services', ServiceController.create)
+  .put('/services/:id', ServiceController.update)
+  .delete('/services/:id', ServiceController.delete);
 
 module.exports = routes;
