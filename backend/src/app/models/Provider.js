@@ -1,10 +1,17 @@
-module.exports = (sequelize, DataTypes) => {
-  const Provider = sequelize.define('Provider', {
-    name: DataTypes.STRING,
-    email: DataTypes.STRING,
-    phone: DataTypes.STRING,
-    url: DataTypes.STRING
-  });
+const { Model, DataTypes } = require('sequelize');
 
-  return Provider;
-};
+class Provider extends Model {
+  static init(sequelize) {
+    super.init(
+      {
+        name: DataTypes.STRING,
+        email: DataTypes.STRING,
+        phone: DataTypes.STRING,
+        url: DataTypes.STRING
+      },
+      { sequelize }
+    );
+  }
+}
+
+module.exports = Provider;

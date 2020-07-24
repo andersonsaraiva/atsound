@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const User = require('../models/User');
 
 class UserController {
   async index(req, res) {
@@ -9,7 +9,7 @@ class UserController {
 
       return res.status(200).send(users);
     } catch (error) {
-      return res.status(400).send({ message: `Erro ao buscar o usuários!` });
+      return res.status(400).send({ message: `Erro ao buscar o usuários!`, error });
     }
   }
 

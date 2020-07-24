@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 
+require('./database');
+
 class AppController {
   constructor() {
     this.express = express();

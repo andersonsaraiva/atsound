@@ -1,4 +1,4 @@
-const { Provider } = require('../models');
+const Provider = require('../models/Provider');
 
 class ProviderController {
   async index(req, res) {
