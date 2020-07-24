@@ -144,7 +144,7 @@
 
               <v-col cols="12" sm="3" md="3" class="py-0">
                 <v-text-field
-                  v-model="editedItem.address.cep"
+                  v-model="editedItem.address.zipcode"
                   label="CEP"
                   required
                   type="text"
@@ -365,7 +365,7 @@ export default {
       gender: '',
       date_of_birth: '',
       address: {
-        cep: '',
+        zipcode: '',
         street: '',
         number: '',
         neighborhood: '',
@@ -390,7 +390,7 @@ export default {
       gender: '',
       date_of_birth: '',
       address: {
-        cep: '',
+        zipcode: '',
         street: '',
         number: '',
         neighborhood: '',

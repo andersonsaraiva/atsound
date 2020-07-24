@@ -25,8 +25,8 @@
     </v-card>
 
     <v-data-table :search="search" :headers="headers" :items="items" class="elevation-1" dense>
-      <template v-slot:item.budgetDate="{ item }">
-        {{ formatDate(item.budgetDate) }}
+      <template v-slot:item.date="{ item }">
+        {{ formatDate(item.date) }}
       </template>
       <template v-slot:item.actions="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)" color="green">
@@ -52,7 +52,15 @@
           <v-container fluid>
             <v-row class="px-1">
               <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.name" label="Nome" type="text" dense outlined required :rules="[required]" />
+                <v-text-field
+                  v-model="editedItem.name"
+                  label="Nome"
+                  type="text"
+                  dense
+                  outlined
+                  required
+                  :rules="[required]"
+                />
               </v-col>
               <v-col cols="12" sm="6" md="6" class="py-0">
                 <v-text-field
@@ -70,12 +78,19 @@
                 <v-text-field v-model="editedItem.email" label="Email" type="text" dense outlined :rules="[email]" />
               </v-col>
               <v-col cols="12" sm="3" md="3" class="py-0">
-                <v-text-field v-model="editedItem.cpf" label="CPF" dense outlined type="text" v-mask="'###.###.##-##'" />
+                <v-text-field
+                  v-model="editedItem.cpf"
+                  label="CPF"
+                  dense
+                  outlined
+                  type="text"
+                  v-mask="'###.###.##-##'"
+                />
               </v-col>
               <v-col cols="12" sm="3" md="3" class="py-0">
                 <v-text-field
                   type="date"
-                  v-model="editedItem.budgetDate"
+                  v-model="editedItem.date"
                   label="Data do Orçamento"
                   dense
                   outlined
@@ -212,7 +227,7 @@ export default {
       { text: 'Email', value: 'email' },
       { text: 'Telefone', value: 'phone' },
       { text: 'CPF', value: 'cpf' },
-      { text: 'Data do Orçamento', value: 'budgetDate' },
+      { text: 'Data do Orçamento', value: 'date' },
       { text: '', value: 'actions', sortable: false, align: 'right' }
     ],
     servicesHeaders: [
@@ -226,7 +241,7 @@ export default {
     editedItem: {
       id: null,
       name: null,
-      budgetDate: null,
+      date: null,
       email: null,
       phone: null,
       services: []
@@ -234,7 +249,7 @@ export default {
     defaultItem: {
       id: null,
       name: null,
-      budgetDate: null,
+      date: null,
       email: null,
       phone: null,
       services: []

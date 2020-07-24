@@ -21,7 +21,7 @@
       "cnh_state": "SP"
     },
     "address": {
-      "cep": "03261090",
+      "zipcode": "03261090",
       "street": "Fernão Lopes de Camargo",
       "number": "280",
       "neighborhood": "Pq São Lucas",
@@ -57,7 +57,7 @@
       "cnh_state": "SP"
     },
     "address": {
-      "cep": "03261090",
+      "zipcode": "03261090",
       "street": "Fernão Lopes de Camargo",
       "number": "280",
       "neighborhood": "Pq São Lucas",

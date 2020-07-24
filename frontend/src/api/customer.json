@@ -7,7 +7,7 @@
     "gender": "Feminino",
     "date_of_birth": "28-05-1993",
     "address": {
-      "cep": "03261090",
+      "zipcode": "03261090",
       "street": "Fernão Lopes de Camargo",
       "number": "280",
       "neighborhood": "Pq São Lucas",
@@ -38,7 +38,7 @@
     "gender": "Feminino",
     "date_of_birth": "28-05-1993",
     "address": {
-      "cep": "03261090",
+      "zipcode": "03261090",
       "street": "Fernão Lopes de Camargo",
       "number": "280",
       "neighborhood": "Pq São Lucas",
@@ -69,7 +69,7 @@
     "gender": "Feminino",
     "date_of_birth": "28-05-1993",
     "address": {
-      "cep": "03261090",
+      "zipcode": "03261090",
       "street": "Fernão Lopes de Camargo",
       "number": "280",
       "neighborhood": "Pq São Lucas",
@@ -100,7 +100,7 @@
     "gender": "Feminino",
     "date_of_birth": "28-05-1993",
     "address": {
-      "cep": "03261090",
+      "zipcode": "03261090",
       "street": "Fernão Lopes de Camargo",
       "number": "280",
       "neighborhood": "Pq São Lucas",
@@ -131,7 +131,7 @@
     "gender": "Feminino",
     "date_of_birth": "28-05-1993",
     "address": {
-      "cep": "03261090",
+      "zipcode": "03261090",
       "street": "Fernão Lopes de Camargo",
       "number": "280",
       "neighborhood": "Pq São Lucas",
@@ -162,7 +162,7 @@
     "gender": "Feminino",
     "date_of_birth": "28-05-1993",
     "address": {
-      "cep": "03261090",
+      "zipcode": "03261090",
       "street": "Fernão Lopes de Camargo",
       "number": "280",
       "neighborhood": "Pq São Lucas",

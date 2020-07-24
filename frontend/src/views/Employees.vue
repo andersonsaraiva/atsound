@@ -194,7 +194,7 @@
 
               <v-col cols="12" sm="3" md="3" class="py-0">
                 <v-text-field
-                  v-model="editedItem.address.cep"
+                  v-model="editedItem.address.zipcode"
                   label="CEP"
                   required
                   type="text"
@@ -288,7 +288,7 @@ import items from '@/api/employees.json';
 import { required, email } from '@/helpers/validations';
 import { showMessage, confirmMessage } from '@/helpers/messages';
 import * as HANDLERS from '@/helpers/handlers';
-import { getCep } from '@/services/cep';
+import { getZipcode } from '@/services/cep';
 
 export default {
   components: {
@@ -421,11 +421,11 @@ export default {
     },
 
     async onBlur() {
-      if (this.editedItem && this.editedItem.address.cep) {
-        const { data } = await getCep(this.editedItem.address.cep);
+      if (this.editedItem && this.editedItem.address.zipcode) {
+        const { data } = await getZipcode(this.editedItem.address.zipcode);
 
         if (data.erro) {
-          showMessage('error', `O CEP ${this.editedItem.address.cep} é inválido!`, 3000);
+          showMessage('error', `O CEP ${this.editedItem.address.zipcode} é inválido!`, 3000);
         } else {
           this.editedItem.address.street = data.logradouro;
           this.editedItem.address.neighborhood = data.bairro;
