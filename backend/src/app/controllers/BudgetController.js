@@ -19,9 +19,9 @@ class BudgetController {
     try {
       const { name, email, phone, cpf, date } = req.body;
 
-      await Budget.create({ name, email, phone, cpf, date });
+      const budget = await Budget.create({ name, email, phone, cpf, date });
 
-      return res.status(201).send();
+      return res.status(201).send(budget);
     } catch (error) {
       return res.status(400).send({ message: 'Erro ao criar novo orçamento!' });
     }
@@ -36,7 +36,7 @@ class BudgetController {
 
       if (budget) await budget.update({ name, email, phone, cpf, date });
 
-      return res.status(200).send();
+      return res.status(200).send(budget);
     } catch (err) {
       return res.status(400).send({ message: `Erro ao atualizar o orçamento do id: ${id}!` });
     }
