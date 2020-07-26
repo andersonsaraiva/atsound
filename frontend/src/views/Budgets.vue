@@ -43,7 +43,7 @@
         <v-card-title class="pa-3">
           <span class="headline">{{ formTitle }}</span>
           <v-spacer></v-spacer>
-          <v-icon @click="close">close</v-icon>
+          <v-icon @click="close" title="Fechar janela">close</v-icon>
         </v-card-title>
 
         <v-divider horizontal></v-divider>
@@ -51,7 +51,10 @@
         <v-form ref="form" lazy-validation v-model="form">
           <v-container fluid>
             <v-row class="px-1">
-              <v-col cols="12" sm="6" md="6" class="py-0">
+              <v-col cols="12" sm="2" md="2" class="py-0" v-if="editedItem.id">
+                <v-text-field v-model="editedItem.id" label="Código" type="text" dense outlined readonly disabled />
+              </v-col>
+              <v-col cols="12" :sm="editedItem.id ? 4 : 6" :md="editedItem.id ? 4 : 6" class="py-0">
                 <v-text-field
                   v-model="editedItem.name"
                   label="Nome"
@@ -84,19 +87,33 @@
                   dense
                   outlined
                   type="text"
-                  v-mask="'###.###.##-##'"
+                  v-mask="'###.###.###-##'"
                 />
               </v-col>
               <v-col cols="12" sm="3" md="3" class="py-0">
-                <v-text-field
-                  type="date"
-                  v-model="editedItem.date"
-                  label="Data do Orçamento"
-                  dense
-                  outlined
-                  required
-                  :rules="[required]"
-                />
+                <v-menu
+                  v-model="menu"
+                  :close-on-content-click="false"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="editedItem.date"
+                      label="Data do Orçamento"
+                      append-icon="event"
+                      readonly
+                      dense
+                      outlined
+                      required
+                      :rules="[required]"
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker v-model="editedItem.date" @input="menu = false" locale="pt-br"></v-date-picker>
+                </v-menu>
               </v-col>
             </v-row>
           </v-container>
@@ -194,7 +211,6 @@
 </template>
 
 <script>
-import items from '@/api/budgets.json';
 import { required, email } from '@/helpers/validations';
 import { showMessage, confirmMessage } from '@/helpers/messages';
 import { formatValue, formatDate } from '@/helpers/utils';
@@ -206,10 +222,12 @@ export default {
   },
 
   events: {
-    [HANDLERS.DELETE_BUDGETS]: 'showDelete'
+    [HANDLERS.DELETE_BUDGETS]: 'showDelete',
+    [HANDLERS.CLOSE_BUDGETS]: 'close'
   },
 
   data: () => ({
+    menu: false,
     totalServices: 0,
     form: true,
     formServices: true,
@@ -235,7 +253,6 @@ export default {
       { text: 'Preço', value: 'price' },
       { text: '', value: 'actions', sortable: false, align: 'right' }
     ],
-    items: [],
     editedIndex: -1,
     editedService: -1,
     editedItem: {
@@ -265,26 +282,20 @@ export default {
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? 'Cadastro' : 'Edição';
-    }
-  },
+    },
 
-  watch: {
-    dialog(val) {
-      val || this.close();
+    items() {
+      return this.$store.getters['budgets/get'];
     }
   },
 
   created() {
-    this.initialize();
+    this.$store.dispatch('budgets/get');
   },
 
   methods: {
     formatValue,
     formatDate,
-
-    initialize() {
-      this.items = items;
-    },
 
     addBudget() {
       this.dialog = true;
@@ -303,9 +314,7 @@ export default {
     },
 
     showDelete(item) {
-      const index = this.items.indexOf(item);
-
-      this.items.splice(index, 1);
+      this.$store.dispatch('budgets/delete', item);
     },
 
     close() {
@@ -317,20 +326,18 @@ export default {
         this.$refs.form.reset();
         this.$refs.formServices.reset();
       });
+
+      this.$store.dispatch('budgets/get');
     },
 
     save() {
       if (!this.$refs.form.validate(true)) return;
 
       if (this.editedIndex > -1) {
-        Object.assign(this.items[this.editedIndex], this.editedItem);
+        this.$store.dispatch('budgets/update', this.editedItem);
       } else {
-        this.items.push(this.editedItem);
+        this.$store.dispatch('budgets/create', this.editedItem);
       }
-
-      showMessage('success', 'Operação realizada com sucesso!');
-
-      this.close();
     },
 
     editService(item) {
@@ -354,6 +361,10 @@ export default {
   },
 
   watch: {
+    dialog(val) {
+      val || this.close();
+    },
+
     editedItem: {
       deep: true,
       handler(newValue) {

@@ -45,7 +45,7 @@
 
         <v-divider horizontal></v-divider>
 
-        <v-form ref="form" lazy-validation>
+        <v-form ref="form" lazy-validation v-model="form">
           <v-container fluid>
             <v-row class="px-1">
               <v-col cols="12" sm="2" md="2" class="py-0" v-if="editedItem.id">
@@ -94,7 +94,7 @@
 
         <v-card-actions class="pa-3">
           <v-spacer></v-spacer>
-          <v-btn color="primary" @click="save" small>Salvar</v-btn>
+          <v-btn color="primary" @click="save" small :disabled="!form">Salvar</v-btn>
           <v-btn @click="close" small>Cancelar</v-btn>
         </v-card-actions>
       </v-card>
@@ -118,6 +118,7 @@ export default {
   },
 
   data: () => ({
+    form: true,
     search: '',
     required,
     email,
