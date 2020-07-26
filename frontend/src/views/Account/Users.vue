@@ -73,7 +73,7 @@
                   :rules="[required, email]"
                 />
               </v-col>
-              <v-col cols="12" sm="12" md="12" class="py-0">
+              <v-col cols="12" sm="12" md="12" class="py-0" v-if="editedItem.id">
                 <v-autocomplete
                   v-model="editedItem.role"
                   label="Permissão"
@@ -110,7 +110,8 @@ export default {
   },
 
   events: {
-    [HANDLERS.DELETE_USER]: 'showDelete'
+    [HANDLERS.DELETE_USER]: 'showDelete',
+    [HANDLERS.CLOSE_USER]: 'close'
   },
 
   data: () => ({
@@ -123,7 +124,6 @@ export default {
       { text: 'Código', value: 'id' },
       { text: 'Nome', value: 'name' },
       { text: 'Email', value: 'email' },
-      { text: 'Login', value: 'username' },
       { text: 'Permissão', value: 'role' },
       { text: '', value: 'actions', sortable: false, align: 'right' }
     ],
@@ -132,14 +132,12 @@ export default {
       id: '',
       name: '',
       email: '',
-      username: '',
       role: ''
     },
     defaultItem: {
       id: '',
       name: '',
       email: '',
-      username: '',
       role: ''
     }
   }),
@@ -193,8 +191,6 @@ export default {
       } else {
         await this.$store.dispatch('users/create', this.editedItem);
       }
-
-      this.close();
     }
   },
 

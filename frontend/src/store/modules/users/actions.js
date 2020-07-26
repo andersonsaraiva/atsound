@@ -27,10 +27,10 @@ export default {
 
   create: async ({ commit }, params) => {
     try {
-      const { data } = await createUser(params);
+      const { status } = await createUser(params);
 
-      if (data) {
-        commit('create', data);
+      if (status === 201) {
+        commit('create');
       }
     } catch (error) {
       throw Error("Ocorreu um erro de API.");

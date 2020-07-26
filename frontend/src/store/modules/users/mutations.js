@@ -1,15 +1,18 @@
 import { showMessage } from '@/helpers/messages';
+import * as HANDLERS from '@/helpers/handlers';
+import eventBus from 'vue-option-events';
 
 export default {
   set: (state, payload) => (state.users = payload),
 
-  create: (state, payload) => {
-    state.users.push(payload);
+  create: () => {
     showMessage('success', 'Operação realizada com sucesso!');
+    eventBus.$emit(HANDLERS.CLOSE_USER);
   },
 
   update: () => {
     showMessage('success', 'Operação realizada com sucesso!');
+    eventBus.$emit(HANDLERS.CLOSE_USER);
   },
 
   delete: (state, payload) => {

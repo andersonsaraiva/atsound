@@ -113,7 +113,8 @@ export default {
   },
 
   events: {
-    [HANDLERS.DELETE_PROVIDER]: 'showDelete'
+    [HANDLERS.DELETE_PROVIDER]: 'showDelete',
+    [HANDLERS.CLOSE_PROVIDER]: 'close'
   },
 
   data: () => ({
@@ -195,8 +196,6 @@ export default {
       } else {
         this.$store.dispatch('providers/create', this.editedItem);
       }
-
-      this.close();
     }
   },
 
