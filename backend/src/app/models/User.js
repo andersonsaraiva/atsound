@@ -9,7 +9,6 @@ class User extends Model {
       {
         name: DataTypes.STRING,
         email: DataTypes.STRING,
-        username: DataTypes.STRING,
         role: DataTypes.STRING,
         password: DataTypes.VIRTUAL,
         password_reset_token: DataTypes.STRING,
@@ -34,7 +33,7 @@ class User extends Model {
   }
 
   generateToken = function () {
-    return jwt.sign({ id: this.id, name: this.name, username: this.username, role: this.role }, '@atsound');
+    return jwt.sign({ id: this.id, name: this.name, role: this.role }, '@atsound');
   };
 }
 
