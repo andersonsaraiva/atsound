@@ -13,6 +13,10 @@ class Budget extends Model {
       { sequelize }
     );
   }
+
+  static associate(models) {
+    this.hasMany(models.Service, { foreignKey: 'budget_id', as: 'services' });
+  }
 }
 
 module.exports = Budget;

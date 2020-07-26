@@ -10,7 +10,7 @@ class ServiceController {
 
       return res.status(200).send(services);
     } catch (error) {
-      return res.status(400).send({ message: `Erro ao buscar o serviços!` });
+      return res.status(400).send({ message: `Erro ao buscar o serviços!`, error });
     }
   }
 

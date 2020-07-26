@@ -13,6 +13,7 @@ Provider.init(connection);
 Budget.init(connection);
 Service.init(connection);
 
+Budget.associate(connection.models);
 Service.associate(connection.models);
 
 module.exports = connection;

@@ -1,10 +1,12 @@
 const Budget = require('../models/Budget');
+const { findByPk } = require('../models/Budget');
 
 class BudgetController {
   async index(req, res) {
     try {
       const budgets = await Budget.findAll({
-        attributes: ['id', 'name', 'email', 'phone', 'cpf', 'date']
+        attributes: ['id', 'name', 'email', 'phone', 'cpf', 'date'],
+        include: { association: 'services' }
       });
 
       return res.status(200).send(budgets);
