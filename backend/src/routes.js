@@ -10,7 +10,7 @@ const ServiceController = require('./app/controllers/ServiceController');
 
 routes.post('/auth', AuthController.create);
 
-routes.use(authMiddleware);
+// routes.use(authMiddleware);
 
 /**
  * Users routes
