@@ -6,15 +6,13 @@
     "cpf": "874.836.300-60",
     "gender": "Feminino",
     "date_of_birth": "28-05-1993",
-    "address": {
-      "zipcode": "03261090",
-      "street": "Fernão Lopes de Camargo",
-      "number": "280",
-      "neighborhood": "Pq São Lucas",
-      "complement": "",
-      "city": "São Paulo",
-      "state": "SP"
-    },
+    "zipcode": "03261090",
+    "street": "Fernão Lopes de Camargo",
+    "number": "280",
+    "neighborhood": "Pq São Lucas",
+    "complement": "",
+    "city": "São Paulo",
+    "state": "SP",
     "cars": [
       {
         "model": "Porsche",
@@ -37,15 +35,13 @@
     "cpf": "548.940.140-09",
     "gender": "Feminino",
     "date_of_birth": "28-05-1993",
-    "address": {
-      "zipcode": "03261090",
-      "street": "Fernão Lopes de Camargo",
-      "number": "280",
-      "neighborhood": "Pq São Lucas",
-      "complement": "",
-      "city": "São Paulo",
-      "state": "SP"
-    },
+    "zipcode": "03261090",
+    "street": "Fernão Lopes de Camargo",
+    "number": "280",
+    "neighborhood": "Pq São Lucas",
+    "complement": "",
+    "city": "São Paulo",
+    "state": "SP",
     "cars": [
       {
         "model": "Porsche",
@@ -68,15 +64,13 @@
     "cpf": "662.668.070-68",
     "gender": "Feminino",
     "date_of_birth": "28-05-1993",
-    "address": {
-      "zipcode": "03261090",
-      "street": "Fernão Lopes de Camargo",
-      "number": "280",
-      "neighborhood": "Pq São Lucas",
-      "complement": "",
-      "city": "São Paulo",
-      "state": "SP"
-    },
+    "zipcode": "03261090",
+    "street": "Fernão Lopes de Camargo",
+    "number": "280",
+    "neighborhood": "Pq São Lucas",
+    "complement": "",
+    "city": "São Paulo",
+    "state": "SP",
     "cars": [
       {
         "model": "Porsche",
@@ -99,15 +93,13 @@
     "cpf": "618.610.880-51",
     "gender": "Feminino",
     "date_of_birth": "28-05-1993",
-    "address": {
-      "zipcode": "03261090",
-      "street": "Fernão Lopes de Camargo",
-      "number": "280",
-      "neighborhood": "Pq São Lucas",
-      "complement": "",
-      "city": "São Paulo",
-      "state": "SP"
-    },
+    "zipcode": "03261090",
+    "street": "Fernão Lopes de Camargo",
+    "number": "280",
+    "neighborhood": "Pq São Lucas",
+    "complement": "",
+    "city": "São Paulo",
+    "state": "SP",
     "cars": [
       {
         "model": "Porsche",
@@ -130,15 +122,13 @@
     "cpf": "070.883.740-99",
     "gender": "Feminino",
     "date_of_birth": "28-05-1993",
-    "address": {
-      "zipcode": "03261090",
-      "street": "Fernão Lopes de Camargo",
-      "number": "280",
-      "neighborhood": "Pq São Lucas",
-      "complement": "",
-      "city": "São Paulo",
-      "state": "SP"
-    },
+    "zipcode": "03261090",
+    "street": "Fernão Lopes de Camargo",
+    "number": "280",
+    "neighborhood": "Pq São Lucas",
+    "complement": "",
+    "city": "São Paulo",
+    "state": "SP",
     "cars": [
       {
         "model": "Porsche",
@@ -161,15 +151,13 @@
     "cpf": "020.719.090-97",
     "gender": "Feminino",
     "date_of_birth": "28-05-1993",
-    "address": {
-      "zipcode": "03261090",
-      "street": "Fernão Lopes de Camargo",
-      "number": "280",
-      "neighborhood": "Pq São Lucas",
-      "complement": "",
-      "city": "São Paulo",
-      "state": "SP"
-    },
+    "zipcode": "03261090",
+    "street": "Fernão Lopes de Camargo",
+    "number": "280",
+    "neighborhood": "Pq São Lucas",
+    "complement": "",
+    "city": "São Paulo",
+    "state": "SP",
     "cars": [
       {
         "model": "Porsche",
