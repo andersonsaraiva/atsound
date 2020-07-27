@@ -24,7 +24,7 @@
       </v-card-text>
     </v-card>
 
-    <v-data-table :search="search" :headers="headers" :items="items" class="elevation-1" dense>
+    <v-data-table :search="search" :headers="headers" :items="items" class="elevation-1" dense sort-by="date">
       <template v-slot:item.date="{ item }">
         {{ formatDate(item.date) }}
       </template>
