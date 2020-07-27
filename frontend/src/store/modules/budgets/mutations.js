@@ -5,14 +5,14 @@ import eventBus from 'vue-option-events';
 export default {
   set: (state, payload) => (state.budgets = payload),
 
-  create: () => {
+  create: (state, payload) => {
     showMessage('success', 'Operação realizada com sucesso!');
-    eventBus.$emit(HANDLERS.CLOSE_BUDGETS);
+    eventBus.$emit(HANDLERS.NEXT_STEP_BUDGETS, payload);
   },
 
-  update: () => {
+  update: (state, payload) => {
     showMessage('success', 'Operação realizada com sucesso!');
-    eventBus.$emit(HANDLERS.CLOSE_BUDGETS);
+    eventBus.$emit(HANDLERS.NEXT_STEP_BUDGETS, payload);
   },
 
   delete: (state, payload) => {
@@ -22,5 +22,17 @@ export default {
       state.budgets.splice(index, 1);
       showMessage('success', 'Operação realizada com sucesso!');
     }
-  }
+  },
+
+  createService: (state, payload) => {
+    showMessage('success', 'Operação realizada com sucesso!');
+  },
+
+  updateService: (state, payload) => {
+    showMessage('success', 'Operação realizada com sucesso!');
+  },
+
+  deleteService: (state, payload) => {
+    showMessage('success', 'Operação realizada com sucesso!');
+  },
 };

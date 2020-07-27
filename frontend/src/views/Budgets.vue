@@ -44,7 +44,7 @@
           <v-toolbar-title>{{ formTitle }}</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn icon dark @click="dialog = false" title="Fechar janela">
+            <v-btn icon dark @click="close" title="Fechar janela">
               <v-icon>mdi-close</v-icon>
             </v-btn>
           </v-toolbar-items>
@@ -59,7 +59,7 @@
               <small>Obrigatório</small>
             </v-stepper-step>
             <v-divider></v-divider>
-            <v-stepper-step :editable="editedItem.id" step="2">
+            <v-stepper-step :editable="!!editedItem.id" step="2">
               Serviços
               <small>Obrigatório</small>
             </v-stepper-step>
@@ -155,7 +155,7 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="primary" @click="save" :disabled="!form">
-                  Próximo Passo
+                  Salvar e avançar
                   <v-icon right="">fas fa-long-arrow-alt-right</v-icon>
                 </v-btn>
               </v-card-actions>
@@ -164,79 +164,68 @@
               <v-form ref="formServices" lazy-validation v-model="formServices">
                 <v-container fluid>
                   <v-row>
+                    <v-col cols="12" sm="8" md="8" class="py-0">
+                      <v-text-field
+                        v-model="service.description"
+                        label="Descrição"
+                        type="text"
+                        dense
+                        outlined
+                        required
+                        :rules="[required]"
+                      />
+                    </v-col>
+                    <v-col cols="12" sm="2" md="2" class="py-0">
+                      <vuetify-money
+                        v-model="service.price"
+                        label="Preço"
+                        dense
+                        outlined
+                        required
+                        :rules="[required]"
+                        :valueWhenIsEmpty="''"
+                        :options="options"
+                        background-color="transparent"
+                      />
+                    </v-col>
+                    <v-col cols="12" sm="2" md="2" class="py-0">
+                      <v-btn color="primary" @click="addService" :disabled="!formServices">
+                        <v-icon left>add</v-icon>
+                        Adicionar
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+                  <v-row>
                     <v-col>
-                      <v-expansion-panels focusable v-model="showCollapse" class="column-group">
-                        <v-expansion-panel>
-                          <v-expansion-panel-header>Serviços</v-expansion-panel-header>
-                          <v-expansion-panel-content>
-                            <v-row>
-                              <v-col cols="12" sm="8" md="8" class="py-0">
-                                <v-text-field
-                                  v-model="service.description"
-                                  label="Descrição"
-                                  type="text"
-                                  dense
-                                  outlined
-                                  required
-                                  :rules="[required]"
-                                />
-                              </v-col>
-                              <v-col cols="12" sm="2" md="2" class="py-0">
-                                <vuetify-money
-                                  v-model="service.price"
-                                  label="Preço"
-                                  dense
-                                  outlined
-                                  required
-                                  :rules="[required]"
-                                  :valueWhenIsEmpty="''"
-                                  :options="options"
-                                  background-color="transparent"
-                                />
-                              </v-col>
-                              <v-col cols="12" sm="2" md="2" class="py-0">
-                                <v-btn color="primary" @click="addService" :disabled="!formServices">
-                                  <v-icon left>add</v-icon>
-                                  Adicionar
-                                </v-btn>
-                              </v-col>
-                            </v-row>
-                            <v-row>
-                              <v-col>
-                                <v-data-table
-                                  :headers="servicesHeaders"
-                                  :items="editedItem.services"
-                                  hide-default-footer
-                                  dense
-                                  class="elevation-1"
-                                >
-                                  <template v-slot:item.price="{ item }">
-                                    {{ formatValue(item.price) }}
-                                  </template>
+                      <v-data-table
+                        :headers="servicesHeaders"
+                        :items="editedItem.services"
+                        hide-default-footer
+                        dense
+                        class="elevation-1"
+                      >
+                        <template v-slot:item.price="{ item }">
+                          {{ formatValue(item.price) }}
+                        </template>
 
-                                  <template v-slot:item.actions="{ item }">
-                                    <v-icon small class="mr-2" @click="editService(item)" color="green">
-                                      mdi-pencil
-                                    </v-icon>
-                                    <v-icon small @click="deleteService(item)" color="red">
-                                      mdi-delete
-                                    </v-icon>
-                                  </template>
-                                  <template v-slot:body.append>
-                                    <tr class="">
-                                      <td class="text-start"><strong>Total:</strong></td>
-                                      <td class="text-start">
-                                        <strong>{{ formatValue(totalServices) }}</strong>
-                                      </td>
-                                      <td class="text-right"></td>
-                                    </tr>
-                                  </template>
-                                </v-data-table>
-                              </v-col>
-                            </v-row>
-                          </v-expansion-panel-content>
-                        </v-expansion-panel>
-                      </v-expansion-panels>
+                        <template v-slot:item.actions="{ item }">
+                          <v-icon small class="mr-2" @click="editService(item)" color="green">
+                            mdi-pencil
+                          </v-icon>
+                          <v-icon small @click="deleteService(item)" color="red">
+                            mdi-delete
+                          </v-icon>
+                        </template>
+                        <template v-slot:body.append>
+                          <tr class="">
+                            <td class="text-start"><strong>Total:</strong></td>
+                            <td class="text-start">
+                              <strong>{{ formatValue(totalServices) }}</strong>
+                            </td>
+                            <td class="text-right"></td>
+                          </tr>
+                        </template>
+                      </v-data-table>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -262,7 +251,8 @@ export default {
 
   events: {
     [HANDLERS.DELETE_BUDGETS]: 'showDelete',
-    [HANDLERS.CLOSE_BUDGETS]: 'close'
+    [HANDLERS.NEXT_STEP_BUDGETS]: 'next_step',
+    [HANDLERS.DELETE_SERVICE]: 'showDeleteService'
   },
 
   data: () => ({
@@ -277,6 +267,7 @@ export default {
     dialog: false,
     showCollapse: 0,
     service: {
+      id: null,
       description: null,
       price: null
     },
@@ -340,6 +331,7 @@ export default {
     addBudget() {
       this.dialog = true;
       this.totalServices = 0;
+      this.step = 1;
     },
 
     editItem(item) {
@@ -359,6 +351,7 @@ export default {
 
     close() {
       this.dialog = false;
+      this.step = 1;
 
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
@@ -380,20 +373,33 @@ export default {
       }
     },
 
+    next_step(item) {
+      this.editedItem.id = item.id;
+      this.step = 2;
+    },
+
     editService(item) {
       this.editedService = this.editedItem.services.indexOf(item);
       this.service = Object.assign({}, item);
     },
 
-    deleteService(item) {},
+    deleteService(item) {
+      confirmMessage(`Deseja realmente excluir`, `${item.description}`, item, HANDLERS.DELETE_SERVICE);
+    },
+
+    showDeleteService(item) {
+      this.$store.dispatch('budgets/deleteService', item);
+    },
 
     addService() {
       if (!this.$refs.formServices.validate(true)) return;
 
+      let params = { budget: { budget_id: this.editedItem.id }, service: this.service };
+
       if (this.editedService > -1) {
-        Object.assign(this.editedItem.services[this.editedService], this.service);
+        this.$store.dispatch('budgets/updateService', params);
       } else {
-        this.editedItem.services.push(JSON.parse(JSON.stringify(this.service)));
+        this.$store.dispatch('budgets/createService', params);
       }
 
       this.$refs.formServices.reset();

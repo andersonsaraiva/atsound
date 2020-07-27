@@ -1,4 +1,4 @@
-import { getBudgets, createBudgets, updateBudgets, deleteBudgets } from '@/services/budgets';
+import { getBudgets, createBudgets, updateBudgets, deleteBudgets, createServices, updateServices, deleteServices } from '@/services/budgets';
 
 export default {
   get: async ({ commit }) => {
@@ -15,10 +15,10 @@ export default {
 
   update: async ({ commit }, params) => {
     try {
-      const { status } = await updateBudgets(params);
+      const { status, data } = await updateBudgets(params);
 
       if (status === 200) {
-        commit('update');
+        commit('update', data);
       }
     } catch (error) {
       throw Error("Ocorreu um erro de API.");
@@ -27,10 +27,10 @@ export default {
 
   create: async ({ commit }, params) => {
     try {
-      const { status } = await createBudgets(params);
+      const { status, data } = await createBudgets(params);
 
       if (status === 201) {
-        commit('create');
+        commit('create', data);
       }
     } catch (error) {
       throw Error("Ocorreu um erro de API.");
@@ -43,6 +43,42 @@ export default {
 
       if (status === 200) {
         commit('delete', params);
+      }
+    } catch (error) {
+      throw Error("Ocorreu um erro de API.");
+    }
+  },
+
+  updateService: async ({ commit }, params) => {
+    try {
+      const { status, data } = await updateServices({ ...params.service, ...params.budget });
+
+      if (status === 200) {
+        commit('updateService', data);
+      }
+    } catch (error) {
+      throw Error("Ocorreu um erro de API.");
+    }
+  },
+
+  createService: async ({ commit }, params) => {
+    try {
+      const { status, data } = await createServices({ ...params.service, ...params.budget });
+
+      if (status === 201) {
+        commit('createService', data);
+      }
+    } catch (error) {
+      throw Error("Ocorreu um erro de API.");
+    }
+  },
+
+  deleteService: async ({ commit }, params) => {
+    try {
+      const { status } = await deleteServices(params);
+
+      if (status === 200) {
+        commit('deleteService', params);
       }
     } catch (error) {
       throw Error("Ocorreu um erro de API.");

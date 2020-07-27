@@ -6,6 +6,8 @@ export const CLOSE_CUSTOMER = 'CLOSE_CUSTOMER';
 
 export const DELETE_BUDGETS = 'DELETE_BUDGETS';
 export const CLOSE_BUDGETS = 'CLOSE_BUDGETS';
+export const NEXT_STEP_BUDGETS = 'NEXT_STEP_BUDGETS';
+export const DELETE_SERVICE = 'DELETE_SERVICE';
 
 export const DELETE_STOCK = 'DELETE_STOCK';
 export const CLOSE_STOCK = 'CLOSE_STOCK';
