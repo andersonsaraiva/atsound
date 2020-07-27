@@ -84,7 +84,7 @@
                     <v-col cols="12" :sm="editedItem.id ? 4 : 6" :md="editedItem.id ? 4 : 6" class="py-0">
                       <v-text-field
                         v-model="editedItem.name"
-                        label="Nome"
+                        label="Nome do Cliente"
                         type="text"
                         dense
                         outlined
@@ -156,7 +156,7 @@
                 <v-spacer></v-spacer>
                 <v-btn color="primary" @click="save" :disabled="!form">
                   Salvar e avançar
-                  <v-icon right="">fas fa-long-arrow-alt-right</v-icon>
+                  <v-icon right>fas fa-long-arrow-alt-right</v-icon>
                 </v-btn>
               </v-card-actions>
             </v-stepper-content>
@@ -219,10 +219,10 @@
                         </template>
 
                         <template v-slot:item.actions="{ item }">
-                          <v-icon small class="mr-2" @click="editService(item)" color="green">
+                          <v-icon small class="mr-2" @click="editService(item)" color="green" title="Editar serviço">
                             mdi-pencil
                           </v-icon>
-                          <v-icon small @click="deleteService(item)" color="red">
+                          <v-icon small @click="deleteService(item)" color="red" title="Excluir serviço">
                             mdi-delete
                           </v-icon>
                         </template>
