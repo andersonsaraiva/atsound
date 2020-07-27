@@ -4,9 +4,7 @@ const Budget = require('../models/Budget');
 class ServiceController {
   async index(req, res) {
     try {
-      const services = await Service.findAll({
-        attributes: ['id', 'budget_id', 'description', 'price']
-      });
+      const services = await Service.findAll();
 
       return res.status(200).send(services);
     } catch (error) {

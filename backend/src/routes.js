@@ -7,10 +7,10 @@ const UserController = require('./app/controllers/UserController');
 const ProviderController = require('./app/controllers/ProviderController');
 const BudgetController = require('./app/controllers/BudgetController');
 const ServiceController = require('./app/controllers/ServiceController');
+const CustomerController = require('./app/controllers/CustomerController');
+const CarController = require('./app/controllers/CarController');
 
 routes.post('/auth', AuthController.create);
-
-// routes.use(authMiddleware);
 
 /**
  * Users routes
@@ -20,6 +20,8 @@ routes
   .post('/users', UserController.create)
   .put('/users/:id', UserController.update)
   .delete('/users/:id', UserController.delete);
+
+routes.use(authMiddleware);
 
 /**
  * Providers routes
@@ -47,5 +49,23 @@ routes
   .post('/budgets/:budget_id/services', ServiceController.create)
   .put('/services/:id', ServiceController.update)
   .delete('/services/:id', ServiceController.delete);
+
+/**
+ * Customers routes
+ */
+routes
+  .get('/customers', CustomerController.index)
+  .post('/customers', CustomerController.create)
+  .put('/customers/:id', CustomerController.update)
+  .delete('/customers/:id', CustomerController.delete);
+
+/**
+ * Cars routes
+ */
+routes
+  .get('/cars', CarController.index)
+  .post('/customers/:customer_id/cars', CarController.create)
+  .put('/cars/:id', CarController.update)
+  .delete('/cars/:id', CarController.delete);
 
 module.exports = routes;

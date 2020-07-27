@@ -1,5 +1,4 @@
 const Budget = require('../models/Budget');
-const { findByPk } = require('../models/Budget');
 
 class BudgetController {
   async index(req, res) {
