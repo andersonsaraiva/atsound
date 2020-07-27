@@ -7,6 +7,7 @@ const Budget = require('../app/models/Budget');
 const Service = require('../app/models/Service');
 const Customer = require('../app/models/Customer');
 const Car = require('../app/models/Car');
+const Employee = require('../app/models/Employee');
 
 const connection = new Sequelize(dbConfig);
 
@@ -16,6 +17,7 @@ Budget.init(connection);
 Service.init(connection);
 Customer.init(connection);
 Car.init(connection);
+Employee.init(connection);
 
 Budget.associate(connection.models);
 Service.associate(connection.models);

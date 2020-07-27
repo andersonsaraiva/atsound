@@ -9,6 +9,7 @@ const BudgetController = require('./app/controllers/BudgetController');
 const ServiceController = require('./app/controllers/ServiceController');
 const CustomerController = require('./app/controllers/CustomerController');
 const CarController = require('./app/controllers/CarController');
+const EmployeeController = require('./app/controllers/EmployeeController');
 
 routes.post('/auth', AuthController.create);
 
@@ -67,5 +68,14 @@ routes
   .post('/customers/:customer_id/cars', CarController.create)
   .put('/cars/:id', CarController.update)
   .delete('/cars/:id', CarController.delete);
+
+/**
+ * Employees routes
+ */
+routes
+  .get('/employees', EmployeeController.index)
+  .post('/employees', EmployeeController.create)
+  .put('/employees/:id', EmployeeController.update)
+  .delete('/employees/:id', EmployeeController.delete);
 
 module.exports = routes;
