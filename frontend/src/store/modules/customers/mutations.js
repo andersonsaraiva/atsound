@@ -3,36 +3,36 @@ import * as HANDLERS from '@/helpers/handlers';
 import eventBus from 'vue-option-events';
 
 export default {
-  set: (state, payload) => (state.budgets = payload),
+  set: (state, payload) => (state.customers = payload),
 
   create: (state, payload) => {
     showMessage('success', 'Operação realizada com sucesso!');
-    eventBus.$emit(HANDLERS.NEXT_STEP_BUDGETS, payload);
+    eventBus.$emit(HANDLERS.NEXT_STEP_CUSTOMERS, payload);
   },
 
   update: (state, payload) => {
     showMessage('success', 'Operação realizada com sucesso!');
-    eventBus.$emit(HANDLERS.NEXT_STEP_BUDGETS, payload);
+    eventBus.$emit(HANDLERS.NEXT_STEP_CUSTOMERS, payload);
   },
 
   delete: (state, payload) => {
-    let index = state.budgets.findIndex(x => x.id === payload.id);
+    let index = state.customers.findIndex(x => x.id === payload.id);
 
     if (index !== -1) {
-      state.budgets.splice(index, 1);
+      state.customers.splice(index, 1);
       showMessage('success', 'Operação realizada com sucesso!');
     }
   },
 
-  createService: (state, payload) => {
+  createCars: (state, payload) => {
     showMessage('success', 'Operação realizada com sucesso!');
   },
 
-  updateService: (state, payload) => {
+  updateCars: (state, payload) => {
     showMessage('success', 'Operação realizada com sucesso!');
   },
 
-  deleteService: (state, payload) => {
+  deleteCars: (state, payload) => {
     showMessage('success', 'Operação realizada com sucesso!');
   },
 };

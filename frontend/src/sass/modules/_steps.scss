@@ -1,0 +1,15 @@
+.v-stepper{
+  box-shadow: none;
+
+  &__header {
+    height: auto;
+  }
+
+  &__step {
+    padding: 12px 24px;
+  }
+
+  &__content {
+    padding: 15px 0;
+  }
+}

@@ -1,9 +1,9 @@
-import { getBudgets, createBudgets, updateBudgets, deleteBudgets, createServices, updateServices, deleteServices } from '@/services/budgets';
+import { getCustomers, createCustomers, updateCustomers, deleteCustomers, createCars, updateCars, deleteCars } from '@/services/customers';
 
 export default {
   get: async ({ commit }) => {
     try {
-      const { data } = await getBudgets();
+      const { data } = await getCustomers();
 
       if (data) {
         commit('set', data);
@@ -15,7 +15,7 @@ export default {
 
   update: async ({ commit }, params) => {
     try {
-      const { status, data } = await updateBudgets(params);
+      const { status, data } = await updateCustomers(params);
 
       if (status === 200) {
         commit('update', data);
@@ -27,7 +27,7 @@ export default {
 
   create: async ({ commit }, params) => {
     try {
-      const { status, data } = await createBudgets(params);
+      const { status, data } = await createCustomers(params);
 
       if (status === 201) {
         commit('create', data);
@@ -39,7 +39,7 @@ export default {
 
   delete: async ({ commit }, params) => {
     try {
-      const { status } = await deleteBudgets(params);
+      const { status } = await deleteCustomers(params);
 
       if (status === 200) {
         commit('delete', params);
@@ -49,36 +49,36 @@ export default {
     }
   },
 
-  updateService: async ({ commit }, params) => {
+  updateCars: async ({ commit }, params) => {
     try {
-      const { status, data } = await updateServices({ ...params.service, ...params.budget });
+      const { status, data } = await updateCars({ ...params.cars, ...params.customer });
 
       if (status === 200) {
-        commit('updateService', data);
+        commit('updateCars', data);
       }
     } catch (error) {
       throw Error("Ocorreu um erro de API.");
     }
   },
 
-  createService: async ({ commit }, params) => {
+  createCars: async ({ commit }, params) => {
     try {
-      const { status, data } = await createServices({ ...params.service, ...params.budget });
+      const { status, data } = await createCars({ ...params.cars, ...params.customer });
 
       if (status === 201) {
-        commit('createService', data);
+        commit('createCars', data);
       }
     } catch (error) {
       throw Error("Ocorreu um erro de API.");
     }
   },
 
-  deleteService: async ({ commit }, params) => {
+  deleteCars: async ({ commit }, params) => {
     try {
-      const { status } = await deleteServices(params);
+      const { status } = await deleteCars(params);
 
       if (status === 200) {
-        commit('deleteService', params);
+        commit('deleteCars', params);
       }
     } catch (error) {
       throw Error("Ocorreu um erro de API.");

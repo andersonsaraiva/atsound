@@ -24,7 +24,7 @@
       </v-card-text>
     </v-card>
 
-    <v-data-table :search="search" :headers="headers" :items="items" class="elevation-1" dense>
+    <v-data-table :search="search" :headers="headers" :items="items" class="elevation-1" dense sort-by="date">
       <template v-slot:item.date="{ item }">
         {{ formatDate(item.date) }}
       </template>
@@ -40,171 +40,209 @@
 
     <v-dialog v-model="dialog" persistent>
       <v-card>
-        <v-card-title class="pa-3">
-          <span class="headline">{{ formTitle }}</span>
+        <v-toolbar dark color="primary">
+          <v-toolbar-title>{{ formTitle }}</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-icon @click="close" title="Fechar janela">close</v-icon>
-        </v-card-title>
+          <v-toolbar-items>
+            <v-btn icon dark @click="close" title="Fechar janela">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </v-toolbar-items>
+        </v-toolbar>
 
         <v-divider horizontal></v-divider>
 
-        <v-form ref="form" lazy-validation v-model="form">
-          <v-container fluid>
-            <v-row class="px-1">
-              <v-col cols="12" sm="2" md="2" class="py-0" v-if="editedItem.id">
-                <v-text-field v-model="editedItem.id" label="Código" type="text" dense outlined readonly disabled />
-              </v-col>
-              <v-col cols="12" :sm="editedItem.id ? 4 : 6" :md="editedItem.id ? 4 : 6" class="py-0">
-                <v-text-field
-                  v-model="editedItem.name"
-                  label="Nome"
-                  type="text"
-                  dense
-                  outlined
-                  required
-                  :rules="[required]"
-                />
-              </v-col>
-              <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field
-                  v-model="editedItem.phone"
-                  label="Telefone"
-                  type="text"
-                  dense
-                  outlined
-                  required
-                  :rules="[required]"
-                  v-mask="['(##) ####-####', '(##) #####-####']"
-                />
-              </v-col>
-              <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field v-model="editedItem.email" label="Email" type="text" dense outlined :rules="[email]" />
-              </v-col>
-              <v-col cols="12" sm="3" md="3" class="py-0">
-                <v-text-field
-                  v-model="editedItem.cpf"
-                  label="CPF"
-                  dense
-                  outlined
-                  type="text"
-                  v-mask="'###.###.###-##'"
-                />
-              </v-col>
-              <v-col cols="12" sm="3" md="3" class="py-0">
-                <v-menu
-                  v-model="menu"
-                  :close-on-content-click="false"
-                  transition="scale-transition"
-                  offset-y
-                  min-width="290px"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                      v-model="editedItem.date"
-                      label="Data do Orçamento"
-                      append-icon="event"
-                      readonly
-                      dense
-                      outlined
-                      required
-                      :rules="[required]"
-                      v-bind="attrs"
-                      v-on="on"
-                    ></v-text-field>
-                  </template>
-                  <v-date-picker v-model="editedItem.date" @input="menu = false" locale="pt-br"></v-date-picker>
-                </v-menu>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-form>
+        <v-stepper v-model="step" non-linear>
+          <v-stepper-header>
+            <v-stepper-step editable step="1">
+              Dados do Usuário
+              <small>Obrigatório</small>
+            </v-stepper-step>
+            <v-divider></v-divider>
+            <v-stepper-step :editable="!!editedItem.id" step="2">
+              Serviços
+              <small>Obrigatório</small>
+            </v-stepper-step>
+          </v-stepper-header>
 
-        <v-form ref="formServices" lazy-validation v-model="formServices">
-          <v-container fluid>
-            <v-row>
-              <v-col>
-                <v-expansion-panels focusable v-model="showCollapse" class="column-group">
-                  <v-expansion-panel>
-                    <v-expansion-panel-header>Serviços</v-expansion-panel-header>
-                    <v-expansion-panel-content>
-                      <v-row>
-                        <v-col cols="12" sm="8" md="8" class="py-0">
+          <v-stepper-items>
+            <v-stepper-content step="1">
+              <v-form ref="form" lazy-validation v-model="form">
+                <v-container fluid>
+                  <v-row class="px-1">
+                    <v-col cols="12" sm="2" md="2" class="py-0" v-if="editedItem.id">
+                      <v-text-field
+                        v-model="editedItem.id"
+                        label="Código"
+                        type="text"
+                        dense
+                        outlined
+                        readonly
+                        disabled
+                      />
+                    </v-col>
+                    <v-col cols="12" :sm="editedItem.id ? 4 : 6" :md="editedItem.id ? 4 : 6" class="py-0">
+                      <v-text-field
+                        v-model="editedItem.name"
+                        label="Nome do Cliente"
+                        type="text"
+                        dense
+                        outlined
+                        required
+                        :rules="[required]"
+                      />
+                    </v-col>
+                    <v-col cols="12" sm="6" md="6" class="py-0">
+                      <v-text-field
+                        v-model="editedItem.email"
+                        label="Email"
+                        type="text"
+                        dense
+                        outlined
+                        :rules="[email]"
+                      />
+                    </v-col>
+                    <v-col cols="12" sm="4" md="4" class="py-0">
+                      <v-text-field
+                        v-model="editedItem.phone"
+                        label="Telefone"
+                        type="text"
+                        dense
+                        outlined
+                        required
+                        :rules="[required]"
+                        v-mask="['(##) ####-####', '(##) #####-####']"
+                      />
+                    </v-col>
+                    <v-col cols="12" sm="4" md="4" class="py-0">
+                      <v-text-field
+                        v-model="editedItem.cpf"
+                        label="CPF"
+                        dense
+                        outlined
+                        type="text"
+                        v-mask="'###.###.###-##'"
+                      />
+                    </v-col>
+                    <v-col cols="12" sm="4" md="4" class="py-0">
+                      <v-menu
+                        v-model="menu"
+                        :close-on-content-click="false"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="290px"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
                           <v-text-field
-                            v-model="service.description"
-                            label="Descrição"
-                            type="text"
+                            v-model="editedItem.date"
+                            label="Data do Orçamento"
+                            append-icon="event"
+                            readonly
                             dense
                             outlined
                             required
                             :rules="[required]"
-                          />
-                        </v-col>
-                        <v-col cols="12" sm="2" md="2" class="py-0">
-                          <vuetify-money
-                            v-model="service.price"
-                            label="Preço"
-                            dense
-                            outlined
-                            required
-                            :rules="[required]"
-                            :valueWhenIsEmpty="''"
-                            :options="options"
-                            background-color="transparent"
-                          />
-                        </v-col>
-                        <v-col cols="12" sm="2" md="2" class="py-0">
-                          <v-btn color="primary" @click="addService" :disabled="!formServices">
-                            <v-icon left>add</v-icon>
-                            Adicionar
-                          </v-btn>
-                        </v-col>
-                      </v-row>
-                      <v-row>
-                        <v-col>
-                          <v-data-table
-                            :headers="servicesHeaders"
-                            :items="editedItem.services"
-                            hide-default-footer
-                            dense
-                            class="elevation-1"
-                          >
-                            <template v-slot:item.price="{ item }">
-                              {{ formatValue(item.price) }}
-                            </template>
+                            v-bind="attrs"
+                            v-on="on"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker v-model="editedItem.date" @input="menu = false" locale="pt-br"></v-date-picker>
+                      </v-menu>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-form>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="primary" @click="save" :disabled="!form">
+                  Salvar e avançar
+                  <v-icon right>fas fa-long-arrow-alt-right</v-icon>
+                </v-btn>
+              </v-card-actions>
+            </v-stepper-content>
+            <v-stepper-content step="2">
+              <v-form ref="formServices" lazy-validation v-model="formServices">
+                <v-container fluid>
+                  <v-row>
+                    <v-col cols="12" sm="6" md="6" class="py-0">
+                      <v-text-field
+                        v-model="service.description"
+                        label="Descrição"
+                        type="text"
+                        dense
+                        outlined
+                        required
+                        :rules="[required]"
+                      />
+                    </v-col>
+                    <v-col cols="12" sm="2" md="2" class="py-0">
+                      <vuetify-money
+                        v-model="service.price"
+                        label="Preço"
+                        dense
+                        outlined
+                        required
+                        :rules="[required]"
+                        :valueWhenIsEmpty="''"
+                        :options="options"
+                        background-color="transparent"
+                      />
+                    </v-col>
+                    <v-col cols="12" sm="4" md="4" class="py-0">
+                      <v-btn color="primary" @click="addService" :disabled="!formServices">
+                        <v-icon left>add</v-icon>
+                        {{ serviceButtonTitle }}
+                      </v-btn>
+                      <v-btn
+                        color="primary"
+                        class="ml-2"
+                        outlined
+                        @click="cancelService"
+                        v-if="editedService > -1"
+                        title="Cancelar Atualização"
+                      >
+                        Cancelar
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col>
+                      <v-data-table
+                        :headers="servicesHeaders"
+                        :items="editedItem.services"
+                        hide-default-footer
+                        dense
+                        class="elevation-1"
+                      >
+                        <template v-slot:item.price="{ item }">
+                          {{ formatValue(item.price) }}
+                        </template>
 
-                            <template v-slot:item.actions="{ item }">
-                              <v-icon small class="mr-2" @click="editService(item)" color="green">
-                                mdi-pencil
-                              </v-icon>
-                              <v-icon small @click="deleteService(item)" color="red">
-                                mdi-delete
-                              </v-icon>
-                            </template>
-                            <template v-slot:body.append>
-                              <tr class="">
-                                <td class="text-start"><strong>Total:</strong></td>
-                                <td class="text-start">
-                                  <strong>{{ formatValue(totalServices) }}</strong>
-                                </td>
-                                <td class="text-right"></td>
-                              </tr>
-                            </template>
-                          </v-data-table>
-                        </v-col>
-                      </v-row>
-                    </v-expansion-panel-content>
-                  </v-expansion-panel>
-                </v-expansion-panels>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-form>
-
-        <v-card-actions class="pa-3">
-          <v-spacer></v-spacer>
-          <v-btn color="primary" @click="save" small :disabled="!form">Salvar</v-btn>
-          <v-btn @click="close" small>Cancelar</v-btn>
-        </v-card-actions>
+                        <template v-slot:item.actions="{ item }">
+                          <v-icon small class="mr-2" @click="editService(item)" color="green" title="Editar serviço">
+                            mdi-pencil
+                          </v-icon>
+                          <v-icon small @click="deleteService(item)" color="red" title="Excluir serviço">
+                            mdi-delete
+                          </v-icon>
+                        </template>
+                        <template v-slot:body.append>
+                          <tr>
+                            <td class="text-start"><strong>Total:</strong></td>
+                            <td class="text-start">
+                              <strong>{{ formatValue(totalServices) }}</strong>
+                            </td>
+                            <td class="text-right"></td>
+                          </tr>
+                        </template>
+                      </v-data-table>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-form>
+            </v-stepper-content>
+          </v-stepper-items>
+        </v-stepper>
       </v-card>
     </v-dialog>
   </v-container>
@@ -223,10 +261,12 @@ export default {
 
   events: {
     [HANDLERS.DELETE_BUDGETS]: 'showDelete',
-    [HANDLERS.CLOSE_BUDGETS]: 'close'
+    [HANDLERS.NEXT_STEP_BUDGETS]: 'next_step',
+    [HANDLERS.DELETE_SERVICE]: 'showDeleteService'
   },
 
   data: () => ({
+    step: 1,
     menu: false,
     totalServices: 0,
     form: true,
@@ -237,6 +277,12 @@ export default {
     dialog: false,
     showCollapse: 0,
     service: {
+      id: null,
+      description: null,
+      price: null
+    },
+    defaultService: {
+      id: null,
       description: null,
       price: null
     },
@@ -281,11 +327,15 @@ export default {
 
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? 'Cadastro' : 'Edição';
+      return this.editedIndex === -1 ? 'Criação de Orçamento' : 'Edição de Orçamento';
     },
 
     items() {
       return this.$store.getters['budgets/get'];
+    },
+
+    serviceButtonTitle() {
+      return this.editedService === -1 ? 'Adicionar' : 'Atualizar';
     }
   },
 
@@ -300,6 +350,7 @@ export default {
     addBudget() {
       this.dialog = true;
       this.totalServices = 0;
+      this.step = 1;
     },
 
     editItem(item) {
@@ -319,11 +370,15 @@ export default {
 
     close() {
       this.dialog = false;
+      this.step = 1;
 
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
         this.$refs.form.reset();
+
+        this.service = Object.assign({}, this.defaultService);
+        this.editedService = -1;
         this.$refs.formServices.reset();
       });
 
@@ -340,20 +395,39 @@ export default {
       }
     },
 
+    next_step(item) {
+      this.editedItem.id = item.id;
+      this.step = 2;
+    },
+
     editService(item) {
       this.editedService = this.editedItem.services.indexOf(item);
       this.service = Object.assign({}, item);
     },
 
-    deleteService(item) {},
+    cancelService() {
+      this.editedService = -1;
+      this.service = Object.assign({}, this.defaultService);
+      this.$refs.formServices.reset();
+    },
+
+    deleteService(item) {
+      confirmMessage(`Deseja realmente excluir`, `${item.description}`, item, HANDLERS.DELETE_SERVICE);
+    },
+
+    showDeleteService(item) {
+      this.$store.dispatch('budgets/deleteService', item);
+    },
 
     addService() {
       if (!this.$refs.formServices.validate(true)) return;
 
+      let params = { budget: { budget_id: this.editedItem.id }, service: this.service };
+
       if (this.editedService > -1) {
-        Object.assign(this.editedItem.services[this.editedService], this.service);
+        this.$store.dispatch('budgets/updateService', params);
       } else {
-        this.editedItem.services.push(JSON.parse(JSON.stringify(this.service)));
+        this.$store.dispatch('budgets/createService', params);
       }
 
       this.$refs.formServices.reset();
