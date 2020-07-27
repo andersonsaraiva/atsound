@@ -3,8 +3,10 @@ const Budget = require('../models/Budget');
 
 class ServiceController {
   async index(req, res) {
+    const { budget_id } = req.params;
+
     try {
-      const services = await Service.findAll();
+      const services = await Service.findAll({ where: { budget_id } });
 
       return res.status(200).send(services);
     } catch (error) {

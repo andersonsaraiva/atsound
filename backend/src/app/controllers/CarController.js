@@ -3,8 +3,10 @@ const Car = require('../models/Car');
 
 class CarController {
   async index(req, res) {
+    const { customer_id } = req.params;
+
     try {
-      const cars = await Car.findAll();
+      const cars = await Car.findAll({ where: { customer_id } });
 
       return res.status(200).send(cars);
     } catch (error) {

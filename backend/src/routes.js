@@ -45,7 +45,7 @@ routes
  * Services routes
  */
 routes
-  .get('/services', ServiceController.index)
+  .get('/services/:budget_id', ServiceController.index)
   .post('/budgets/:budget_id/services', ServiceController.create)
   .put('/services/:id', ServiceController.update)
   .delete('/services/:id', ServiceController.delete);
@@ -63,7 +63,7 @@ routes
  * Cars routes
  */
 routes
-  .get('/cars', CarController.index)
+  .get('/cars/:customer_id', CarController.index)
   .post('/customers/:customer_id/cars', CarController.create)
   .put('/cars/:id', CarController.update)
   .delete('/cars/:id', CarController.delete);
