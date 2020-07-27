@@ -5,6 +5,7 @@ import VuexPersist from 'vuex-persist';
 import { authentication } from '@/store/modules/authentication';
 import { background } from '@/store/modules/background';
 import { budgets } from '@/store/modules/budgets';
+import { customers } from '@/store/modules/customers';
 import { loading } from '@/store/modules/loading';
 import { providers } from '@/store/modules/providers';
 import { sidebar } from '@/store/modules/sidebar';
@@ -26,6 +27,7 @@ export default new Vuex.Store({
     authentication,
     background,
     budgets,
+    customers,
     loading,
     providers,
     sidebar,
