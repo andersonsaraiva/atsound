@@ -153,7 +153,7 @@
 
               <v-col cols="12" sm="3" md="3" class="py-0">
                 <v-text-field
-                  v-model="editedItem.documents.cpf"
+                  v-model="editedItem.cpf"
                   label="CPF"
                   required
                   type="text"
@@ -166,7 +166,7 @@
 
               <v-col cols="12" sm="3" md="3" class="py-0">
                 <v-text-field
-                  v-model="editedItem.documents.rg"
+                  v-model="editedItem.rg"
                   label="RG"
                   required
                   type="text"
@@ -178,7 +178,7 @@
 
               <v-col cols="12" sm="3" md="3" class="py-0">
                 <v-text-field
-                  v-model="editedItem.documents.cnh"
+                  v-model="editedItem.cnh"
                   label="CNH"
                   required
                   type="text"
@@ -194,7 +194,7 @@
 
               <v-col cols="12" sm="3" md="3" class="py-0">
                 <v-text-field
-                  v-model="editedItem.address.zipcode"
+                  v-model="editedItem.zipcode"
                   label="CEP"
                   required
                   type="text"
@@ -208,7 +208,7 @@
 
               <v-col cols="12" sm="6" md="6" class="py-0">
                 <v-text-field
-                  v-model="editedItem.address.street"
+                  v-model="editedItem.street"
                   label="Rua"
                   required
                   type="text"
@@ -220,7 +220,7 @@
 
               <v-col cols="12" sm="3" md="3" class="py-0">
                 <v-text-field
-                  v-model="editedItem.address.number"
+                  v-model="editedItem.number"
                   label="Número"
                   required
                   type="text"
@@ -231,12 +231,12 @@
               </v-col>
 
               <v-col cols="12" sm="3" md="3" class="py-0">
-                <v-text-field v-model="editedItem.address.complement" label="Complemento" type="text" outlined dense />
+                <v-text-field v-model="editedItem.complement" label="Complemento" type="text" outlined dense />
               </v-col>
 
               <v-col cols="12" sm="3" md="3" class="py-0">
                 <v-text-field
-                  v-model="editedItem.address.neighborhood"
+                  v-model="editedItem.neighborhood"
                   label="Bairro"
                   required
                   type="text"
@@ -248,7 +248,7 @@
 
               <v-col cols="12" sm="3" md="3" class="py-0">
                 <v-text-field
-                  v-model="editedItem.address.city"
+                  v-model="editedItem.city"
                   label="Cidade"
                   required
                   type="text"
@@ -260,7 +260,7 @@
 
               <v-col cols="12" sm="3" md="3" class="py-0">
                 <v-text-field
-                  v-model="editedItem.address.state"
+                  v-model="editedItem.state"
                   label="Estado"
                   required
                   type="text"
@@ -323,19 +323,15 @@ export default {
       schooling: '',
       email: '',
       phone: '',
-      documents: {
-        cpf: '',
-        rg: '',
-        cnh: ''
-      },
-      address: {
-        street: '',
-        number: '',
-        neighborhood: '',
-        complement: '',
-        city: '',
-        state: ''
-      }
+      cpf: '',
+      rg: '',
+      cnh: '',
+      street: '',
+      number: '',
+      neighborhood: '',
+      complement: '',
+      city: '',
+      state: ''
     },
     defaultItem: {
       name: '',
@@ -346,19 +342,15 @@ export default {
       schooling: '',
       email: '',
       phone: '',
-      documents: {
-        cpf: '',
-        rg: '',
-        cnh: ''
-      },
-      address: {
-        street: '',
-        number: '',
-        neighborhood: '',
-        complement: '',
-        city: '',
-        state: ''
-      }
+      cpf: '',
+      rg: '',
+      cnh: '',
+      street: '',
+      number: '',
+      neighborhood: '',
+      complement: '',
+      city: '',
+      state: ''
     }
   }),
 
@@ -421,16 +413,16 @@ export default {
     },
 
     async onBlur() {
-      if (this.editedItem && this.editedItem.address.zipcode) {
-        const { data } = await getZipcode(this.editedItem.address.zipcode);
+      if (this.editedItem && this.editedItem.zipcode) {
+        const { data } = await getZipcode(this.editedItem.zipcode);
 
         if (data.erro) {
-          showMessage('error', `O CEP ${this.editedItem.address.zipcode} é inválido!`, 3000);
+          showMessage('error', `O CEP ${this.editedItem.zipcode} é inválido!`, 3000);
         } else {
-          this.editedItem.address.street = data.logradouro;
-          this.editedItem.address.neighborhood = data.bairro;
-          this.editedItem.address.city = data.localidade;
-          this.editedItem.address.state = data.uf;
+          this.editedItem.street = data.logradouro;
+          this.editedItem.neighborhood = data.bairro;
+          this.editedItem.city = data.localidade;
+          this.editedItem.state = data.uf;
         }
       }
     }

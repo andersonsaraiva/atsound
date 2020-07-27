@@ -8,32 +8,16 @@
     "schooling": "Ensino Médio Completo",
     "email": "email@email.com",
     "phone": "(11) 97026-7700",
-    "documents": {
-      "cpf": "874.836.300-60",
-      "rg": "367744179",
-      "rg_date_of_issue": "28/05/1993",
-      "rg_emitting_organ": "SP",
-      "rg_state": "SP",
-      "cnh": "65464565496879",
-      "cnh_date_of_issue": "28/05/2018",
-      "cnh_expiration_date": "28/05/2022",
-      "cnh_emitting_organ": "SP",
-      "cnh_state": "SP"
-    },
-    "address": {
-      "zipcode": "03261090",
-      "street": "Fernão Lopes de Camargo",
-      "number": "280",
-      "neighborhood": "Pq São Lucas",
-      "complement": "",
-      "city": "São Paulo",
-      "state": "SP"
-    },
-    "hiring": {
-      "contract_date": "28/05/2012",
-      "current_position": "Developer",
-      "current_wage": 1200
-    }
+    "cpf": "874.836.300-60",
+    "rg": "367744179",
+    "cnh": "65464565496879",
+    "zipcode": "03261090",
+    "street": "Fernão Lopes de Camargo",
+    "number": "280",
+    "neighborhood": "Pq São Lucas",
+    "complement": "",
+    "city": "São Paulo",
+    "state": "SP"
   },
   {
     "name": "John Doe 2",
@@ -44,31 +28,15 @@
     "schooling": "Ensino Médio Completo",
     "email": "email@email.com",
     "phone": "(11) 97026-7700",
-    "documents": {
-      "cpf": "874.836.300-60",
-      "rg": "367744179",
-      "rg_date_of_issue": "28/05/1993",
-      "rg_emitting_organ": "SP",
-      "rg_state": "SP",
-      "cnh": "65464565496879",
-      "cnh_date_of_issue": "28/05/2018",
-      "cnh_expiration_date": "28/05/2022",
-      "cnh_emitting_organ": "SP",
-      "cnh_state": "SP"
-    },
-    "address": {
-      "zipcode": "03261090",
-      "street": "Fernão Lopes de Camargo",
-      "number": "280",
-      "neighborhood": "Pq São Lucas",
-      "complement": "",
-      "city": "São Paulo",
-      "state": "SP"
-    },
-    "hiring": {
-      "contract_date": "28/05/2012",
-      "current_position": "Developer",
-      "current_wage": 1200
-    }
+    "cpf": "874.836.300-60",
+    "rg": "367744179",
+    "cnh": "65464565496879",
+    "zipcode": "03261090",
+    "street": "Fernão Lopes de Camargo",
+    "number": "280",
+    "neighborhood": "Pq São Lucas",
+    "complement": "",
+    "city": "São Paulo",
+    "state": "SP"
   }
 ]
