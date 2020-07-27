@@ -4,7 +4,6 @@ class BudgetController {
   async index(req, res) {
     try {
       const budgets = await Budget.findAll({
-        attributes: ['id', 'name', 'email', 'phone', 'cpf', 'date'],
         include: { association: 'services' }
       });
 
@@ -16,9 +15,7 @@ class BudgetController {
 
   async create(req, res) {
     try {
-      const { name, email, phone, cpf, date } = req.body;
-
-      const budget = await Budget.create({ name, email, phone, cpf, date });
+      const budget = await Budget.create(req.body);
 
       return res.status(201).send(budget);
     } catch (error) {
@@ -27,13 +24,12 @@ class BudgetController {
   }
 
   async update(req, res) {
-    try {
-      const { name, email, phone, cpf, date } = req.body;
-      const { id } = req.params;
+    const { id } = req.params;
 
+    try {
       const budget = await Budget.findOne({ where: { id } });
 
-      if (budget) await budget.update({ name, email, phone, cpf, date });
+      if (budget) await budget.update(req.body);
 
       return res.status(200).send(budget);
     } catch (err) {

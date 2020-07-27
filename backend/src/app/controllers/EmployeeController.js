@@ -1,11 +1,11 @@
-const Provider = require('../models/Provider');
+const Employee = require('../models/Employee');
 
-class ProviderController {
+class EmployeeController {
   async index(req, res) {
     try {
-      const providers = await Provider.findAll();
+      const employees = await Employee.findAll();
 
-      return res.status(200).send(providers);
+      return res.status(200).send(employees);
     } catch (error) {
       return res.status(400).send({ message: `Erro ao buscar o fornecedores!` });
     }
@@ -13,7 +13,7 @@ class ProviderController {
 
   async create(req, res) {
     try {
-      await Provider.create(req.body);
+      await Employee.create(req.body);
 
       return res.status(201).send();
     } catch (error) {
@@ -25,9 +25,9 @@ class ProviderController {
     const { id } = req.params;
 
     try {
-      const provider = await Provider.findOne({ where: { id } });
+      const employee = await Employee.findOne({ where: { id } });
 
-      if (provider) await provider.update(req.body);
+      if (employee) await employee.update(req.body);
 
       return res.status(200).send();
     } catch (err) {
@@ -39,7 +39,7 @@ class ProviderController {
     const { id } = req.params;
 
     try {
-      await Provider.destroy({ where: { id } });
+      await Employee.destroy({ where: { id } });
 
       return res.status(200).send();
     } catch (err) {
@@ -48,4 +48,4 @@ class ProviderController {
   }
 }
 
-module.exports = new ProviderController();
+module.exports = new EmployeeController();

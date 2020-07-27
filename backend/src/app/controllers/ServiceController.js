@@ -25,7 +25,7 @@ class ServiceController {
         return res.status(400).send({ message: `Erro ao buscar o orçamento do id: ${budget_id}!` });
       }
 
-      await Service.create({ budget_id, description, price });
+      await Service.create({ budget_id, ...req.body });
 
       return res.status(201).send();
     } catch (error) {
@@ -34,13 +34,12 @@ class ServiceController {
   }
 
   async update(req, res) {
-    const { budget_id, description, price } = req.body;
     const { id } = req.params;
 
     try {
       const service = await Service.findOne({ where: { id } });
 
-      if (service) await service.update({ budget_id, description, price });
+      if (service) await service.update(req.body);
 
       return res.status(200).send();
     } catch (err) {

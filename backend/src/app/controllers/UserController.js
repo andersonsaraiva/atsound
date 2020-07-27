@@ -15,13 +15,11 @@ class UserController {
 
   async create(req, res) {
     try {
-      const { name, email, password } = req.body;
-
       if (!!(await User.findOne({ where: { email } }))) {
         return res.status(400).send({ message: 'Erro ao criar novo usuário... Usuário já existe na base de dados!' });
       }
 
-      await User.create({ name, email, password });
+      await User.create(req.body);
 
       return res.status(201).send();
     } catch (error) {
@@ -30,13 +28,12 @@ class UserController {
   }
 
   async update(req, res) {
-    const { name, email, password } = req.body;
     const { id } = req.params;
 
     try {
       const user = await User.findOne({ where: { id } });
 
-      if (user) await user.update({ name, email, password });
+      if (user) await user.update(req.body);
 
       return res.status(200).send();
     } catch (err) {
