@@ -164,7 +164,7 @@
               <v-form ref="formServices" lazy-validation v-model="formServices">
                 <v-container fluid>
                   <v-row>
-                    <v-col cols="12" sm="8" md="8" class="py-0">
+                    <v-col cols="12" sm="6" md="6" class="py-0">
                       <v-text-field
                         v-model="service.description"
                         label="Descrição"
@@ -188,10 +188,20 @@
                         background-color="transparent"
                       />
                     </v-col>
-                    <v-col cols="12" sm="2" md="2" class="py-0">
+                    <v-col cols="12" sm="4" md="4" class="py-0">
                       <v-btn color="primary" @click="addService" :disabled="!formServices">
                         <v-icon left>add</v-icon>
-                        Adicionar
+                        {{ serviceButtonTitle }}
+                      </v-btn>
+                      <v-btn
+                        color="primary"
+                        class="ml-2"
+                        outlined
+                        @click="cancelService"
+                        v-if="editedService > -1"
+                        title="Cancelar Atualização"
+                      >
+                        Cancelar
                       </v-btn>
                     </v-col>
                   </v-row>
@@ -217,7 +227,7 @@
                           </v-icon>
                         </template>
                         <template v-slot:body.append>
-                          <tr class="">
+                          <tr>
                             <td class="text-start"><strong>Total:</strong></td>
                             <td class="text-start">
                               <strong>{{ formatValue(totalServices) }}</strong>
@@ -271,6 +281,11 @@ export default {
       description: null,
       price: null
     },
+    defaultService: {
+      id: null,
+      description: null,
+      price: null
+    },
     headers: [
       { text: 'Nome', value: 'name' },
       { text: 'Email', value: 'email' },
@@ -317,6 +332,10 @@ export default {
 
     items() {
       return this.$store.getters['budgets/get'];
+    },
+
+    serviceButtonTitle() {
+      return this.editedService === -1 ? 'Adicionar' : 'Atualizar';
     }
   },
 
@@ -357,6 +376,9 @@ export default {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
         this.$refs.form.reset();
+
+        this.service = Object.assign({}, this.defaultService);
+        this.editedService = -1;
         this.$refs.formServices.reset();
       });
 
@@ -381,6 +403,12 @@ export default {
     editService(item) {
       this.editedService = this.editedItem.services.indexOf(item);
       this.service = Object.assign({}, item);
+    },
+
+    cancelService() {
+      this.editedService = -1;
+      this.service = Object.assign({}, this.defaultService);
+      this.$refs.formServices.reset();
     },
 
     deleteService(item) {
