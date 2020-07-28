@@ -2,7 +2,7 @@ import Swal from 'sweetalert2';
 import * as HANDLERS from '@/helpers/handlers';
 import eventBus from 'vue-option-events';
 
-export const showMessage = (type, message, timer = 1500) => {
+export const showMessage = (type, message, timer = 2500) => {
   if (message) {
     const Toast = Swal.mixin({
       position: 'top-end',

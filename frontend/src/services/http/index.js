@@ -49,7 +49,7 @@ Axios.interceptors.response.use(
 
         case 401: {
           router.push({ path: '/login' });
-          showMessage("error", message, 2500);
+          showMessage("error", message);
           break;
         }
 
