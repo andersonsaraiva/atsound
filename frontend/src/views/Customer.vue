@@ -183,6 +183,7 @@
                         required
                         :rules="[required]"
                         v-mask="'#####-###'"
+                        @blur="onBlur"
                       />
                     </v-col>
 
@@ -369,6 +370,7 @@ import { required, email } from '@/helpers/validations';
 import { showMessage, confirmMessage } from '@/helpers/messages';
 import { formatValue, formatDate } from '@/helpers/utils';
 import * as HANDLERS from '@/helpers/handlers';
+import { getZipcode } from '@/services/zipcode';
 
 export default {
   components: {
@@ -561,6 +563,21 @@ export default {
 
       this.$refs.formCars.reset();
       this.editedIndexCar = -1;
+    },
+
+    async onBlur() {
+      if (this.editedItem && this.editedItem.zipcode) {
+        const { data } = await getZipcode(this.editedItem.zipcode);
+
+        if (data.erro) {
+          showMessage('error', `O CEP ${this.editedItem.zipcode} é inválido!`, 3000);
+        } else {
+          this.editedItem.street = data.logradouro;
+          this.editedItem.neighborhood = data.bairro;
+          this.editedItem.city = data.localidade;
+          this.editedItem.state = data.uf;
+        }
+      }
     }
   },
 

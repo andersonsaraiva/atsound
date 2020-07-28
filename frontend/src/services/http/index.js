@@ -9,7 +9,9 @@ Axios.interceptors.request.use(
 
     const token = store.getters['authentication/getToken'];
 
-    if (token) {
+    let isZipCode = config.url.includes('https://viacep.com.br/');
+
+    if (token && !isZipCode) {
       config.headers.Authorization = `Bearer ${token}`;
     }
 

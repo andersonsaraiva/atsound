@@ -288,7 +288,7 @@ import items from '@/api/employees.json';
 import { required, email } from '@/helpers/validations';
 import { showMessage, confirmMessage } from '@/helpers/messages';
 import * as HANDLERS from '@/helpers/handlers';
-import { getZipcode } from '@/services/cep';
+import { getZipcode } from '@/services/zipcode';
 
 export default {
   components: {
