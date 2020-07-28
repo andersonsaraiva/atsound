@@ -209,7 +209,7 @@
                     <v-col>
                       <v-data-table
                         :headers="servicesHeaders"
-                        :items="editedItem.services"
+                        :items="services"
                         hide-default-footer
                         dense
                         class="elevation-1"
@@ -306,16 +306,14 @@ export default {
       name: null,
       date: null,
       email: null,
-      phone: null,
-      services: []
+      phone: null
     },
     defaultItem: {
       id: null,
       name: null,
       date: null,
       email: null,
-      phone: null,
-      services: []
+      phone: null
     },
     options: {
       locale: 'pt-BR',
@@ -336,6 +334,10 @@ export default {
 
     serviceButtonTitle() {
       return this.editedService === -1 ? 'Adicionar' : 'Atualizar';
+    },
+
+    services() {
+      return this.$store.getters['budgets/getServices'];
     }
   },
 
@@ -358,6 +360,8 @@ export default {
       this.editedIndex = this.items.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
+
+      this.$store.dispatch('budgets/getServices', item.id);
     },
 
     deleteItem(item) {
@@ -398,10 +402,12 @@ export default {
     next_step(item) {
       this.editedItem.id = item.id;
       this.step = 2;
+
+      this.$store.dispatch('budgets/getServices', item.id);
     },
 
     editService(item) {
-      this.editedService = this.editedItem.services.indexOf(item);
+      this.editedService = this.services.indexOf(item);
       this.service = Object.assign({}, item);
     },
 
@@ -431,6 +437,7 @@ export default {
       }
 
       this.$refs.formServices.reset();
+      this.editedService = -1;
     }
   },
 
@@ -439,11 +446,11 @@ export default {
       val || this.close();
     },
 
-    editedItem: {
+    services: {
       deep: true,
       handler(newValue) {
-        if (newValue.services.length) {
-          let prices = newValue.services.map(item => parseFloat(item.price));
+        if (newValue.length) {
+          let prices = newValue.map(item => parseFloat(item.price));
           this.totalServices = prices.reduce(function(a, b) {
             return a + b;
           }, 0);

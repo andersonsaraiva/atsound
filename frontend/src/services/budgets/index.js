@@ -8,7 +8,7 @@ export const updateBudgets = (params) => Axios.put(`budgets/${params.id}`, param
 
 export const deleteBudgets = (params) => Axios.delete(`budgets/${params.id}`);
 
-export const getServices = () => Axios.get('services');
+export const getServices = (budget_id) => Axios.get(`services/${budget_id}`);
 
 export const createServices = (params) => Axios.post(`budgets/${params.budget_id}/services`, params);
 

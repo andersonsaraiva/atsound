@@ -5,7 +5,8 @@ import mutations from './mutations';
 export const budgets = {
   namespaced: true,
   state: {
-    budgets: []
+    budgets: [],
+    services: []
   },
   getters,
   mutations,

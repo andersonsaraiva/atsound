@@ -1,3 +1,4 @@
 export default {
-  get: state => state.budgets
+  get: state => state.budgets,
+  getServices: state => state.services
 };

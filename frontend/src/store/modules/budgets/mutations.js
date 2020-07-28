@@ -24,6 +24,8 @@ export default {
     }
   },
 
+  setServices: (state, payload) => (state.services = payload),
+
   createService: (state, payload) => {
     showMessage('success', 'Operação realizada com sucesso!');
   },
@@ -33,6 +35,11 @@ export default {
   },
 
   deleteService: (state, payload) => {
-    showMessage('success', 'Operação realizada com sucesso!');
+    let index = state.services.findIndex(x => x.id === payload.id);
+
+    if (index !== -1) {
+      state.services.splice(index, 1);
+      showMessage('success', 'Operação realizada com sucesso!');
+    }
   },
 };
