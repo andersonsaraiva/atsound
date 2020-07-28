@@ -5,7 +5,8 @@ import mutations from './mutations';
 export const customers = {
   namespaced: true,
   state: {
-    customers: []
+    customers: [],
+    cars: []
   },
   getters,
   mutations,

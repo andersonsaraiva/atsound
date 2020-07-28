@@ -24,15 +24,22 @@ export default {
     }
   },
 
-  createCars: (state, payload) => {
+  setCars: (state, payload) => (state.cars = payload),
+
+  createCar: (state, payload) => {
     showMessage('success', 'Operação realizada com sucesso!');
   },
 
-  updateCars: (state, payload) => {
+  updateCar: (state, payload) => {
     showMessage('success', 'Operação realizada com sucesso!');
   },
 
-  deleteCars: (state, payload) => {
-    showMessage('success', 'Operação realizada com sucesso!');
-  },
+  deleteCar: (state, payload) => {
+    let index = state.cars.findIndex(x => x.id === payload.id);
+
+    if (index !== -1) {
+      state.cars.splice(index, 1);
+      showMessage('success', 'Operação realizada com sucesso!');
+    }
+  }
 };

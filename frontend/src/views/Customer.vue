@@ -18,7 +18,7 @@
           </v-col>
 
           <v-col lg="2" md="2" sm="4">
-            <v-btn color="primary" @click="dialog = true">Cadastrar</v-btn>
+            <v-btn color="primary" @click="addCustomer">Cadastrar</v-btn>
           </v-col>
         </v-row>
       </v-card-text>
@@ -38,285 +38,336 @@
 
     <v-dialog v-model="dialog">
       <v-card>
-        <v-card-title class="pa-3">
-          <span class="headline">{{ formTitle }}</span>
+        <v-toolbar dark color="primary">
+          <v-toolbar-title>{{ formTitle }}</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-icon @click="close">close</v-icon>
-        </v-card-title>
+          <v-toolbar-items>
+            <v-btn icon dark @click="close" title="Fechar janela">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </v-toolbar-items>
+        </v-toolbar>
 
         <v-divider horizontal></v-divider>
 
-        <v-form ref="form" lazy-validation>
-          <v-container fluid>
-            <v-row class="px-1">
-              <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field
-                  v-model="editedItem.name"
-                  label="Nome"
-                  type="text"
-                  required
-                  :rules="[required]"
-                  outlined
-                  dense
-                />
-              </v-col>
+        <v-stepper v-model="step" non-linear>
+          <v-stepper-header>
+            <v-stepper-step editable step="1">
+              Dados do Cliente
+            </v-stepper-step>
+            <v-divider></v-divider>
+            <v-stepper-step :editable="!!editedItem.id" step="2">
+              Carros
+            </v-stepper-step>
+          </v-stepper-header>
 
-              <v-col cols="12" sm="3" md="3" class="py-0">
-                <v-text-field
-                  v-model="editedItem.email"
-                  label="Email"
-                  type="text"
-                  required
-                  :rules="[required]"
-                  outlined
-                  dense
-                />
-              </v-col>
+          <v-stepper-items>
+            <v-stepper-content step="1">
+              <v-form ref="form" lazy-validation v-model="form">
+                <v-container fluid>
+                  <v-row class="px-1">
+                    <v-col cols="12" sm="2" md="2" class="py-0" v-if="editedItem.id">
+                      <v-text-field
+                        v-model="editedItem.id"
+                        label="Código"
+                        type="text"
+                        dense
+                        outlined
+                        readonly
+                        disabled
+                      />
+                    </v-col>
 
-              <v-col cols="12" sm="3" md="3" class="py-0">
-                <v-text-field
-                  v-model="editedItem.phone"
-                  label="Telefone"
-                  type="text"
-                  required
-                  :rules="[required]"
-                  outlined
-                  dense
-                />
-              </v-col>
+                    <v-col cols="12" :sm="editedItem.id ? 4 : 6" :md="editedItem.id ? 4 : 6" class="py-0">
+                      <v-text-field
+                        v-model="editedItem.name"
+                        label="Nome"
+                        type="text"
+                        outlined
+                        dense
+                        required
+                        :rules="[required]"
+                      />
+                    </v-col>
 
-              <v-col cols="12" sm="3" md="3" class="py-0">
-                <v-menu
-                  ref="menu"
-                  v-model="menu"
-                  :close-on-content-click="false"
-                  :return-value.sync="editedItem.date_of_birth"
-                  transition="scale-transition"
-                  offset-y
-                  min-width="290px"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                      v-model="editedItem.date_of_birth"
-                      label="Data de nascimento"
-                      prepend-inner-icon="event"
-                      readonly
-                      v-bind="attrs"
-                      v-on="on"
-                      outlined
-                      dense
-                    />
-                  </template>
+                    <v-col cols="12" sm="3" md="3" class="py-0">
+                      <v-text-field
+                        v-model="editedItem.email"
+                        label="Email"
+                        type="text"
+                        outlined
+                        dense
+                        :rules="[email]"
+                      />
+                    </v-col>
 
-                  <v-date-picker v-model="editedItem.date_of_birth" no-title scrollable>
-                    <v-spacer></v-spacer>
-                    <v-btn small color="primary" @click="menu = false">Cancel</v-btn>
-                    <v-btn small color="primary" @click="$refs.menu.save(date)">OK</v-btn>
-                  </v-date-picker>
-                </v-menu>
-              </v-col>
+                    <v-col cols="12" sm="3" md="3" class="py-0">
+                      <v-text-field
+                        v-model="editedItem.phone"
+                        label="Telefone"
+                        type="text"
+                        outlined
+                        dense
+                        required
+                        :rules="[required]"
+                        v-mask="['(##) ####-####', '(##) #####-####']"
+                      />
+                    </v-col>
 
-              <v-col cols="12" sm="3" md="3" class="py-0">
-                <v-select
-                  v-model="editedItem.gender"
-                  :items="['Masculino', 'Feminino']"
-                  label="Sexo"
-                  outlined
-                  dense
-                ></v-select>
-              </v-col>
-
-              <v-col cols="12" sm="3" md="3" class="py-0">
-                <v-text-field
-                  v-model="editedItem.cpf"
-                  label="CPF"
-                  required
-                  type="text"
-                  :rules="[required]"
-                  outlined
-                  dense
-                />
-              </v-col>
-
-              <v-col cols="12" class="pt-0">
-                <h3 class="subtitle-1">Endereço</h3>
-              </v-col>
-
-              <v-col cols="12" sm="3" md="3" class="py-0">
-                <v-text-field
-                  v-model="editedItem.address.zipcode"
-                  label="CEP"
-                  required
-                  type="text"
-                  :rules="[required]"
-                  outlined
-                  dense
-                />
-              </v-col>
-
-              <v-col cols="12" sm="6" md="6" class="py-0">
-                <v-text-field
-                  v-model="editedItem.address.street"
-                  label="Rua"
-                  required
-                  type="text"
-                  :rules="[required]"
-                  outlined
-                  dense
-                />
-              </v-col>
-
-              <v-col cols="12" sm="3" md="3" class="py-0">
-                <v-text-field
-                  v-model="editedItem.address.number"
-                  label="Número"
-                  required
-                  type="text"
-                  :rules="[required]"
-                  outlined
-                  dense
-                />
-              </v-col>
-
-              <v-col cols="12" sm="3" md="3" class="py-0">
-                <v-text-field v-model="editedItem.address.complement" label="Complemento" type="text" outlined dense />
-              </v-col>
-
-              <v-col cols="12" sm="3" md="3" class="py-0">
-                <v-text-field
-                  v-model="editedItem.address.neighborhood"
-                  label="Bairro"
-                  required
-                  type="text"
-                  :rules="[required]"
-                  outlined
-                  dense
-                />
-              </v-col>
-
-              <v-col cols="12" sm="3" md="3" class="py-0">
-                <v-text-field
-                  v-model="editedItem.address.city"
-                  label="Cidade"
-                  required
-                  type="text"
-                  :rules="[required]"
-                  outlined
-                  dense
-                />
-              </v-col>
-
-              <v-col cols="12" sm="3" md="3" class="py-0">
-                <v-text-field
-                  v-model="editedItem.address.state"
-                  label="Estado"
-                  required
-                  type="text"
-                  :rules="[required]"
-                  outlined
-                  dense
-                />
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-form>
-
-        <v-form ref="formCars" lazy-validation v-model="formCars">
-          <v-container fluid>
-            <v-row>
-              <v-col>
-                <v-expansion-panels focusable v-model="showCollapse" class="column-group">
-                  <v-expansion-panel>
-                    <v-expansion-panel-header>Serviços</v-expansion-panel-header>
-                    <v-expansion-panel-content>
-                      <v-row>
-                        <v-col cols="12" sm="3" md="3" class="py-0">
+                    <v-col cols="12" sm="3" md="3" class="py-0">
+                      <v-menu
+                        v-model="menu"
+                        :close-on-content-click="false"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="290px"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
                           <v-text-field
-                            v-model="car.model"
-                            label="Modelo"
-                            type="text"
+                            v-model="editedItem.date_of_birth"
+                            label="Data de nascimento"
+                            append-icon="event"
+                            readonly
                             dense
                             outlined
                             required
                             :rules="[required]"
-                          />
-                        </v-col>
+                            v-bind="attrs"
+                            v-on="on"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker
+                          v-model="editedItem.date_of_birth"
+                          @input="menu = false"
+                          locale="pt-br"
+                        ></v-date-picker>
+                      </v-menu>
+                    </v-col>
 
-                        <v-col cols="12" sm="3" md="3" class="py-0">
-                          <v-text-field
-                            v-model="car.color"
-                            label="Cor"
-                            type="text"
-                            dense
-                            outlined
-                            required
-                            :rules="[required]"
-                          />
-                        </v-col>
+                    <v-col cols="12" sm="3" md="3" class="py-0">
+                      <v-select
+                        v-model="editedItem.gender"
+                        :items="['Masculino', 'Feminino']"
+                        label="Sexo"
+                        outlined
+                        dense
+                        required
+                        :rules="[required]"
+                      ></v-select>
+                    </v-col>
 
-                        <v-col cols="12" sm="3" md="3" class="py-0">
-                          <v-text-field
-                            v-model="car.year"
-                            label="Ano"
-                            type="text"
-                            dense
-                            outlined
-                            required
-                            :rules="[required]"
-                          />
-                        </v-col>
+                    <v-col cols="12" sm="3" md="3" class="py-0">
+                      <v-text-field
+                        v-model="editedItem.cpf"
+                        label="CPF"
+                        type="text"
+                        outlined
+                        dense
+                        required
+                        :rules="[required]"
+                        v-mask="'###.###.###-##'"
+                      />
+                    </v-col>
 
-                        <v-col cols="12" sm="3" md="3" class="py-0">
-                          <v-btn color="primary" @click="addCar" :disabled="!formCars">
-                            <v-icon left>add</v-icon>
-                            Adicionar
-                          </v-btn>
-                        </v-col>
-                      </v-row>
+                    <v-col cols="12" class="pt-0">
+                      <h3 class="subtitle-1">Endereço</h3>
+                    </v-col>
 
-                      <v-row>
-                        <v-col>
-                          <v-data-table
-                            :headers="carsHeaders"
-                            :items="editedItem.cars"
-                            hide-default-footer
-                            dense
-                            class="elevation-1"
-                          >
-                            <template v-slot:item.actions="{ item }">
-                              <v-icon small class="mr-2" @click="editCar(item)" color="green">
-                                mdi-pencil
-                              </v-icon>
+                    <v-col cols="12" sm="3" md="3" class="py-0">
+                      <v-text-field
+                        v-model="editedItem.zipcode"
+                        label="CEP"
+                        type="text"
+                        outlined
+                        dense
+                        required
+                        :rules="[required]"
+                        v-mask="'#####-###'"
+                      />
+                    </v-col>
 
-                              <v-icon small @click="deleteCar(item)" color="red">
-                                mdi-delete
-                              </v-icon>
-                            </template>
-                          </v-data-table>
-                        </v-col>
-                      </v-row>
-                    </v-expansion-panel-content>
-                  </v-expansion-panel>
-                </v-expansion-panels>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-form>
+                    <v-col cols="12" sm="6" md="6" class="py-0">
+                      <v-text-field
+                        v-model="editedItem.street"
+                        label="Rua"
+                        type="text"
+                        outlined
+                        dense
+                        required
+                        :rules="[required]"
+                      />
+                    </v-col>
 
-        <v-card-actions class="pa-3 pt-0">
-          <v-spacer></v-spacer>
-          <v-btn color="primary" @click="save" small>Salvar</v-btn>
-          <v-btn @click="close" small>Cancelar</v-btn>
-        </v-card-actions>
+                    <v-col cols="12" sm="3" md="3" class="py-0">
+                      <v-text-field
+                        v-model="editedItem.number"
+                        label="Número"
+                        type="text"
+                        outlined
+                        dense
+                        required
+                        :rules="[required]"
+                      />
+                    </v-col>
+
+                    <v-col cols="12" sm="3" md="3" class="py-0">
+                      <v-text-field
+                        v-model="editedItem.complement"
+                        label="Complemento"
+                        type="text"
+                        outlined
+                        dense
+                        hint="Exemplo: andar, apto, bloco"
+                      />
+                    </v-col>
+
+                    <v-col cols="12" sm="3" md="3" class="py-0">
+                      <v-text-field
+                        v-model="editedItem.neighborhood"
+                        label="Bairro"
+                        type="text"
+                        outlined
+                        dense
+                        required
+                        :rules="[required]"
+                      />
+                    </v-col>
+
+                    <v-col cols="12" sm="3" md="3" class="py-0">
+                      <v-text-field
+                        v-model="editedItem.city"
+                        label="Cidade"
+                        type="text"
+                        outlined
+                        dense
+                        required
+                        :rules="[required]"
+                      />
+                    </v-col>
+
+                    <v-col cols="12" sm="3" md="3" class="py-0">
+                      <v-text-field
+                        v-model="editedItem.state"
+                        label="Estado"
+                        type="text"
+                        outlined
+                        dense
+                        required
+                        :rules="[required]"
+                      />
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-form>
+              <v-card-actions class="pa-3 pt-0">
+                <v-spacer></v-spacer>
+                <v-btn color="primary" @click="save" :disabled="!form">
+                  Salvar e avançar
+                  <v-icon right>fas fa-long-arrow-alt-right</v-icon>
+                </v-btn>
+              </v-card-actions>
+            </v-stepper-content>
+            <v-stepper-content step="2">
+              <v-form ref="formCars" lazy-validation v-model="formCars">
+                <v-container fluid>
+                  <v-row>
+                    <v-col cols="12" sm="2" md="2" class="py-0">
+                      <v-text-field
+                        v-model="car.model"
+                        label="Modelo"
+                        type="text"
+                        dense
+                        outlined
+                        required
+                        :rules="[required]"
+                      />
+                    </v-col>
+
+                    <v-col cols="12" sm="2" md="2" class="py-0">
+                      <v-text-field
+                        v-model="car.color"
+                        label="Cor"
+                        type="text"
+                        dense
+                        outlined
+                        required
+                        :rules="[required]"
+                      />
+                    </v-col>
+
+                    <v-col cols="12" sm="2" md="2" class="py-0">
+                      <v-text-field
+                        v-model="car.year"
+                        label="Ano"
+                        type="number"
+                        min="0"
+                        max="9999"
+                        dense
+                        outlined
+                        required
+                        :rules="[required]"
+                      />
+                    </v-col>
+
+                    <v-col cols="12" sm="2" md="2" class="py-0">
+                      <v-text-field
+                        v-model="car.license_plate"
+                        label="Placa"
+                        type="text"
+                        dense
+                        outlined
+                        required
+                        :rules="[required]"
+                      />
+                    </v-col>
+
+                    <v-col cols="12" sm="4" md="4" class="py-0">
+                      <v-btn color="primary" @click="addCar" :disabled="!formCars">
+                        <v-icon left>add</v-icon>
+                        {{ carButtonTitle }}
+                      </v-btn>
+                      <v-btn
+                        color="primary"
+                        class="ml-2"
+                        outlined
+                        @click="cancelCar"
+                        v-if="editedIndexCar > -1"
+                        title="Cancelar Atualização"
+                      >
+                        Cancelar
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+
+                  <v-row>
+                    <v-col>
+                      <v-data-table :headers="carsHeaders" :items="cars" hide-default-footer dense class="elevation-1">
+                        <template v-slot:item.actions="{ item }">
+                          <v-icon small class="mr-2" @click="editCar(item)" color="green" title="Editar carro">
+                            mdi-pencil
+                          </v-icon>
+
+                          <v-icon small @click="deleteCar(item)" color="red" title="Excluir carro">
+                            mdi-delete
+                          </v-icon>
+                        </template>
+                      </v-data-table>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-form>
+            </v-stepper-content>
+          </v-stepper-items>
+        </v-stepper>
       </v-card>
     </v-dialog>
   </v-container>
 </template>
 
 <script>
-import items from '@/api/customer.json';
-import { required } from '@/helpers/validations';
-import { confirmMessage } from '@/helpers/messages';
+import { required, email } from '@/helpers/validations';
+import { showMessage, confirmMessage } from '@/helpers/messages';
+import { formatValue, formatDate } from '@/helpers/utils';
 import * as HANDLERS from '@/helpers/handlers';
 
 export default {
@@ -325,17 +376,22 @@ export default {
   },
 
   events: {
-    [HANDLERS.DELETE_CUSTOMER]: 'showDelete'
+    [HANDLERS.DELETE_CUSTOMER]: 'showDelete',
+    [HANDLERS.NEXT_STEP_CUSTOMERS]: 'next_step',
+    [HANDLERS.DELETE_CAR]: 'showDeleteCar'
   },
 
   data: () => ({
-    search: '',
     required,
+    email,
+    form: true,
     formCars: true,
-    showCollapse: 0,
-    dialog: false,
+    search: '',
+    step: 1,
     menu: false,
-    date: new Date().toISOString().substr(0, 10),
+    dialog: false,
+    editedIndex: -1,
+    editedIndexCar: -1,
     headers: [
       { text: 'Nome', value: 'name' },
       { text: 'Email', value: 'email' },
@@ -346,94 +402,89 @@ export default {
       { text: 'Modelo', value: 'model' },
       { text: 'Cor', value: 'color' },
       { text: 'Ano', value: 'year' },
+      { text: 'Placa', value: 'license_plate' },
       { text: '', value: 'actions', sortable: false, align: 'right' }
     ],
-    items: [],
     car: {
-      model: '',
-      color: '',
-      year: '',
-      license_plate: ''
+      id: null,
+      model: null,
+      color: null,
+      year: null,
+      license_plate: null
     },
-    editedCar: -1,
-    editedIndex: -1,
+    defaultCar: {
+      id: null,
+      model: null,
+      color: null,
+      year: null,
+      license_plate: null
+    },
     editedItem: {
-      name: '',
-      email: '',
-      phone: '',
-      cpf: '',
-      gender: '',
-      date_of_birth: '',
-      address: {
-        zipcode: '',
-        street: '',
-        number: '',
-        neighborhood: '',
-        complement: '',
-        city: '',
-        state: ''
-      },
-      cars: [
-        {
-          model: '',
-          color: '',
-          year: '',
-          license_plate: ''
-        }
-      ]
+      name: null,
+      email: null,
+      phone: null,
+      cpf: null,
+      gender: null,
+      date_of_birth: null,
+      zipcode: null,
+      street: null,
+      number: null,
+      neighborhood: null,
+      complement: null,
+      city: null,
+      state: null
     },
     defaultItem: {
-      name: '',
-      email: '',
-      phone: '',
-      cpf: '',
-      gender: '',
-      date_of_birth: '',
-      address: {
-        zipcode: '',
-        street: '',
-        number: '',
-        neighborhood: '',
-        complement: '',
-        city: '',
-        state: ''
-      },
-      cars: [
-        {
-          model: '',
-          color: '',
-          year: '',
-          license_plate: ''
-        }
-      ]
+      name: null,
+      email: null,
+      phone: null,
+      cpf: null,
+      gender: null,
+      date_of_birth: null,
+      zipcode: null,
+      street: null,
+      number: null,
+      neighborhood: null,
+      complement: null,
+      city: null,
+      state: null
     }
   }),
 
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? 'Cadastro' : 'Edição';
-    }
-  },
+      return this.editedIndex === -1 ? 'Cadastro de Cliente' : 'Edição de Cliente';
+    },
 
-  watch: {
-    dialog(val) {
-      val || this.close();
+    items() {
+      return this.$store.getters['customers/get'];
+    },
+
+    carButtonTitle() {
+      return this.editedIndexCar === -1 ? 'Adicionar' : 'Atualizar';
+    },
+
+    cars() {
+      return this.$store.getters['customers/getCars'];
     }
   },
 
   created() {
-    this.initialize();
+    this.$store.dispatch('customers/get');
   },
 
   methods: {
-    initialize() {
-      this.items = items;
+    addCustomer() {
+      this.dialog = true;
+      this.step = 1;
     },
 
     editItem(item) {
       this.editedIndex = this.items.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
+
+      this.$store.dispatch('customers/getCars', item.id);
     },
 
     deleteItem(item) {
@@ -441,50 +492,82 @@ export default {
     },
 
     showDelete(item) {
-      const index = this.items.indexOf(item);
-
-      this.items.splice(index, 1);
+      this.$store.dispatch('customers/delete', item);
     },
 
     close() {
       this.dialog = false;
+      this.step = 1;
+
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
         this.$refs.form.reset();
+
+        this.car = Object.assign({}, this.defaultCar);
+        this.editedIndexCar = -1;
+        this.$refs.formCars.reset();
       });
+
+      this.$store.dispatch('customers/get');
     },
 
     save() {
       if (!this.$refs.form.validate(true)) return;
 
       if (this.editedIndex > -1) {
-        Object.assign(this.items[this.editedIndex], this.editedItem);
+        this.$store.dispatch('customers/update', this.editedItem);
       } else {
-        this.items.push(this.editedItem);
+        this.$store.dispatch('customers/create', this.editedItem);
       }
+    },
 
-      this.close();
+    next_step(item) {
+      this.editedItem.id = item.id;
+      this.step = 2;
+
+      this.$store.dispatch('customers/getCars', item.id);
+    },
+
+    editCar(item) {
+      this.editedIndexCar = this.cars.indexOf(item);
+      this.car = Object.assign({}, item);
+    },
+
+    cancelCar() {
+      this.editedIndexCar = -1;
+      this.car = Object.assign({}, this.defaultCar);
+      this.$refs.formCars.reset();
+    },
+
+    deleteCar(item) {
+      confirmMessage(`Deseja realmente excluir`, `${item.model}`, item, HANDLERS.DELETE_CAR);
+    },
+
+    showDeleteCar(item) {
+      this.$store.dispatch('customers/deleteCar', item);
     },
 
     addCar() {
       if (!this.$refs.formCars.validate(true)) return;
 
-      if (this.editedCar > -1) {
-        Object.assign(this.editedItem.cars[this.editedCar], this.car);
+      let params = { customer: { customer_id: this.editedItem.id }, car: this.car };
+
+      if (this.editedIndexCar > -1) {
+        this.$store.dispatch('customers/updateCar', params);
       } else {
-        this.editedItem.cars.push(JSON.parse(JSON.stringify(this.car)));
+        this.$store.dispatch('customers/createCar', params);
       }
 
       this.$refs.formCars.reset();
-    },
+      this.editedIndexCar = -1;
+    }
+  },
 
-    editCar(item) {
-      this.editedCar = this.editedItem.cars.indexOf(item);
-      this.car = Object.assign({}, item);
-    },
-
-    deleteCar(item) {}
+  watch: {
+    dialog(val) {
+      val || this.close();
+    }
   }
 };
 </script>

@@ -1,4 +1,4 @@
-import { getCustomers, createCustomers, updateCustomers, deleteCustomers, createCars, updateCars, deleteCars } from '@/services/customers';
+import { getCustomers, createCustomers, updateCustomers, deleteCustomers, getCars, createCars, updateCars, deleteCars } from '@/services/customers';
 
 export default {
   get: async ({ commit }) => {
@@ -49,36 +49,50 @@ export default {
     }
   },
 
-  updateCars: async ({ commit }, params) => {
+  getCars: async ({ commit }, params) => {
     try {
-      const { status, data } = await updateCars({ ...params.cars, ...params.customer });
+      const { data } = await getCars(params);
+
+      if (data) {
+        commit('setCars', data);
+      }
+    } catch (error) {
+      throw Error("Ocorreu um erro de API.");
+    }
+  },
+
+  updateCar: async ({ commit, dispatch }, params) => {
+    try {
+      const { status, data } = await updateCars({ ...params.car, ...params.customer });
 
       if (status === 200) {
-        commit('updateCars', data);
+        commit('updateCar', data);
+        dispatch('customers/getCars', params.customer.customer_id, { root: true });
       }
     } catch (error) {
       throw Error("Ocorreu um erro de API.");
     }
   },
 
-  createCars: async ({ commit }, params) => {
+  createCar: async ({ commit, dispatch }, params) => {
     try {
-      const { status, data } = await createCars({ ...params.cars, ...params.customer });
+      const { status, data } = await createCars({ ...params.car, ...params.customer });
 
       if (status === 201) {
-        commit('createCars', data);
+        commit('createCar', data);
+        dispatch('customers/getCars', params.customer.customer_id, { root: true });
       }
     } catch (error) {
       throw Error("Ocorreu um erro de API.");
     }
   },
 
-  deleteCars: async ({ commit }, params) => {
+  deleteCar: async ({ commit }, params) => {
     try {
       const { status } = await deleteCars(params);
 
       if (status === 200) {
-        commit('deleteCars', params);
+        commit('deleteCar', params);
       }
     } catch (error) {
       throw Error("Ocorreu um erro de API.");
