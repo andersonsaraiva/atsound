@@ -8,7 +8,7 @@ export const updateCustomers = (params) => Axios.put(`customers/${params.id}`, p
 
 export const deleteCustomers = (params) => Axios.delete(`customers/${params.id}`);
 
-export const getCars = () => Axios.get('cars');
+export const getCars = (customer_id) => Axios.get(`cars/${customer_id}`);
 
 export const createCars = (params) => Axios.post(`customers/${params.customer_id}/cars`, params);
 

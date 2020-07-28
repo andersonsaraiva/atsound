@@ -9,7 +9,9 @@ Axios.interceptors.request.use(
 
     const token = store.getters['authentication/getToken'];
 
-    if (token) {
+    let isZipCode = config.url.includes('https://viacep.com.br/');
+
+    if (token && !isZipCode) {
       config.headers.Authorization = `Bearer ${token}`;
     }
 
@@ -47,7 +49,7 @@ Axios.interceptors.response.use(
 
         case 401: {
           router.push({ path: '/login' });
-          showMessage("error", message, 2500);
+          showMessage("error", message);
           break;
         }
 

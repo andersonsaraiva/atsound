@@ -266,16 +266,17 @@ export default {
   },
 
   data: () => ({
-    step: 1,
-    menu: false,
-    totalServices: 0,
+    required,
+    email,
     form: true,
     formServices: true,
     search: '',
-    required,
-    email,
+    step: 1,
+    menu: false,
     dialog: false,
-    showCollapse: 0,
+    totalServices: 0,
+    editedIndex: -1,
+    editedService: -1,
     service: {
       id: null,
       description: null,
@@ -299,8 +300,6 @@ export default {
       { text: 'Preço', value: 'price' },
       { text: '', value: 'actions', sortable: false, align: 'right' }
     ],
-    editedIndex: -1,
-    editedService: -1,
     editedItem: {
       id: null,
       name: null,
