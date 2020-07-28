@@ -3,9 +3,8 @@ const Budget = require('../models/Budget');
 class BudgetController {
   async index(req, res) {
     try {
-      const budgets = await Budget.findAll({
-        include: { association: 'services' }
-      });
+      const budgets = await Budget.findAll();
+      // include: { association: 'services' }
 
       return res.status(200).send(budgets);
     } catch (error) {

@@ -3,9 +3,8 @@ const Customer = require('../models/Customer');
 class CustomerController {
   async index(req, res) {
     try {
-      const customers = await Customer.findAll({
-        include: { association: 'cars' }
-      });
+      const customers = await Customer.findAll();
+      // include: { association: 'cars' }
 
       return res.status(200).send(customers);
     } catch (error) {

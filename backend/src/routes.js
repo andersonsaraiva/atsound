@@ -10,6 +10,7 @@ const ServiceController = require('./app/controllers/ServiceController');
 const CustomerController = require('./app/controllers/CustomerController');
 const CarController = require('./app/controllers/CarController');
 const EmployeeController = require('./app/controllers/EmployeeController');
+const ProductController = require('./app/controllers/ProductController');
 
 routes.post('/auth', AuthController.create);
 
@@ -77,5 +78,14 @@ routes
   .post('/employees', EmployeeController.create)
   .put('/employees/:id', EmployeeController.update)
   .delete('/employees/:id', EmployeeController.delete);
+
+/**
+ * Products routes
+ */
+routes
+  .get('/products', ProductController.index)
+  .post('/products', ProductController.create)
+  .put('/products/:id', ProductController.update)
+  .delete('/products/:id', ProductController.delete);
 
 module.exports = routes;

@@ -5,7 +5,7 @@ class Service extends Model {
     super.init(
       {
         description: DataTypes.STRING,
-        price: DataTypes.STRING
+        price: DataTypes.FLOAT
       },
       { sequelize }
     );
