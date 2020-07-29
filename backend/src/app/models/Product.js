@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 const { Model, DataTypes } = require('sequelize');
 
 class Product extends Model {
@@ -9,7 +11,12 @@ class Product extends Model {
         brand: DataTypes.STRING,
         description: DataTypes.STRING,
         quantity: DataTypes.INTEGER,
-        purchase_date: DataTypes.DATE,
+        purchase_date: {
+          type: DataTypes.DATE,
+          get: function () {
+            return moment(this.getDataValue('purchase_date')).format('DD/MM/YYYY');
+          }
+        },
         purchase_value: DataTypes.FLOAT,
         stock_value: DataTypes.FLOAT
       },

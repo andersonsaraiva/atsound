@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 const { Model, DataTypes } = require('sequelize');
 
 class Employee extends Model {
@@ -7,7 +9,12 @@ class Employee extends Model {
         name: DataTypes.STRING,
         email: DataTypes.STRING,
         phone: DataTypes.STRING,
-        date_of_birth: DataTypes.DATE,
+        date_of_birth: {
+          type: DataTypes.DATE,
+          get: function () {
+            return moment(this.getDataValue('date_of_birth')).format('DD/MM/YYYY');
+          }
+        },
         gender: DataTypes.STRING,
         nationality: DataTypes.STRING,
         marital_status: DataTypes.STRING,
