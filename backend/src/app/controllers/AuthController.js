@@ -1,22 +1,26 @@
 const User = require('../models/User');
 
 class AuthController {
-  async create(req, res) {
+  async create(req, res, next) {
     const { email, password } = req.body;
 
     try {
-      const user = await User.findOne({
-        where: { email }
-      });
+      let user = await User.findOne({ where: { email } });
 
       if (!user) return res.status(401).json({ message: 'Usuário ou senha inválidos!' });
 
       if (!(await user.checkPassword(password)))
         return res.status(401).json({ message: 'Usuário ou senha inválidos!' });
 
+      const token = user.generateToken();
+
+      user = user.toJSON();
+
+      delete user.password_hash;
+
       return res.status(200).json({
         user,
-        token: user.generateToken()
+        token
       });
     } catch (err) {
       return res.status(400).json({ message: 'Ocorreu um erro!', err });

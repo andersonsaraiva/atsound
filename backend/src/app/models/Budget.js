@@ -8,7 +8,8 @@ class Budget extends Model {
         email: DataTypes.STRING,
         phone: DataTypes.STRING,
         cpf: DataTypes.STRING,
-        date: DataTypes.DATE
+        date: DataTypes.DATE,
+        total: DataTypes.VIRTUAL
       },
       { sequelize }
     );
