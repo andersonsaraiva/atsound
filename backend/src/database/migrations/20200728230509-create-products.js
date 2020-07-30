@@ -11,7 +11,7 @@ module.exports = {
       },
       provider_id: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true
       },
       name: {
         type: Sequelize.STRING,

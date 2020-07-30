@@ -16,7 +16,7 @@ module.exports = {
       email: {
         type: Sequelize.STRING,
         unique: true,
-        allowNull: false
+        allowNull: true
       },
       phone: {
         type: Sequelize.STRING,
@@ -52,7 +52,11 @@ module.exports = {
       },
       cnh: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
+      },
+      zipcode: {
+        type: Sequelize.STRING,
+        allowNull: true
       },
       street: {
         type: Sequelize.STRING,
@@ -68,7 +72,7 @@ module.exports = {
       },
       complement: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       city: {
         type: Sequelize.STRING,

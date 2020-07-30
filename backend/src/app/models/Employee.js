@@ -22,6 +22,7 @@ class Employee extends Model {
         cpf: DataTypes.STRING,
         rg: DataTypes.STRING,
         cnh: DataTypes.STRING,
+        zipcode: DataTypes.STRING,
         street: DataTypes.STRING,
         number: DataTypes.STRING,
         neighborhood: DataTypes.STRING,

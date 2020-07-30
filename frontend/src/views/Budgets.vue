@@ -295,7 +295,6 @@ export default {
       { text: 'Nome', value: 'name' },
       { text: 'Email', value: 'email' },
       { text: 'Telefone', value: 'phone' },
-      { text: 'CPF', value: 'cpf' },
       { text: 'Data do Orçamento', value: 'date' },
       { text: 'Total do Orçamento', value: 'total' },
       { text: '', value: 'actions', sortable: false, align: 'right' }

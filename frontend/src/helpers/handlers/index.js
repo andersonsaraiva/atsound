@@ -16,3 +16,6 @@ export const CLOSE_PRODUCT = 'CLOSE_PRODUCT';
 
 export const DELETE_USER = 'DELETE_USER';
 export const CLOSE_USER = 'CLOSE_USER';
+
+export const DELETE_EMPLOYEES = 'DELETE_EMPLOYEES';
+export const CLOSE_EMPLOYEES = 'CLOSE_EMPLOYEES';
