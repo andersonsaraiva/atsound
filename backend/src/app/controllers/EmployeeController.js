@@ -12,7 +12,14 @@ class EmployeeController {
   }
 
   async create(req, res) {
+    const { cpf } = req.body;
+
     try {
+
+      if (!!(await Employee.findOne({ where: { cpf } }))) {
+        return res.status(400).send({ message: 'Erro ao criar novo funcionário... CPF já existe na base de dados!' });
+      }
+
       await Employee.create(req.body);
 
       return res.status(201).send();
@@ -22,9 +29,13 @@ class EmployeeController {
   }
 
   async update(req, res) {
-    const { id } = req.params;
+    const { id, cpf } = req.params;
 
     try {
+      if (!!(await Employee.findOne({ where: { cpf } }))) {
+        return res.status(400).send({ message: 'Erro ao criar novo funcionário... CPF já existe na base de dados!' });
+      }
+
       const employee = await Employee.findOne({ where: { id } });
 
       if (employee) await employee.update(req.body);

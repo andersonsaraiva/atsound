@@ -16,7 +16,6 @@ class ServiceController {
 
   async create(req, res) {
     try {
-      const { description, price } = req.body;
       const { budget_id } = req.params;
 
       const budget = await Budget.findByPk(budget_id);

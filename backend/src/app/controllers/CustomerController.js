@@ -4,7 +4,6 @@ class CustomerController {
   async index(req, res) {
     try {
       const customers = await Customer.findAll();
-      // include: { association: 'cars' }
 
       return res.status(200).send(customers);
     } catch (error) {
@@ -24,6 +23,7 @@ class CustomerController {
 
   async update(req, res) {
     const { id } = req.params;
+
     try {
       const customer = await Customer.findOne({ where: { id } });
 

@@ -14,6 +14,8 @@ class UserController {
   }
 
   async create(req, res) {
+    const { email } = req.params;
+
     try {
       if (!!(await User.findOne({ where: { email } }))) {
         return res.status(400).send({ message: 'Erro ao criar novo usuário... Usuário já existe na base de dados!' });
