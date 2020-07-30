@@ -7,6 +7,7 @@ import { background } from '@/store/modules/background';
 import { budgets } from '@/store/modules/budgets';
 import { customers } from '@/store/modules/customers';
 import { loading } from '@/store/modules/loading';
+import { products } from '@/store/modules/products';
 import { providers } from '@/store/modules/providers';
 import { sidebar } from '@/store/modules/sidebar';
 import { users } from '@/store/modules/users';
@@ -29,6 +30,7 @@ export default new Vuex.Store({
     budgets,
     customers,
     loading,
+    products,
     providers,
     sidebar,
     users

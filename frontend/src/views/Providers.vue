@@ -37,11 +37,15 @@
 
     <v-dialog v-model="dialog" persistent>
       <v-card>
-        <v-card-title class="pa-3">
-          <span class="headline">{{ formTitle }}</span>
+        <v-toolbar dark color="primary">
+          <v-toolbar-title>{{ formTitle }}</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-icon @click="close" title="Fechar janela">close</v-icon>
-        </v-card-title>
+          <v-toolbar-items>
+            <v-btn icon dark @click="close" title="Fechar janela">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </v-toolbar-items>
+        </v-toolbar>
 
         <v-divider horizontal></v-divider>
 

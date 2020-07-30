@@ -61,13 +61,13 @@ export default [
     component: () => import('@/views/Budgets.vue')
   },
   {
-    path: '/stock',
+    path: '/products',
     meta: {
       public: false,
       title: 'Estoque'
     },
-    name: 'stock',
-    component: () => import('@/views/Stock.vue')
+    name: 'products',
+    component: () => import('@/views/Products.vue')
   },
   {
     path: '/provider',

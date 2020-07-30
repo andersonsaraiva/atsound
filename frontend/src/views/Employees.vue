@@ -26,11 +26,10 @@
 
     <v-data-table :search="search" :headers="headers" :items="items" class="elevation-1" dense>
       <template v-slot:item.actions="{ item }">
-        <v-icon small class="mr-2" @click="editItem(item)" color="green">
+        <v-icon small class="mr-2" @click="editItem(item)" color="green" title="Editar item">
           mdi-pencil
         </v-icon>
-
-        <v-icon small @click="deleteItem(item)" color="red">
+        <v-icon small @click="deleteItem(item)" color="red" title="Excluir item">
           mdi-delete
         </v-icon>
       </template>
@@ -38,11 +37,15 @@
 
     <v-dialog v-model="dialog">
       <v-card>
-        <v-card-title class="pa-3">
-          <span class="headline">{{ formTitle }}</span>
+        <v-toolbar dark color="primary">
+          <v-toolbar-title>{{ formTitle }}</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-icon @click="close">close</v-icon>
-        </v-card-title>
+          <v-toolbar-items>
+            <v-btn icon dark @click="close" title="Fechar janela">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </v-toolbar-items>
+        </v-toolbar>
 
         <v-divider horizontal></v-divider>
 

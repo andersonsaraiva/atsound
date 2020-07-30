@@ -28,6 +28,10 @@
       <template v-slot:item.date="{ item }">
         {{ formatDate(item.date) }}
       </template>
+      <template v-slot:item.total="{ item }">
+        {{ formatValue(item.total) }}
+      </template>
+
       <template v-slot:item.actions="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)" color="green">
           mdi-pencil
@@ -293,6 +297,7 @@ export default {
       { text: 'Telefone', value: 'phone' },
       { text: 'CPF', value: 'cpf' },
       { text: 'Data do Orçamento', value: 'date' },
+      { text: 'Total do Orçamento', value: 'total' },
       { text: '', value: 'actions', sortable: false, align: 'right' }
     ],
     servicesHeaders: [

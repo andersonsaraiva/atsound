@@ -18,7 +18,7 @@
           </v-col>
 
           <v-col lg="2" md="2" sm="4">
-            <v-btn color="primary" @click="dialog = true">Cadastrar</v-btn>
+            <v-btn color="primary" @click="addProduct">Cadastrar</v-btn>
           </v-col>
         </v-row>
       </v-card-text>
@@ -29,19 +29,19 @@
         <span :class="['font-weight-bold', getColor(item.quantity)]">{{ item.quantity }}</span>
       </template>
 
-      <template v-slot:item.purchaseValue="{ item }">
-        {{ formatValue(item.purchaseValue) }}
+      <template v-slot:item.purchase_value="{ item }">
+        {{ formatValue(item.purchase_value) }}
       </template>
 
-      <template v-slot:item.stockValue="{ item }">
-        {{ formatValue(item.purchaseValue * item.quantity) }}
+      <template v-slot:item.stock_value="{ item }">
+        {{ formatValue(item.purchase_value * item.quantity) }}
       </template>
 
       <template v-slot:item.actions="{ item }">
-        <v-icon small class="mr-2" @click="editItem(item)" color="green">
+        <v-icon small class="mr-2" @click="editItem(item)" color="green" title="Editar item">
           mdi-pencil
         </v-icon>
-        <v-icon small @click="deleteItem(item)" color="red">
+        <v-icon small @click="deleteItem(item)" color="red" title="Excluir item">
           mdi-delete
         </v-icon>
       </template>
@@ -49,18 +49,25 @@
 
     <v-dialog v-model="dialog" persistent>
       <v-card>
-        <v-card-title class="pa-3">
-          <span class="headline">{{ formTitle }}</span>
+        <v-toolbar dark color="primary">
+          <v-toolbar-title>{{ formTitle }}</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-icon @click="close">close</v-icon>
-        </v-card-title>
+          <v-toolbar-items>
+            <v-btn icon dark @click="close" title="Fechar janela">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </v-toolbar-items>
+        </v-toolbar>
 
         <v-divider horizontal></v-divider>
 
-        <v-form ref="form" lazy-validation>
+        <v-form ref="form" lazy-validation v-model="form">
           <v-container fluid>
             <v-row class="px-1">
-              <v-col cols="12" sm="6" md="6" class="py-0">
+              <v-col cols="12" sm="2" md="2" class="py-0" v-if="editedItem.id">
+                <v-text-field v-model="editedItem.id" label="Código" type="text" dense outlined readonly disabled />
+              </v-col>
+              <v-col cols="12" :sm="editedItem.id ? 4 : 6" :md="editedItem.id ? 4 : 6" class="py-0">
                 <v-text-field
                   v-model="editedItem.name"
                   label="Nome"
@@ -98,11 +105,37 @@
                 />
               </v-col>
               <v-col cols="12" sm="3" md="3" class="py-0">
-                <v-text-field type="date" v-model="editedItem.purchaseDate" label="Data da Compra" dense outlined />
+                <v-menu
+                  v-model="menu"
+                  :close-on-content-click="false"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="editedItem.purchase_date"
+                      label="Data do Orçamento"
+                      append-icon="event"
+                      readonly
+                      dense
+                      outlined
+                      required
+                      :rules="[required]"
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker
+                    v-model="editedItem.purchase_date"
+                    @input="menu = false"
+                    locale="pt-br"
+                  ></v-date-picker>
+                </v-menu>
               </v-col>
               <v-col cols="12" sm="2" md="2" class="py-0">
                 <vuetify-money
-                  v-model="editedItem.purchaseValue"
+                  v-model="editedItem.purchase_value"
                   label="Valor de Compra"
                   dense
                   outlined
@@ -115,13 +148,15 @@
               </v-col>
               <v-col cols="12" sm="5" md="5" class="py-0">
                 <v-autocomplete
-                  v-model="editedItem.providerId"
+                  v-model="editedItem.provider_id"
                   label="Fornecedor"
                   dense
                   outlined
-                  :items="providers"
                   item-text="name"
                   item-value="id"
+                  :items="providers"
+                  required
+                  :rules="[required]"
                 />
               </v-col>
             </v-row>
@@ -130,7 +165,7 @@
 
         <v-card-actions class="pa-3">
           <v-spacer></v-spacer>
-          <v-btn color="primary" @click="save" small>Salvar</v-btn>
+          <v-btn color="primary" @click="save" small :disabled="!form">Salvar</v-btn>
           <v-btn @click="close" small>Cancelar</v-btn>
         </v-card-actions>
       </v-card>
@@ -139,9 +174,8 @@
 </template>
 
 <script>
-import items from '@/api/stock.json';
 import { required } from '@/helpers/validations';
-import { showMessage, confirmMessage } from '@/helpers/messages';
+import { confirmMessage } from '@/helpers/messages';
 import { formatValue } from '@/helpers/utils';
 import * as HANDLERS from '@/helpers/handlers';
 
@@ -151,10 +185,13 @@ export default {
   },
 
   events: {
-    [HANDLERS.DELETE_STOCK]: 'showDelete'
+    [HANDLERS.DELETE_PRODUCT]: 'showDelete',
+    [HANDLERS.CLOSE_PRODUCT]: 'close'
   },
 
   data: () => ({
+    menu: false,
+    form: true,
     search: '',
     required,
     dialog: false,
@@ -162,11 +199,10 @@ export default {
       { text: 'Nome', value: 'name' },
       { text: 'Marca', value: 'brand' },
       { text: 'Quantidade', value: 'quantity' },
-      { text: 'Valor de Compra', value: 'purchaseValue' },
-      { text: 'Valor em Estoque', value: 'stockValue' },
+      { text: 'Valor de Compra', value: 'purchase_value' },
+      { text: 'Valor em Estoque', value: 'stock_value' },
       { text: '', value: 'actions', sortable: false, align: 'right' }
     ],
-    items: [],
     editedIndex: -1,
     editedItem: {
       id: null,
@@ -174,9 +210,9 @@ export default {
       brand: null,
       description: null,
       quantity: null,
-      purchaseDate: null,
-      purchaseValue: null,
-      providerId: null
+      purchase_date: null,
+      purchase_value: null,
+      provider_id: null
     },
     defaultItem: {
       id: null,
@@ -184,9 +220,9 @@ export default {
       brand: null,
       description: null,
       quantity: null,
-      purchaseDate: null,
-      purchaseValue: null,
-      providerId: null
+      purchase_date: null,
+      purchase_value: null,
+      provider_id: null
     },
     options: {
       locale: 'pt-BR',
@@ -196,9 +232,18 @@ export default {
     }
   }),
 
+  created() {
+    this.$store.dispatch('products/get');
+    this.$store.dispatch('providers/get');
+  },
+
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? 'Cadastro' : 'Edição';
+    },
+
+    items() {
+      return this.$store.getters['products/get'];
     },
 
     providers() {
@@ -206,22 +251,11 @@ export default {
     }
   },
 
-  watch: {
-    dialog(val) {
-      val || this.close();
-    }
-  },
-
-  created() {
-    this.$store.dispatch('providers/get');
-    this.initialize();
-  },
-
   methods: {
     formatValue,
 
-    initialize() {
-      this.items = items;
+    addProduct() {
+      this.dialog = true;
     },
 
     editItem(item) {
@@ -231,13 +265,11 @@ export default {
     },
 
     deleteItem(item) {
-      confirmMessage(`Deseja realmente excluir`, `${item.name}`, item, HANDLERS.DELETE_STOCK);
+      confirmMessage(`Deseja realmente excluir`, `${item.name}`, item, HANDLERS.DELETE_PRODUCT);
     },
 
     showDelete(item) {
-      const index = this.items.indexOf(item);
-
-      this.items.splice(index, 1);
+      this.$store.dispatch('products/delete', item);
     },
 
     close() {
@@ -248,26 +280,30 @@ export default {
         this.editedIndex = -1;
         this.$refs.form.reset();
       });
+
+      this.$store.dispatch('products/get');
     },
 
     save() {
       if (!this.$refs.form.validate(true)) return;
 
       if (this.editedIndex > -1) {
-        Object.assign(this.items[this.editedIndex], this.editedItem);
+        this.$store.dispatch('products/update', this.editedItem);
       } else {
-        this.items.push(this.editedItem);
+        this.$store.dispatch('products/create', this.editedItem);
       }
-
-      showMessage('success', 'Operação realizada com sucesso!');
-
-      this.close();
     },
 
     getColor(item) {
       if (item == 1) return 'red--text';
       else if (item == 2) return 'orange--text';
       else return 'green--text';
+    }
+  },
+
+  watch: {
+    dialog(val) {
+      val || this.close();
     }
   }
 };

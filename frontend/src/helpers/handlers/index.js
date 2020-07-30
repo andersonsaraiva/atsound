@@ -11,8 +11,8 @@ export const CLOSE_BUDGETS = 'CLOSE_BUDGETS';
 export const NEXT_STEP_BUDGETS = 'NEXT_STEP_BUDGETS';
 export const DELETE_SERVICE = 'DELETE_SERVICE';
 
-export const DELETE_STOCK = 'DELETE_STOCK';
-export const CLOSE_STOCK = 'CLOSE_STOCK';
+export const DELETE_PRODUCT = 'DELETE_PRODUCT';
+export const CLOSE_PRODUCT = 'CLOSE_PRODUCT';
 
 export const DELETE_USER = 'DELETE_USER';
 export const CLOSE_USER = 'CLOSE_USER';
