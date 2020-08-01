@@ -104,5 +104,14 @@ export default [
     },
     name: 'users',
     component: () => import('@/views/Account/Users.vue')
+  },
+  {
+    path: '/newPassword',
+    meta: {
+      public: true,
+      title: 'Redefinição de Senha'
+    },
+    name: 'newPassword',
+    component: () => import('@/views/Account/NewPassword.vue')
   }
 ];

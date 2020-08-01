@@ -1,5 +1,6 @@
 import Axios from 'axios';
 import router from '@/router';
+import { showMessage } from '@/helpers/messages';
 
 export default {
   setSettings: (state, payload) => {
@@ -15,6 +16,11 @@ export default {
 
   setToken: (state, payload) => {
     state.token = payload;
+  },
+
+  setChangePassword: () => {
+    showMessage('success', 'Senha alterada com sucesso!')
+    router.push('login');
   },
 
   clear: (state) => {

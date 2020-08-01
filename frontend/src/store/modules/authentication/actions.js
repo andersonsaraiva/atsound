@@ -1,5 +1,5 @@
 import { get } from '@/services/settings';
-import { auth } from '@/services/authentication';
+import { auth, changePassword } from '@/services/authentication';
 
 export default {
   getSettings: async ({ commit }) => {
@@ -32,6 +32,18 @@ export default {
       commit('clear');
     } catch (error) {
       throw Error("Ocorreu um erro de API.");
+    }
+  },
+
+  changePassword: async ({ commit }, params) => {
+    try {
+      const { status } = await changePassword(params);
+
+      if (status === 204) {
+        commit('setChangePassword');
+      }
+    } catch (error) {
+      throw Error('Ocorreu um erro de API');
     }
   }
 };
