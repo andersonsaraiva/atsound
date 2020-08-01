@@ -472,10 +472,10 @@ export default {
 
     dateFormated: {
       get: function() {
-        return this.formatDate();
+        return this.getSetDate();
       },
       set: function() {
-        return this.formatDate();
+        return this.getSetDate();
       }
     }
   },
@@ -485,7 +485,7 @@ export default {
   },
 
   methods: {
-    formatDate() {
+    getSetDate() {
       if (this.editedItem.date_of_birth) {
         return formatDateComputed(this.editedItem.date_of_birth);
       } else {
