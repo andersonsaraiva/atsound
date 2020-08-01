@@ -124,7 +124,7 @@
                       >
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
-                            v-model="editedItem.date_of_birth"
+                            v-model="dateFormated"
                             label="Data de nascimento"
                             append-icon="event"
                             readonly
@@ -368,7 +368,7 @@
 <script>
 import { required, email } from '@/helpers/validations';
 import { showMessage, confirmMessage } from '@/helpers/messages';
-import { formatValue, formatDate } from '@/helpers/utils';
+import { formatDateForm, formatDateComputed } from '@/helpers/utils';
 import * as HANDLERS from '@/helpers/handlers';
 import { getZipcode } from '@/services/zipcode';
 
@@ -468,6 +468,15 @@ export default {
 
     cars() {
       return this.$store.getters['customers/getCars'];
+    },
+
+    dateFormated: {
+      get: function() {
+        return this.formatDate();
+      },
+      set: function() {
+        return this.formatDate();
+      }
     }
   },
 
@@ -476,6 +485,14 @@ export default {
   },
 
   methods: {
+    formatDate() {
+      if (this.editedItem.date_of_birth) {
+        return formatDateComputed(this.editedItem.date_of_birth);
+      } else {
+        return null;
+      }
+    },
+
     addCustomer() {
       this.dialog = true;
       this.step = 1;
@@ -483,6 +500,8 @@ export default {
 
     editItem(item) {
       this.editedIndex = this.items.indexOf(item);
+
+      item.date_of_birth = formatDateForm(item.date_of_birth);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
 

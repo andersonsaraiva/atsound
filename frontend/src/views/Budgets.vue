@@ -138,7 +138,7 @@
                       >
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
-                            v-model="editedItem.date"
+                            v-model="dateFormated"
                             label="Data do Orçamento"
                             append-icon="event"
                             readonly
@@ -255,7 +255,7 @@
 <script>
 import { required, email } from '@/helpers/validations';
 import { showMessage, confirmMessage } from '@/helpers/messages';
-import { formatValue, formatDate } from '@/helpers/utils';
+import { formatValue, formatDate, formatDateForm, formatDateComputed } from '@/helpers/utils';
 import * as HANDLERS from '@/helpers/handlers';
 
 export default {
@@ -341,6 +341,15 @@ export default {
 
     services() {
       return this.$store.getters['budgets/getServices'];
+    },
+
+    dateFormated: {
+      get: function() {
+        return this.getSetDate();
+      },
+      set: function() {
+        return this.getSetDate();
+      }
     }
   },
 
@@ -352,6 +361,14 @@ export default {
     formatValue,
     formatDate,
 
+    getSetDate() {
+      if (this.editedItem.date) {
+        return formatDateComputed(this.editedItem.date);
+      } else {
+        return null;
+      }
+    },
+
     addBudget() {
       this.dialog = true;
       this.totalServices = 0;
@@ -361,6 +378,8 @@ export default {
     editItem(item) {
       this.totalServices = 0;
       this.editedIndex = this.items.indexOf(item);
+
+      item.date = formatDateForm(item.date);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
 

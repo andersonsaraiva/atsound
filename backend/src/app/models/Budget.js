@@ -1,5 +1,3 @@
-const moment = require('moment');
-
 const { Model, DataTypes } = require('sequelize');
 
 class Budget extends Model {
@@ -10,12 +8,7 @@ class Budget extends Model {
         email: DataTypes.STRING,
         phone: DataTypes.STRING,
         cpf: DataTypes.STRING,
-        date: {
-          type: DataTypes.DATE,
-          get: function () {
-            return moment(this.getDataValue('date')).format('DD/MM/YYYY');
-          }
-        },
+        date: DataTypes.DATE,
         total: DataTypes.VIRTUAL
       },
       { sequelize }

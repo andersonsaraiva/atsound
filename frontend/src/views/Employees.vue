@@ -106,7 +106,7 @@
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
-                      v-model="editedItem.date_of_birth"
+                      v-model="dateFormated"
                       label="Data de nascimento"
                       append-icon="event"
                       readonly
@@ -313,7 +313,7 @@ import { required, email } from '@/helpers/validations';
 import { showMessage, confirmMessage } from '@/helpers/messages';
 import * as HANDLERS from '@/helpers/handlers';
 import { getZipcode } from '@/services/zipcode';
-import { formatDate } from '@/helpers/utils';
+import { formatDate, formatDateForm, formatDateComputed } from '@/helpers/utils';
 
 export default {
   components: {
@@ -395,11 +395,28 @@ export default {
 
     items() {
       return this.$store.getters['employees/get'];
+    },
+
+    dateFormated: {
+      get: function() {
+        return this.getSetDate();
+      },
+      set: function() {
+        return this.getSetDate();
+      }
     }
   },
 
   methods: {
     formatDate,
+
+    getSetDate() {
+      if (this.editedItem.date_of_birth) {
+        return formatDateComputed(this.editedItem.date_of_birth);
+      } else {
+        return null;
+      }
+    },
 
     addEmployees() {
       this.dialog = true;
@@ -407,6 +424,8 @@ export default {
 
     editItem(item) {
       this.editedIndex = this.items.indexOf(item);
+
+      item.date_of_birth = formatDateForm(item.date_of_birth);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },

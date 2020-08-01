@@ -29,13 +29,9 @@ class EmployeeController {
   }
 
   async update(req, res) {
-    const { id, cpf } = req.params;
+    const { id } = req.params;
 
     try {
-      if (!!(await Employee.findOne({ where: { cpf } }))) {
-        return res.status(400).send({ message: 'Erro ao criar novo funcionário... CPF já existe na base de dados!' });
-      }
-
       const employee = await Employee.findOne({ where: { id } });
 
       if (employee) await employee.update(req.body);

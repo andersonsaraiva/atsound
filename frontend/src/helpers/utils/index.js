@@ -10,5 +10,14 @@ export const formatValue = (value) => {
 };
 
 export const formatDate = (value) => {
+  value = value.split('T')[0];
+  return moment(value).format('DD/MM/YYYY');
+}
+
+export const formatDateForm = (value) => {
+  return value.split('T')[0];
+}
+
+export const formatDateComputed = (value) => {
   return moment(value).format('DD/MM/YYYY');
 }
