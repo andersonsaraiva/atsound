@@ -30,6 +30,15 @@
 
         <v-divider></v-divider>
 
+        <v-list-item dense ripple @click="changePassword" id="changePassword" link>
+          <v-icon color="primary" :size="19" class="mr-2">fas fa-key</v-icon>
+          <v-list-item-content>
+            <v-list-item-title>Alterar Senha</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-divider></v-divider>
+
         <v-list-item dense ripple @click="logoff" id="logoff" link>
           <v-icon color="primary" :size="19" class="mr-2">fas fa-power-off</v-icon>
           <v-list-item-content>
@@ -38,11 +47,28 @@
         </v-list-item>
       </v-list>
     </v-menu>
+
+    <appChangePassword :dialog="dialog" />
   </v-layout>
 </template>
 
 <script>
+import * as HANDLERS from '@/helpers/handlers';
+import eventBus from 'vue-option-events';
+
 export default {
+  events: {
+    [HANDLERS.CLOSE_DIALOG_NEW_PASSWORD]: 'closeDialogChangePassword'
+  },
+
+  components: {
+    appChangePassword: () => import('@/components/dialog/app-change-password')
+  },
+
+  data: () => ({
+    dialog: false
+  }),
+
   computed: {
     profile() {
       return this.$store.getters['authentication/getProfile'];
@@ -56,6 +82,14 @@ export default {
 
     admin() {
       this.$router.push('users');
+    },
+
+    changePassword() {
+      this.dialog = true;
+    },
+
+    closeDialogChangePassword() {
+      this.dialog = false;
     }
   }
 };

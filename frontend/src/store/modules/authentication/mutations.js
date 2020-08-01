@@ -1,6 +1,8 @@
 import Axios from 'axios';
 import router from '@/router';
 import { showMessage } from '@/helpers/messages';
+import * as HANDLERS from '@/helpers/handlers';
+import eventBus from 'vue-option-events';
 
 export default {
   setSettings: (state, payload) => {
@@ -21,6 +23,11 @@ export default {
   setChangePassword: () => {
     showMessage('success', 'Senha alterada com sucesso!')
     router.push('login');
+  },
+
+  setEditPassword: () => {
+    showMessage('success', 'Senha alterada com sucesso!')
+    eventBus.$emit(HANDLERS.CLOSE_DIALOG_NEW_PASSWORD);
   },
 
   clear: (state) => {
