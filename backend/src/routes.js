@@ -11,6 +11,7 @@ const CustomerController = require('./app/controllers/CustomerController');
 const CarController = require('./app/controllers/CarController');
 const EmployeeController = require('./app/controllers/EmployeeController');
 const ProductController = require('./app/controllers/ProductController');
+const EventController = require('./app/controllers/EventController');
 
 routes.post('/auth', AuthController.create);
 
@@ -87,5 +88,14 @@ routes
   .post('/products', ProductController.create)
   .put('/products/:id', ProductController.update)
   .delete('/products/:id', ProductController.delete);
+
+/**
+ * Events routes
+ */
+routes
+  .get('/events', EventController.index)
+  .post('/events', EventController.create)
+  .put('/events/:id', EventController.update)
+  .delete('/events/:id', EventController.delete);
 
 module.exports = routes;
