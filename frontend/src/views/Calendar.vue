@@ -50,6 +50,7 @@
 
         <v-sheet height="600">
           <v-calendar
+            locale="pt-br"
             ref="calendar"
             v-model="focus"
             color="primary"
@@ -60,16 +61,15 @@
             @click:more="viewDay"
             @click:date="viewDay"
             @change="updateRange"
-          ></v-calendar>
+          >
+          </v-calendar>
 
           <v-menu v-model="selectedOpen" :close-on-content-click="false" :activator="selectedElement" offset-x>
             <v-card min-width="350px" flat>
               <v-toolbar :color="selectedEvent.color" dense>
-                <v-icon small class="mr-2" @click="handleEdit(selectedEvent)">mdi-pencil</v-icon>
                 <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
                 <v-spacer></v-spacer>
-                <v-icon small class="mr-2" @click>mdi-heart</v-icon>
-                <v-icon small @click>mdi-dots-vertical</v-icon>
+                <v-icon small class="mr-2" @click="handleEdit(selectedEvent)">mdi-pencil</v-icon>
               </v-toolbar>
 
               <v-card-text>
@@ -80,8 +80,8 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
 
-                <v-btn color="secondary" @click="selectedOpen = false" small>
-                  Cancel
+                <v-btn color="primary" @click="selectedOpen = false" small>
+                  Cancelar
                 </v-btn>
               </v-card-actions>
             </v-card>
@@ -248,7 +248,7 @@ export default {
   data: () => ({
     required,
     focus: '',
-    type: 'month',
+    type: 'week',
     typeToLabel: {
       month: 'Mês',
       week: 'Semana',
@@ -452,10 +452,6 @@ export default {
       //
       // this.events = events;
     }
-
-    // rnd(a, b) {
-    //   return Math.floor((b - a + 1) * Math.random()) + a;
-    // }
   }
 };
 </script>
